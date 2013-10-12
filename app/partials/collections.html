@@ -32,7 +32,7 @@
         <div data-ng-repeat="video in collection['videos'] | filter: {'ma:title': video_filter}" class="video_blocks" style="vertical-align: top;">
             <a title="{{video['ma:description']}}" href="/video/{{video.pid}}?collection={{collection.pid}}">
                 <div id="video-wrapper"><div id="video-clipper">
-                    <img width="300" height="200" data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>
+                    <img data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>
                 </div></div>
             </a>
             <a title="{{video['ma:description']}}" style="text-align:center;" class="plain_link" href="/video/{{video.pid}}?collection={{collection.pid}}">{{video['ma:title']}}</a>
