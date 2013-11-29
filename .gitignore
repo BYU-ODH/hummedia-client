@@ -10,3 +10,7 @@ app/CONFIG.js
 .settings
 .idea/*
 .vagrant
+
+api/ingest
+api/movies
+api/real_files
