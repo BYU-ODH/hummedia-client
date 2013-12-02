@@ -67,7 +67,7 @@ BYU_SHARED_SECRET = "byu_shared_secret_goes_here"
 
 SECRET_KEY = 'app_secret_goes_here'
 COOKIE_NAME = 'hummedia-session'
-COOKIE_DOMAIN = "zelda.local"
+COOKIE_DOMAIN = ".zelda.local"
 APPLICATION_ROOT = "/"
 
 MONGODB_DB = 'hummedia'
