@@ -1,62 +1,82 @@
 'use strict';
 function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
     
-    $scope.collections = Collection.query(function(){
-        
-        //Alphabetize the Collections
-        $scope.collections.sort(function(a, b) {
-            if(a['dc:title']<b['dc:title']){
-                return -1;
-            }
-            if(a['dc:title']>b['dc:title']){
-                return 1;
-            }
-            return 0;
-        });
-        
-        if(!$scope.collections.length){
-            $scope.message = 'There are no collections to display.';
+    $scope.all = true;
+    
+    $scope.loadCollectionList = function(all, callback) {
+        var data = {};
+        if(!all) {
+            $scope.all = false;
+            data.read = user.data.username;
         }
-        
-        $scope.collections_data=[];
-        
-        //If no id is specified then show the first collection
-        if(!$location.search().id){
-            showVideos($scope.collections[0]['pid']);
+        else
+        {
+            $scope.all = true;
         }
-        
-        for(var coll=0; coll<$scope.collections.length; coll++){
-            (function(){
-                var pid = $scope.collections[coll]['pid'];
+        $scope.message = null; // reset message
+        $scope.collections = Collection.query(data, function establishCollections(){
 
-                var item = Collection.get({identifier:pid}, function(){
-                    item.isLoading = false;
-                    item.videos.sort(function(a, b) {
-                        return a['ma:title'].toLowerCase() > b['ma:title'].toLowerCase();
-                    });
-                });
-                item.isLoading = true;
-                $scope['collections_data'][pid] = item;
-            })();
+            //Alphabetize the Collections
+            $scope.collections.sort(function(a, b) {
+                if(a['dc:title']<b['dc:title']){
+                    return -1;
+                }
+                if(a['dc:title']>b['dc:title']){
+                    return 1;
+                }
+                return 0;
+            });
+
+            if(!$scope.collections.length){
+                $scope.message = 'There are no collections to display.';
+            }
+            else if(!$location.search().id){ //If no id is specified then show the first collection
+                showVideos($scope.collections[0]['pid']);
+            }
+            
+            if(typeof callback === "function") {
+                callback.apply(this, arguments);
+            }
+        });
+    };
+    
+    user.checkStatus().then(function initialize(){
+        if(user.data.role === 'faculty') {
+            $scope.loadCollectionList(false, function(data) {
+                if(!data.length) {
+                    $scope.showTabs = false;
+                    $scope.loadCollectionList(true);
+                }
+                else
+                {
+                    $scope.showTabs = true;
+                }
+            });
+        }
+        else
+        {
+            $scope.loadCollectionList(true);
         }
     });
     
+
     $scope.showVideos = function(pid){
         $location.search({'id':pid});
     };
     
     function showVideos(pid){
-        $scope.collections.$promise.then(function() {
-            for(var i=0; i<$scope.collections.length; i++){
-                if($scope.collections[i]['pid']===pid){
-                    $scope.collection = $scope.collections[i];
-                    return;
-                }
-            }
+        $scope.collection = Collection.get({identifier:pid}, function success(){
+            $scope.collection.isLoading = false;
+            $scope.collection.videos.sort(function(a, b) {
+                return a['ma:title'].toLowerCase() > b['ma:title'].toLowerCase();
+            });
+        }, function error(){
             $scope.collection = {'dc:title':'Unable to Access Course',
                                  'dc:description':'Make sure the URL you are trying to reach is correct and that you are enrolled in this course'
             };
         });
+        $scope.collection.isLoading = true;
+        
         $('html,body').scrollTop(0);
     };
 
@@ -68,7 +88,7 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
 
     $scope.canEdit = function(collection) {
         return collection['dc:rights']['write'].indexOf(user.data.username) !== -1;
-    }
+    };
 }
 // always inject this in so we can later compress this JavaScript
 CollectionsCtrl.$inject = ['$scope', 'Collection', '$routeParams', '$location', 'user'];
