@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get update
-apt-get install -y apache2 mongodb python libapache2-mod-python libapache2-mod-wsgi python-pip python-dev libxml2-dev libxslt1-dev gearman
+apt-get install -y apache2 mongodb python libapache2-mod-python libapache2-mod-wsgi python-pip python-dev libxml2-dev libxslt1-dev gearman imagemagick
 
 rm -rf /var/www
 ln -fs /vagrant /var/www
@@ -24,6 +24,10 @@ cat << 'EOF' > /etc/apache2/sites-available/zelda.local
 
     WSGIPassAuthorization On
     WSGIScriptAlias /api/v2 /var/www/api/flask/flask.wsgi
+
+    AliasMatch ^/posters/.*([0-9])_thumb.jpg$ /var/www/api/posters/$1_thumb.jpg
+    AliasMatch ^/posters/.*([0-9]).jpg$ /var/www/api/posters/$1.jpg
+    AliasMatch ^/posters/(.*)$ /var/www/api/posters/$1
 </VirtualHost>
 EOF
 
@@ -121,21 +125,28 @@ pip install gearman
 
 cd /var/www/api/
 
-rm -rf real_files ingest movies posters
-mkdir real_files
-mkdir ingest
-mkdir movies
-mkdir posters
+#rm -rf real_files ingest movies posters
+mkdir -p real_files
+mkdir -p ingest
+mkdir -p movies
+mkdir -p posters
 
 cd real_files
 
 # download some sample MP4s and webms
-wget http://video.webmfiles.org/big-buck-bunny_trailer.webm -O trailer.webm --no-verbose
-wget http://video.blendertestbuilds.de/download.blender.org/peach/trailer_480p.mov -O trailer.mp4 --no-verbose
+if [ ! -f trailer.webm ]; then
+    wget http://video.webmfiles.org/big-buck-bunny_trailer.webm -O trailer.webm --no-verbose
+fi
+
+if [ ! -f trailer.mp4 ]; then
+    wget http://video.blendertestbuilds.de/download.blender.org/peach/trailer_480p.mov -O trailer.mp4 --no-verbose
+fi
 
 cd ../ingest
 
-wget http://ftp.nluug.nl/ftp/graphics/blender/apricot/trailer/sintel_trailer-480p.mp4 -O ingest-me.mp4 --no-verbose
+if [ ! -f ingest-me.mp4 ]; then
+    wget https://archive.org/download/Video_Diary__Short_Version_PSP/MAQ11112_512kb.mp4 -O ingest-me.mp4 --no-verbose
+fi
 
 # initialize the database
 cd ../db
@@ -153,10 +164,16 @@ cd ../movies
 
 for FILE in $FILES; do
     if [[ ${#FILE} -gt 0 ]]; then
-        ln -s ../real_files/trailer.webm "${FILE}.webm"
-        ln -s ../real_files/trailer.mp4 "${FILE}.mp4"
+        ln -s ../real_files/trailer.webm "${FILE}.webm" > /dev/null 2>&1
+        ln -s ../real_files/trailer.mp4 "${FILE}.mp4" > /dev/null 2>&1
     fi
 done
+
+# Download images
+cd ../posters
+for i in $(seq 0 9); do wget https://placeimg.com/300/200/any -O $i.jpg; done
+GLOBIGNORE=*thumb.jpg
+convert -format jpg -thumbnail 100x150 *.jpg -set filename:f '%t_thumb.%e' '%[filename:f]'
 
 # ALL SYSTEMS GO
 a2ensite zelda.local
