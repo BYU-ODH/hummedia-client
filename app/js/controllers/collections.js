@@ -1,10 +1,18 @@
 'use strict';
 function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
     
+    $scope.all = true;
+    $scope.user = user;
+    
     $scope.loadCollectionList = function(all, callback) {
         var data = {};
         if(!all) {
+            $scope.all = false;
             data.read = user.data.username;
+        }
+        else
+        {
+            $scope.all = true;
         }
         $scope.message = null; // reset message
         $scope.collections = Collection.query(data, function establishCollections(){

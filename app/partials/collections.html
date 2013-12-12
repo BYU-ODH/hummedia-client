@@ -1,11 +1,15 @@
 <div id="collections_content">
-        
+
+    <div ng-show="user.data.role == 'faculty'">
+        <button ng-show="!all" ng-click="loadCollectionList(true)">View All</button>
+        <button ng-show="all" ng-click="loadCollectionList(false)">View Mine</button>
+    </div>
 <ul id="tabs" data-ng-show="collections.length">
     <li data-ng-repeat="tabcollection in collections" data-ng-class="{highlighted: collection.pid==tabcollection.pid}" data-ng-click="showVideos(tabcollection.pid)">
         <a ng-show='canEdit(tabcollection)' class='edit-button' ng-href="/admin/collection?id={{tabcollection.pid}}"><i data-tooltip="Edit this collection" class="icon-edit"></i></a>
         <a ng-href="/collection?id={{tabcollection['pid']}}" id="tab-{{tabcollection['pid']}}">{{tabcollection['dc:title']}}</a>
     </li>
-</ul>    
+</ul>
 <div id="collections_wrapper">
     <h2>{{message}}</h2>
 <div class='collection_blocks'>
