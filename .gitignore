@@ -14,3 +14,4 @@ app/CONFIG.js
 api/ingest
 api/movies
 api/real_files
+api/posters
