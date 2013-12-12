@@ -9,7 +9,7 @@
 <div id="collections_wrapper">
     <h2>{{message}}</h2>
 <div class='collection_blocks'>
-    <div class='collection_toggle' id="{{collection['pid']}}">
+    <div class='collection_toggle'>
         <div>
             <h2>{{collection['dc:title']}}</h2>
             <p data-ng-bind-html="collection['dc:description']"></p>
@@ -18,13 +18,13 @@
                 {{"Search:" | tr}} <input type="search" ng-model="video_filter">
             </div>         
             
-            <progress data-ng-show="collections_data[collection['pid']].isLoading" title="Loading videos">Loading videos&hellip;</progress>
+            <progress data-ng-show="collection.isLoading" title="Loading videos">Loading videos&hellip;</progress>
             
             <hr>
         
         </div>
         
-        <div data-ng-repeat="video in collections_data[collection['pid']]['videos'] | filter: {'ma:title': video_filter}" class="video_blocks" style="vertical-align: top;">
+        <div data-ng-repeat="video in collection['videos'] | filter: {'ma:title': video_filter}" class="video_blocks" style="vertical-align: top;">
             <a title="{{video['ma:description']}}" href="/video/{{video.pid}}?collection={{collection.pid}}">
                 <div id="video-wrapper"><div id="video-clipper">
                     <img width="300" height="200" data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>

@@ -24,39 +24,25 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
         if(!$location.search().id){
             showVideos($scope.collections[0]['pid']);
         }
-        
-        for(var coll=0; coll<$scope.collections.length; coll++){
-            (function(){
-                var pid = $scope.collections[coll]['pid'];
-
-                var item = Collection.get({identifier:pid}, function(){
-                    item.isLoading = false;
-                    item.videos.sort(function(a, b) {
-                        return a['ma:title'].toLowerCase() > b['ma:title'].toLowerCase();
-                    });
-                });
-                item.isLoading = true;
-                $scope['collections_data'][pid] = item;
-            })();
-        }
     });
-    
+
     $scope.showVideos = function(pid){
         $location.search({'id':pid});
     };
     
     function showVideos(pid){
-        $scope.collections.$promise.then(function() {
-            for(var i=0; i<$scope.collections.length; i++){
-                if($scope.collections[i]['pid']===pid){
-                    $scope.collection = $scope.collections[i];
-                    return;
-                }
-            }
+        $scope.collection = Collection.get({identifier:pid}, function success(){
+            $scope.collection.isLoading = false;
+            $scope.collection.videos.sort(function(a, b) {
+                return a['ma:title'].toLowerCase() > b['ma:title'].toLowerCase();
+            });
+        }, function error(){
             $scope.collection = {'dc:title':'Unable to Access Course',
                                  'dc:description':'Make sure the URL you are trying to reach is correct and that you are enrolled in this course'
             };
         });
+        $scope.collection.isLoading = true;
+        
         $('html,body').scrollTop(0);
     };
 
