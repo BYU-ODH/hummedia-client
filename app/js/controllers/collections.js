@@ -2,7 +2,6 @@
 function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
     
     $scope.all = true;
-    $scope.user = user;
     
     $scope.loadCollectionList = function(all, callback) {
         var data = {};
@@ -45,7 +44,12 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
         if(user.data.role === 'faculty') {
             $scope.loadCollectionList(false, function(data) {
                 if(!data.length) {
+                    $scope.showTabs = false;
                     $scope.loadCollectionList(true);
+                }
+                else
+                {
+                    $scope.showTabs = true;
                 }
             });
         }

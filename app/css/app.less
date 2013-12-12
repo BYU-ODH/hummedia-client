@@ -354,9 +354,46 @@ strong {
     padding-left:0px;
     padding-right:0px;
 }
-#tabs{
-    display: inline-block;
+#tabs-holder {
     width: 27%;
+    text-align: left;
+    display: inline-block;
+}
+#select-view-buttons {
+    padding-left: 5px;
+    margin-top: -3px;
+    button {
+        font-weight: bold;
+        border: solid black 1px;
+        border-radius: 5px 5px 0 0;
+        z-index: 1;
+        position: relative;
+        margin: 0;
+        font-size: 1.2em;
+        background-color: rgba(255,255,255,.75);
+        padding-left: 0.9em;
+        padding-right: 1em;
+        &:first-of-type {
+            left: .9em;
+        }
+        &.active {
+            background-color: rgba(255,255,255,1);
+            z-index: 5;
+            &:first-of-type {
+                box-shadow: black 4px 0px 5px;
+            }
+            &:last-of-type {
+                box-shadow: black -4px 0px 5px;
+            }
+        }
+        &:not(.active) {
+            z-index: 1;
+        }
+    }
+}
+#tabs{
+    z-index: 10;
+    position: relative;
     text-align: left;
     font-size: 125%;
     padding: 5px;
