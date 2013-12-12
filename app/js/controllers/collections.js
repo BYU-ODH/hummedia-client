@@ -1,30 +1,52 @@
 'use strict';
 function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
     
-    $scope.collections = Collection.query(function(){
-        
-        //Alphabetize the Collections
-        $scope.collections.sort(function(a, b) {
-            if(a['dc:title']<b['dc:title']){
-                return -1;
-            }
-            if(a['dc:title']>b['dc:title']){
-                return 1;
-            }
-            return 0;
-        });
-        
-        if(!$scope.collections.length){
-            $scope.message = 'There are no collections to display.';
+    $scope.loadCollectionList = function(all, callback) {
+        var data = {};
+        if(!all) {
+            data.read = user.data.username;
         }
-        
-        $scope.collections_data=[];
-        
-        //If no id is specified then show the first collection
-        if(!$location.search().id){
-            showVideos($scope.collections[0]['pid']);
+        $scope.message = null; // reset message
+        $scope.collections = Collection.query(data, function establishCollections(){
+
+            //Alphabetize the Collections
+            $scope.collections.sort(function(a, b) {
+                if(a['dc:title']<b['dc:title']){
+                    return -1;
+                }
+                if(a['dc:title']>b['dc:title']){
+                    return 1;
+                }
+                return 0;
+            });
+
+            if(!$scope.collections.length){
+                $scope.message = 'There are no collections to display.';
+            }
+            else if(!$location.search().id){ //If no id is specified then show the first collection
+                showVideos($scope.collections[0]['pid']);
+            }
+            
+            if(typeof callback === "function") {
+                callback.apply(this, arguments);
+            }
+        });
+    };
+    
+    user.checkStatus().then(function initialize(){
+        if(user.data.role === 'faculty') {
+            $scope.loadCollectionList(false, function(data) {
+                if(!data.length) {
+                    $scope.loadCollectionList(true);
+                }
+            });
+        }
+        else
+        {
+            $scope.loadCollectionList(true);
         }
     });
+    
 
     $scope.showVideos = function(pid){
         $location.search({'id':pid});
@@ -54,7 +76,7 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
 
     $scope.canEdit = function(collection) {
         return collection['dc:rights']['write'].indexOf(user.data.username) !== -1;
-    }
+    };
 }
 // always inject this in so we can later compress this JavaScript
 CollectionsCtrl.$inject = ['$scope', 'Collection', '$routeParams', '$location', 'user'];
