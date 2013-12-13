@@ -43,6 +43,7 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
           orderedTracks = butter.currentMedia.orderedTracks,
           id = originalEvent.target.getAttribute( "data-butter-track-id" );
 
+      setActiveTrack( id );
       for ( var i = 0; i < orderedTracks.length; i++ ) {
         if ( orderedTracks[ i ].id === id ) {
           _draggingHandleIndex = i;
@@ -95,6 +96,34 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
         element.querySelector( "span.title" ).textContent = track.name;
       }
     });
+    
+    function setActiveTrack( trackId ) {
+      Object.getOwnPropertyNames( _tracks ).forEach(function( id ){
+        if(id === trackId) {
+          _tracks[ id ].element.classList.add( "active" );
+        }
+        else
+        {
+          _tracks[ id ].element.classList.remove( "active" );
+        }
+      });
+      
+      setTimeout(function(){
+        var list = tracksContainer.element.getElementsByClassName( "butter-track" );
+        for(var i = 0; i<list.length; i++) {
+          var el = list[i],
+              id = el.attributes[ 'data-butter-track-id' ].value;
+
+          if( id === trackId ) {
+            el.classList.add( "active" );
+          }
+          else
+          {
+            el.classList.remove( "active" );
+          }
+        };
+      });
+    }
 
     function onTrackAdded( e ) {
       var track = e.data,
@@ -125,6 +154,10 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
         dialog.open();
       }, false );
 
+      trackDiv.addEventListener( "click", function(){
+        setActiveTrack( trackId );    
+      });
+      
       trackDiv.addEventListener( "dblclick", function(){
         var dialog = Dialog.spawn( "track-data", {
           data: track,
@@ -205,6 +238,8 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
       _addTrackButton.style.top = _listElement.offsetHeight - ADD_TRACK_BUTTON_Y_ADJUSTMENT + "px";
 
       sortHandles();
+      
+      setActiveTrack( trackId );
     }
 
     var existingTracks = _media.tracks;
