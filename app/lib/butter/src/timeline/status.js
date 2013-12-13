@@ -19,6 +19,20 @@ define( [ "util/time" ], function( util ){
             icons[i].classList.add('icon-play');
             icons[i].classList.remove('icon-pause');
         }
+        
+        // Set the volume icon to on
+        var icons = _button.getElementsByClassName('icon-volume');
+        for(var i=0; i<icons.length; i++){
+            icons[i].classList.add('icon-volume-up');
+            icons[i].classList.remove('icon-volume-off');
+        }
+        
+        // Set the eye icon open
+        var icons = _button.getElementsByClassName('icon-eye');
+        for(var i=0; i<icons.length; i++){
+            icons[i].classList.add('icon-eye-open');
+            icons[i].classList.remove('icon-eye-close');
+        }
       }
       else {
         _button.setAttribute( "data-state", true );
@@ -28,6 +42,20 @@ define( [ "util/time" ], function( util ){
         for(var i=0; i<icons.length; i++){
             icons[i].classList.add('icon-pause');
             icons[i].classList.remove('icon-play');
+        }
+        
+        // Set the volume icon to mute
+        var icons = _button.getElementsByClassName('icon-volume');
+        for(var i=0; i<icons.length; i++){
+            icons[i].classList.add('icon-volume-off');
+            icons[i].classList.remove('icon-volume-up');
+        }
+        
+        // Set the eye icon closed
+        var icons = _button.getElementsByClassName('icon-eye');
+        for(var i=0; i<icons.length; i++){
+            icons[i].classList.add('icon-eye-close');
+            icons[i].classList.remove('icon-eye-open');
         }
       }
     }
@@ -101,17 +129,22 @@ define( [ "util/time" ], function( util ){
 
   }
 
-  return function Status( media, statusArea ) {
+  return function Status( media, butter, statusArea ) {
 
     var _media = media,
         _statusContainer = statusArea.querySelector( ".status-container" ),
         _muteButton,
         _playButton,
+        _trackButton,
         _time;
 
     _statusContainer.className = "status-container";
 
     _time = new Time( statusArea, _media );
+    
+    _trackButton = new Button( statusArea, ".tracks-button-container", function() {
+        butter.tracksEnabled = !butter.tracksEnabled;
+    });
 
     _muteButton = new Button( statusArea, ".mute-button-container", function() {
       _media.muted = !_media.muted;
@@ -157,6 +190,14 @@ define( [ "util/time" ], function( util ){
       _playButton.state = true;
     });
 
+    butter.listen( "tracksenabled", function(){
+        _trackButton.state = true;
+    });
+    
+    butter.listen( "tracksdisabled", function(){
+        _trackButton.state = false;
+    });
+    
   };
 
 });

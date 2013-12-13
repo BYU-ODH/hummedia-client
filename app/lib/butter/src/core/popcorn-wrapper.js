@@ -64,6 +64,22 @@ define( [
         }
       }
     };
+    
+    this.disable = function( pluginName ) {
+      if( _popcorn ) {
+        window.pop = _popcorn;
+        console.log("Disabling", pluginName);
+        _popcorn.disable(pluginName);
+      }
+    };
+    
+    this.enable = function( pluginName ) {
+      if( _popcorn ) {
+        window.pop = _popcorn;
+        console.log("Enabling", pluginName);
+        _popcorn.enable(pluginName);
+      }
+    };
 
     /* Setup any handlers that were defined in the options passed into
      * popcorn wrapper. Events such as timeupdate, paused, etc
