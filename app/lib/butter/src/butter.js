@@ -213,7 +213,8 @@ window.Butter = {
           if ( track && track.constructor === Array ) {
             position = track;
           }
-          track = _currentMedia.orderedTracks[ 0 ];
+
+          track = _currentMedia.getActiveTrack() || _currentMedia.orderedTracks[ 0 ];
         }
 
         track = track || _currentMedia.addTrack();

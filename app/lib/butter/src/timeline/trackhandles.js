@@ -101,10 +101,12 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
       Object.getOwnPropertyNames( _tracks ).forEach(function( id ){
         if(id === trackId) {
           _tracks[ id ].element.classList.add( "active" );
+          _tracks[ id ].track.active = true;
         }
         else
         {
           _tracks[ id ].element.classList.remove( "active" );
+          _tracks[ id ].track.active = false;
         }
       });
       
