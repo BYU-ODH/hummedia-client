@@ -130,6 +130,7 @@ window.Butter = {
           _defaultPopcornScripts = {},
           _defaultPopcornCallbacks = {},
           _pluginsByType = {},
+          _tracksEnabled = true,
           _defaultTrackeventDuration;
 
       // We use the default configuration in src/default-config.json as
@@ -645,6 +646,30 @@ window.Butter = {
       _this.getTrackEventsByType = function ( query ) {
         return _this.getTrackEvents( "type", query );
       };
+      
+      // Turns on all tracks events
+      function enableTracks() {
+        if( _tracksEnabled ) {
+          return;
+        }
+        Popcorn.registry.forEach( function( event ) {
+          _currentMedia.popcorn.enable( event.name );
+        });
+        _tracksEnabled = true;
+        _this.dispatch( "tracksenabled" );
+      }
+      
+      // Disables all track events
+      function disableTracks() {
+        if( !_tracksEnabled ) {
+          return;
+        }
+        Popcorn.registry.forEach( function( event ) {
+          _currentMedia.popcorn.disable( event.name );
+        });
+        _tracksEnabled = false;
+        _this.dispatch( "tracksdisabled" );
+      }
 
       /****************************************************************
        * Properties
@@ -686,6 +711,15 @@ window.Butter = {
           set: function( time ) {
             checkMedia();
             _currentMedia.currentTime = time;
+          },
+          enumerable: true
+        },
+        tracksEnabled: {
+          get: function() {
+            return _tracksEnabled;
+          },
+          set: function( status ) {
+            status ? enableTracks() : disableTracks();
           },
           enumerable: true
         },

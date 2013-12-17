@@ -6,7 +6,7 @@
 @_playButtonHeight: 27px;
 @_scrubberBarHeight: 8px;
 @_scrubberHandleHeight: 10px;
-@_traySideWidth: 129px;
+@_traySideWidth: 154px;
 @_timebarRight: 27px;
 
 /*********************************************************
@@ -202,16 +202,27 @@
   top: 13px;
   left: @_traySideWidth - 23px;
 
+  &:hover {
+      cursor: pointer;
+  }
+  
   .status-button {
     width: 20px;
     height: 20px;
     background: none;
-    .icon {
-      background-image: url( "../resources/icons/glyphiconshalflings-alt.png" );
-    }
-    &[data-state="true"] .icon {
-      background-position: -360px -24px;
-    }
+    line-height: 20px;
   }
+}
 
+.tracks-button-container{
+  float: left;
+  .status-button {
+    width: 20px;
+    height: 20px;
+    background: none;
+    line-height: 20px;
+  }
+  .icon-eye-close {
+      color: red;
+  }
 }
