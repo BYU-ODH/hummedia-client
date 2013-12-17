@@ -19,6 +19,7 @@ define( [ "./eventmanager", "./trackevent", "./views/track-view", "util/sanitize
         _popcornWrapper = null,
         _this = this,
         _order = 0,
+        _active = false,
         _name = NAME_PREFIX + _order;
 
     _this._media = null;
@@ -52,6 +53,10 @@ define( [ "./eventmanager", "./trackevent", "./views/track-view", "util/sanitize
         trackEvents[ i ].update();
       }
     };
+    
+    _view.element.addEventListener( 'click', function() {
+      _this.active = true;
+    });
 
     Object.defineProperties( this, {
       view: {
@@ -72,6 +77,33 @@ define( [ "./eventmanager", "./trackevent", "./views/track-view", "util/sanitize
           for( var i=0, l=_trackEvents.length; i<l; i++ ) {
             _trackEvents[ i ].target = val;
             _trackEvents[ i ].update({ target: val });
+          }
+        }
+      },
+      active: {
+        enumerable: true,
+        get: function(){
+          return _active;
+        },
+        set: function( value ) {
+          if( _active === !!value ) {
+            return;
+          }
+
+          if( !!value ) {
+            // deactivate all other tracks
+            _this._media.tracks.forEach( function( track ) {
+              track.active = false;
+            });
+            
+            _active = true;
+            _this.view.element.classList.add( "active" );
+            _this.dispatch( "active", _this );
+          }
+          else {
+            _active = false;
+            _this.view.element.classList.remove( "active" );
+            _this.dispatch( "inactive", _this );
           }
         }
       },

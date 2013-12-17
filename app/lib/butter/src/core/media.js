@@ -376,6 +376,19 @@
         return track;
       };
 
+      /**
+       * If any tracks are selected in the UI, this will return the first one
+       * This is for knowing where to place plugin events.
+       */
+      this.getActiveTrack = function() {
+        for( var i = 0; i < _orderedTracks.length; i++ ) {
+          if( _orderedTracks[ i ].active ) {
+            return _orderedTracks[ i ];
+          }
+        }
+        return undefined;
+      };
+
       this.fixTrackEventBounds = function() {
         var i, j,
             tracks, tracksLength,

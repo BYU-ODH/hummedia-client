@@ -85,6 +85,9 @@
     left: 5px;
     top: 50%;
   }
+  &.active {
+      background-color: white;
+  }
   &.draggable-hover {
     //box-shadow: inset 0 0 0 2px @green;
     background: fade( #FFF, 80% );
@@ -314,6 +317,15 @@
   }
   &:first-of-type {
     box-shadow: none;
+  }
+  
+  &.active {
+    background-color: white;
+    background-image: linear-gradient(90deg, transparent 98%, @green 98%);
+    .title {
+        font-weight: bold;
+        color: black;
+    }
   }
 
   .menu {
