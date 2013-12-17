@@ -4,7 +4,7 @@
 window.HUMMEDIA_GLOBALS = {
   
   // the URL to the Hummedia API
-  apiBase: 'https://zelda.byu.edu/api/v2/',
+  apiBase: 'https://zelda.local/api/v2/',
 
   // a flickr API key for use with rotating backgrounds
   flickrKey: 'YOUR FLICKR API KEY HERE',
@@ -16,5 +16,5 @@ window.HUMMEDIA_GLOBALS = {
   googleKey: 'YOUR GOOGLE API KEY HERE',
 
   // Whether or not to show the developer button and include other debugging resources
-  debugMode: false
+  debugMode: true
 };
