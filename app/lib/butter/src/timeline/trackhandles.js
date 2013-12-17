@@ -97,33 +97,21 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
       }
     });
     
-    function setActiveTrack( trackId ) {
-      Object.getOwnPropertyNames( _tracks ).forEach(function( id ){
-        if(id === trackId) {
-          _tracks[ id ].element.classList.add( "active" );
-          _tracks[ id ].track.active = true;
-        }
-        else
-        {
-          _tracks[ id ].element.classList.remove( "active" );
-          _tracks[ id ].track.active = false;
-        }
-      });
-      
-      setTimeout(function(){
-        var list = tracksContainer.element.getElementsByClassName( "butter-track" );
-        for(var i = 0; i<list.length; i++) {
-          var el = list[i],
-              id = el.attributes[ 'data-butter-track-id' ].value;
+    function setActiveTrack( track ) {
+      var item = null,
+          isEv = !!track.data;
 
-          if( id === trackId ) {
-            el.classList.add( "active" );
-          }
-          else
-          {
-            el.classList.remove( "active" );
-          }
-        };
+      Object.getOwnPropertyNames(_tracks).forEach(function( i ) {
+        var item = _tracks[ i ];
+        
+        if( ( isEv && item.track === track.data ) || i == track ) {
+          item.element.classList.add( "active" );
+          item.track.active = true;
+          return;
+        }
+
+        _tracks[ i ].track.active = false;
+        _tracks[ i ].element.classList.remove( "active" );
       });
     }
 
@@ -134,6 +122,7 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
           menuDiv = trackDiv.querySelector( ".menu" ),
           deleteButton = menuDiv.querySelector( ".delete" );
 
+      track.listen( "active", setActiveTrack );
       deleteButton.addEventListener( "click", function() {
         var dialog = Dialog.spawn( "delete-track", {
           data: track.name,
