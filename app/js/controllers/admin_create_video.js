@@ -63,6 +63,7 @@ function AdminCreateVideo($scope, Youtube, Video, $routeParams, $location) {
             $scope.data['ma:date'] = video.snippet.publishedAt.slice(0,4);
             $scope.data['url'] = ['http://youtu.be/' + id];
             $scope.data['type'] = 'yt';
+            $scope.data['ma:hasLanguage'] = ['en'];
         });
     };
 
