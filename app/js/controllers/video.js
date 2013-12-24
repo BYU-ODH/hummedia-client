@@ -80,7 +80,7 @@ function VideoCtrl($scope, $routeParams, Video, Annotation, appConfig, ANNOTATIO
         else
         {
             // there are no predefined annotations, aside from a set of required annotations
-            $scope.annotations = Annotation.get({identifier: required_annotation}, function(){
+            $scope.annotations = Annotation.get({identifier: required_annotation, client: "popcorn"}, function(){
                 butter_with_plugins(null, required_annotation)
             });
         }
@@ -113,7 +113,7 @@ function VideoCtrl($scope, $routeParams, Video, Annotation, appConfig, ANNOTATIO
         }
         else
         {
-            loadAnnotation($scope.annotation, butter);
+            loadAnnotation($scope.annotations, butter);
         }
     };
 
@@ -184,7 +184,7 @@ function VideoCtrl($scope, $routeParams, Video, Annotation, appConfig, ANNOTATIO
         else
         {
             // there is only one required annotation; load it
-            $scope.annotations = Annotation.get({identifier: required_annotation}, function(){loadEachAnnotation()});
+            $scope.annotations = Annotation.get({identifier: required_annotation, client: "popcorn"}, function(){loadEachAnnotation()});
         }
     }
     
