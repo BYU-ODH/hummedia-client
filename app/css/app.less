@@ -886,21 +886,29 @@ strong {
  * YOUTUBE VIDEO CREATION
  ************************/
 [id|=admin-create-video] {
+    background-color: white;
     h1 {
         font-size: 2em;
         font-weight: bold;
-        background-color: white;
     }
     h2 {
         font-weight: bold;
         font-size: 1.5em;
-        background-color: white;
-    }
-    h3 {
-        background-color: white;
     }
     form {
         background-color: white;
+    }
+}
+#admin-create-video-error {
+    padding-top: 10px;
+    h3 {
+        color: red;
+        font-weight: bold;
+    }
+    #admin-create-video-error-details {
+        font-family: monospace;
+        border: solid black 1px;
+        white-space: pre;
     }
 }
 #admin-select-video {

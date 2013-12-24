@@ -9,6 +9,20 @@
             <input id="admin-youtube-search" type="search" data-ng-model="query">
             <input type="submit" value="Search">
         </form>
+        
+        <div id="admin-create-video-error" ng-show="error">
+            <h3>{{"We've encountered an error."|tr}}</h3>
+            <h4>{{"Please send us this error message so we can fix the problem."|tr}}</h4>
+            <!-- This is indented weirdly because we're displaying it as if it were a PRE tag. -->
+            <!-- We're not using a PRE tag, though, because a PRE tag won't allow us to loop elements within it -->
+            <div id='admin-create-video-error-details'>Query: {{queryCopy}}
+<span ng-repeat='e in error.errors'>
+  Domain:  {{e.domain}}
+  Message: {{e.message}}
+  Reason:  {{e.reason}}
+
+</span></div>
+        </div>
     </div>
 
     <ul id="admin-select-video" data-ng-show="videos.items.length">

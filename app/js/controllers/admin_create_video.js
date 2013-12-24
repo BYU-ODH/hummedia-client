@@ -34,12 +34,16 @@ function AdminCreateVideo($scope, Youtube, Video, $routeParams, $location) {
     });
 
     function searchVideo(query) {
+        $scope.video = null;
+        $scope.error = null;
         // anything falsy, but numeric values are okay
         if(query === '' || query === null || query === false || query === undefined) {
             return;
         }
-        $scope.video = null;
         Youtube.search(query).success(function(data) {
+            $scope.error = data.error || null;
+            // use a copy instead of the original, otherwise our error message auto-updates with keypresses
+            $scope.queryCopy = query;
             $scope.videos = data;
         });
     }
