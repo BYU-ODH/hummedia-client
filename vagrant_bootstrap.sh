@@ -10,6 +10,10 @@ a2enmod rewrite ssl wsgi python
 
 cat << 'EOF' > /etc/apache2/sites-available/zelda.local
 <VirtualHost *:443>
+    AddDefaultCharset UTF-8
+    AddType 'text/vtt; charset=UTF-8' .vtt
+    AddType 'text/plain; charset=UTF-8' .srt
+
     ServerName zelda.local
 
     DocumentRoot /var/www/app
@@ -28,12 +32,22 @@ cat << 'EOF' > /etc/apache2/sites-available/zelda.local
     AliasMatch ^/posters/.*([0-9])_thumb.jpg$ /var/www/api/posters/$1_thumb.jpg
     AliasMatch ^/posters/.*([0-9]).jpg$ /var/www/api/posters/$1.jpg
     AliasMatch ^/posters/(.*)$ /var/www/api/posters/$1
+    
+    RewriteRule ^/text/(.*)$ /var/www/api/text/$1
+    RewriteMap subtitles rnd:/etc/apache2/maps/subtitles.txt
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} ^/text/.*
+    RewriteRule ^.*.(srt|vtt)$ /var/www/api/text/${subtitles:file}.$1 [L] 
 </VirtualHost>
 EOF
 
 if [ ! -f /var/www/app/CONFIG.js ]; then
     cp /var/www/app/CONFIG.default.js /var/www/app/CONFIG.js
 fi
+
+# Allows for randomly selecting subtitles when they don't exist
+mkdir -p /etc/apache2/maps/
+echo "file teenagers|gulliver|santa" > /etc/apache2/maps/subtitles.txt
 
 
 
