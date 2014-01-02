@@ -32,6 +32,8 @@ cat << 'EOF' > /etc/apache2/sites-available/zelda.local
     AliasMatch ^/posters/.*([0-9])_thumb.jpg$ /var/www/api/posters/$1_thumb.jpg
     AliasMatch ^/posters/.*([0-9]).jpg$ /var/www/api/posters/$1.jpg
     AliasMatch ^/posters/(.*)$ /var/www/api/posters/$1
+
+    RewriteEngine On
     
     RewriteRule ^/text/(.*)$ /var/www/api/text/$1
     RewriteMap subtitles rnd:/etc/apache2/maps/subtitles.txt
