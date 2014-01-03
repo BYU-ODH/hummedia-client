@@ -366,7 +366,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
 
       // remove track events whose popcornOptions object contains a key equaling the value passed in
       function stripEventsByOption(data, key, value) {
-          tracks = data.media[0].tracks;
+          var tracks = data.media[0].tracks;
           tracks.forEach(function(track) {
               var events = track.trackEvents;
 
@@ -387,7 +387,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
 
           // how many saves do we need before this is complete? If admin, we have to save required as well
           required = butter.config.value('admin') ? 2 : 1;
-          if(count == required) {
+          if(count === required) {
               success();
           }
       }
@@ -421,7 +421,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
           else
           {
               reqUrl +=  '?client=popcorn';
-              xhr.post( reqUrl, nonrequired, function(data) {
+              xhr.post( reqUrl, required, function(data) {
                   var updatedConfig = Config.parse(JSON.stringify({requiredAnnotationID: data.media[0].tracks[0].id}));
                   butter.config.override(updatedConfig);
                   projectSaved(data);
