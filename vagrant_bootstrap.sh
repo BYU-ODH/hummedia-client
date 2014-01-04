@@ -195,3 +195,5 @@ convert -format jpg -thumbnail 100x150 *.jpg -set filename:f '%t_thumb.%e' '%[fi
 a2ensite zelda.local
 service hummedia_ingest start
 service apache2 restart
+
+/var/www/scripts/restartApache2.sh &
