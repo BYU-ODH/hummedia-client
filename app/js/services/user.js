@@ -90,7 +90,7 @@ HUMMEDIA_SERVICES.factory('user', ['$http', 'appConfig', '$location', '$template
          }
 
          $('html').addClass('noscroll');
-         $http.get('partials/login.html', {cache:$templateCache}).success(function(data){
+         $http.get('/partials/login.html', {cache:$templateCache}).success(function(data){
              $("#view").append($compile(data)($scope));
          });
      };

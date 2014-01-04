@@ -121,6 +121,9 @@ msgstr ""
 msgid "Saving…"
 msgstr ""
 
+msgid "Search:"
+msgstr ""
+
 msgid "Search"
 msgstr ""
 

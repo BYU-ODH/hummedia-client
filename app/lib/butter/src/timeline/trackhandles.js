@@ -43,6 +43,7 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
           orderedTracks = butter.currentMedia.orderedTracks,
           id = originalEvent.target.getAttribute( "data-butter-track-id" );
 
+      setActiveTrack( id );
       for ( var i = 0; i < orderedTracks.length; i++ ) {
         if ( orderedTracks[ i ].id === id ) {
           _draggingHandleIndex = i;
@@ -95,6 +96,24 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
         element.querySelector( "span.title" ).textContent = track.name;
       }
     });
+    
+    function setActiveTrack( track ) {
+      var item = null,
+          isEv = !!track.data;
+
+      Object.getOwnPropertyNames(_tracks).forEach(function( i ) {
+        var item = _tracks[ i ];
+        
+        if( ( isEv && item.track === track.data ) || i == track ) {
+          item.element.classList.add( "active" );
+          item.track.active = true;
+          return;
+        }
+
+        _tracks[ i ].track.active = false;
+        _tracks[ i ].element.classList.remove( "active" );
+      });
+    }
 
     function onTrackAdded( e ) {
       var track = e.data,
@@ -103,6 +122,7 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
           menuDiv = trackDiv.querySelector( ".menu" ),
           deleteButton = menuDiv.querySelector( ".delete" );
 
+      track.listen( "active", setActiveTrack );
       deleteButton.addEventListener( "click", function() {
         var dialog = Dialog.spawn( "delete-track", {
           data: track.name,
@@ -125,6 +145,10 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
         dialog.open();
       }, false );
 
+      trackDiv.addEventListener( "click", function(){
+        setActiveTrack( trackId );    
+      });
+      
       trackDiv.addEventListener( "dblclick", function(){
         var dialog = Dialog.spawn( "track-data", {
           data: track,
@@ -205,6 +229,8 @@ define( [ "dialog/dialog", "util/dragndrop", "util/lang", "text!layouts/track-ha
       _addTrackButton.style.top = _listElement.offsetHeight - ADD_TRACK_BUTTON_Y_ADJUSTMENT + "px";
 
       sortHandles();
+      
+      setActiveTrack( trackId );
     }
 
     var existingTracks = _media.tracks;

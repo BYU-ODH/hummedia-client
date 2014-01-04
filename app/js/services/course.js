@@ -109,7 +109,7 @@ HUMMEDIA_SERVICES.factory('Course', ['$q', '$http', 'appConfig', function($q, $h
     
     var courseStringToReadableString = function(course_string){
         
-        var matches = course_string.match(/([a-zA-Z\ ]+?)\ +([0-9]{3}R?)\ +([0-9]{3})\ +([0-9]{4})([0-9])/);
+        var matches = course_string.match(/([a-zA-Z\ ]+?)\ +([0-9]{3}[A-Z]?)\ +([0-9]{3})\ +([0-9]{4})([0-9])/);
         if(matches){
             var department = matches[1];
             var course_number = matches[2];

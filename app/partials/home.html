@@ -1,13 +1,7 @@
 <div id="home_content">
-           <a id="coursesbutton" class="bwbuttondark" href='#/collection'>{{"Media for My Courses" | tr}}</a>
+           <a id="coursesbutton" class="bwbuttondark" href='/collection'>{{"Media for My Courses" | tr}}</a>
            <form class="searchform">
-               <input id="homesearch" name="query" class="searchfield" type="search" analytics="{category: 'search', label: 'home-search-input', events: ['focus']}" placeholder="{{'Search' | tr}}..." />
-               <input class="searchbutton" type="submit" onclick="run_search()" analytics="{category: 'search', label: 'home-search-button', events: ['hover', 'click', 'focus']}" value="{{'Go' | tr}}" />
+               <input id="homesearch" name="query" class="searchfield" type="search" ng-model="query" analytics="{category: 'search', label: 'home-search-input', events: ['focus']}" placeholder="{{'Search' | tr}}..." />
+               <input class="searchbutton" type="submit" data-ng-click="search(query)" analytics="{category: 'search', label: 'home-search-button', events: ['hover', 'click', 'focus']}" value="{{'Go' | tr}}" />
            </form>
 </div>
-<script>
-var run_search = function(){
-    var query = $('#homesearch').val();
-    window.location = "#/search?query="+query;
-};
-</script>

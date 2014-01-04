@@ -1,4 +1,4 @@
-<div id="video-content">
+<div id="video-content" oncontextmenu="return false">
     
 <div id="video-wrapper">
     <div id="player-header">
@@ -12,11 +12,18 @@
         </div>
         <div id="description" data-ng-bind-html="video['ma:description']"></div>
     </div>
-    <div id ="target-0" data-butter="target">
-        <div id="video" data-repaint data-butter="media" data-butter-source="{{video.url.join(',')}}"></div> <!-- join is necessary for Butter -->
-    </div>
-    <label id="toggle-annotations" data-ng-show="has_optional_annotations"><input type="checkbox" checked="checked" data-ng-click="toggleAnnotations()"/>&nbsp;{{"Annotations" | tr}}&nbsp;</label>
-    <label id="toggle-subtitles" data-ng-show="has_subtitles"><input type="checkbox" ng-model="subtitlesEnabled"/>&nbsp;{{"Subtitles" | tr}}&nbsp;</label>
+    <div 
+        id ="target-0"
+        hum-video="{{vid}}"
+        hum-video-collection="{{coll}}"
+        data-butter="target"
+        hum-video-subtitles="subtitlesEnabled"
+        hum-video-annotations="annotationsEnabled"
+        hum-video-object="video"
+        hum-video-editor="{{editorMode}}"
+    ></div>
+    <label id="toggle-annotations" data-ng-show="video.hasAnnotations && !editorMode"><input type="checkbox" checked="checked" ng-model="annotationsEnabled"/>&nbsp;{{"Annotations" | tr}}&nbsp;</label>
+    <label id="toggle-subtitles" data-ng-show="video.hasSubtitles && !editorMode"><input type="checkbox" checked="checked" ng-model="subtitlesEnabled"/>&nbsp;{{"Subtitles" | tr}}&nbsp;</label>
 
     <div id="target-4" data-butter="target">
     </div>

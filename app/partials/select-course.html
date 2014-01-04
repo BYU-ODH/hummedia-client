@@ -4,9 +4,9 @@
         <h2>You are watching <cite>{{video['ma:title']}}</cite></h2>
         <p>{{"The item you select below will determine how subtitles, audio tracks, and other annotations and modifications are made to your video. If you have been assigned to watch this video for a class, select the option most relevant to your class." | tr}}</p>
         <ul>
-            <li><a href='#/video/{{video.pid}}'>{{"None" | tr}}</a></li>
+            <li><a href='/video/{{video.pid}}'>{{"None" | tr}}</a></li>
             <li data-ng-repeat='collection in video["ma:isMemberOf"]'>
-                <a data-ng-href='#/video/{{video.pid}}?collection={{collection["@id"]}}'>{{collection.title}}</a>
+                <a data-ng-href='/video/{{video.pid}}?collection={{collection["@id"]}}'>{{collection.title}}</a>
             </li>
         </ul>
     </div>

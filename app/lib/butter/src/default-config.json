@@ -1,6 +1,6 @@
 {
   "name": "default-config",
-  "baseDir": "lib/butter/",
+  "baseDir": "/lib/butter/",
   "crashReporter": false,
   "cssRenderClientSide": false,
   "snapshotHTMLOnReady": false,
@@ -41,7 +41,7 @@
         "displayName": "Freebase Search",
         "targets": ["target-4"],
         "googleKeyProperty": "key",
-        "icon": "lib/hummedia-popcorn-plugins/freebase-search/freebase_logo.png"
+        "icon": "{{baseDir}}/../../hummedia-popcorn-plugins/freebase-search/freebase_logo.png"
       },
       {
         "type": "pausePlugin",

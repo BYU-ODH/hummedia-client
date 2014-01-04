@@ -1,33 +1,36 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.services', 'hummedia.directives', 'ngLocale', 'ngSanitize','ui.tinymce']).
+angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.services', 'hummedia.directives', 'ngLocale', 'ngSanitize','ui.tinymce', 'ngRoute']).
   config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/search', {title: "Hummedia | Search", templateUrl: 'partials/search/search.html', controller: SearchCtrl, reloadOnSearch: false});
-    $routeProvider.when('/', {title: "Hummedia", templateUrl: 'partials/home.html'});
-    $routeProvider.when('/video/:id', {title: "Hummedia | Video", templateUrl: 'partials/video.html', controller: VideoCtrl,
+    $routeProvider.when('/search', {title: "Hummedia | Search", templateUrl: '/partials/search/search.html', controller: SearchCtrl, reloadOnSearch: false});
+    $routeProvider.when('/', {title: "Hummedia", templateUrl: '/partials/home.html', controller: HomeCtrl});
+    $routeProvider.when('/video/:id', {title: "Hummedia | Video", templateUrl: '/partials/video.html', controller: VideoCtrl,
         resolve: {
             ANNOTATION_MODE: function(){ return false; }
         }
     });    
-    $routeProvider.when('/video/annotate/:id', {title: "Hummedia | Annotate", templateUrl: 'partials/video.html', controller: VideoCtrl,
+    $routeProvider.when('/video/annotate/:id', {title: "Hummedia | Annotate", templateUrl: '/partials/video.html', controller: VideoCtrl,
         resolve: {
             ANNOTATION_MODE: function() { return true; }
         }
     });    
-    $routeProvider.when('/admin/collection', {title: "Hummedia | Collections", templateUrl: 'partials/admin-collection.html', controller: AdminCollectionCtrl, reloadOnSearch: false});
-    $routeProvider.when('/admin/user', {title: "Hummedia | Users", admin: true, templateUrl: 'partials/admin-user.html', controller: AdminUserCtrl, reloadOnSearch: false});
-    $routeProvider.when('/admin/video', {title: "Hummedia | Videos", admin: true, templateUrl: 'partials/admin-video.html', controller: AdminVideoCtrl, reloadOnSearch: false});
-    $routeProvider.when('/admin/video/ingest', {title: "Hummedia | Ingest Video", admin: true, templateUrl: 'partials/admin-ingest.html', controller: AdminIngestCtrl, reloadOnSearch: false});
-    $routeProvider.when('/admin/video/create', {title: "Hummedia | Create Video", admin: true, templateUrl: 'partials/admin-create-video.html', controller: AdminCreateVideo, reloadOnSearch: false});
-    $routeProvider.when('/collection', {title: "Hummedia | Collections", templateUrl: 'partials/collections.html', controller: CollectionsCtrl, reloadOnSearch: false});
-    $routeProvider.when('/select-course/:video', {title: "Hummedia | Select Course", templateUrl: 'partials/select-course.html', controller: SelectCourseCtrl});
-    $routeProvider.when('/developer', {title: "Hummedia | Developer", templateUrl: 'partials/developer.html'});
-    $routeProvider.when('/about', {title: "Hummedia | About", templateUrl: 'partials/about.html'});
+    $routeProvider.when('/admin/collection', {title: "Hummedia | Collections", templateUrl: '/partials/admin-collection.html', controller: AdminCollectionCtrl, reloadOnSearch: false});
+    $routeProvider.when('/admin/user', {title: "Hummedia | Users", admin: true, templateUrl: '/partials/admin-user.html', controller: AdminUserCtrl, reloadOnSearch: false});
+    $routeProvider.when('/admin/video', {title: "Hummedia | Videos", admin: true, templateUrl: '/partials/admin-video.html', controller: AdminVideoCtrl, reloadOnSearch: false});
+    $routeProvider.when('/admin/video/ingest', {title: "Hummedia | Ingest Video", admin: true, templateUrl: '/partials/admin-ingest.html', controller: AdminIngestCtrl, reloadOnSearch: false});
+    $routeProvider.when('/admin/video/create', {title: "Hummedia | Create Video", admin: true, templateUrl: '/partials/admin-create-video.html', controller: AdminCreateVideo, reloadOnSearch: false});
+    $routeProvider.when('/collection', {title: "Hummedia | Collections", templateUrl: '/partials/collections.html', controller: CollectionsCtrl, reloadOnSearch: false});
+    $routeProvider.when('/select-course/:video', {title: "Hummedia | Select Course", templateUrl: '/partials/select-course.html', controller: SelectCourseCtrl});
+    $routeProvider.when('/developer', {title: "Hummedia | Developer", templateUrl: '/partials/developer.html'});
+    $routeProvider.when('/about', {title: "Hummedia | About", templateUrl: '/partials/about.html'});
     $routeProvider.otherwise({redirectTo: '/'});
   }]).
+  config(['$parseProvider', function($parseProvider) {
+    $parseProvider.unwrapPromises(true); // allows us to send promises to templates
+  }]).
   config(['$locationProvider', function($locationProvider) {
-    //$locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
   }]).
   config(['$httpProvider', function($httpProvider) {
       $httpProvider.defaults.headers.patch = {"Content-Type": "application/json"};

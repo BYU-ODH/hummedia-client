@@ -86,14 +86,14 @@
         <i data-ng-click="toggleModal('#modal-add-course')" class="icon-remove-sign close-icon"></i>
         <h2>Add Course</h2>
         <p>Enter the course number and section<br />
-           Include the "R" if necessary (358R)</p>
+           Include any one letter if necessary (358R)</p>
         <br />
         <form data-ng-submit="addCourse()">
         <p>
             <select data-ng-model="course_department">
                 <option data-ng-repeat="dept in course_departments" value="{{dept}}">{{dept}}</option>
             </select>
-            <input required data-ng-model='course_number' type="text" size="6" placeholder="Course" pattern="\d{3}R?$" title="Enter the course number (101 or 101R)"/>
+            <input required data-ng-model='course_number' type="text" size="6" placeholder="Course" pattern="\d{3}[A-Z]?$" title="Enter the course number (101 or 101R)"/>
             <input required max="999" min="0" data-ng-model='section_number' type="number" style='width: 4em;' placeholder="Section" title="Enter the section number" />
         </p>
         <br />
@@ -122,6 +122,6 @@
         <p>{{selected_videos_count}} Videos Selected</p>
         <button class="bwbuttondark" data-ng-click="addVideosToCollection()">Add Selected to Collection</button>
         <hr>
-        <p>Can't find what you're looking for?  <a href='#/admin/video' class='classic_link'>Create</a> a new video.</p>
+        <p>Can't find what you're looking for?  <a href='/admin/video' class='classic_link'>Create</a> a new video.</p>
     </div>
 </div>

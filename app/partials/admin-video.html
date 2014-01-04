@@ -11,7 +11,7 @@
                 <li class="selectable" data-ng-repeat="v in videos | filter: {'ma:title': title_filter} | orderBy:orderTitle:false" data-ng-class="{selected: v.pid == video.pid}" data-ng-click="setVideo(v)">{{v["ma:title"]}}</li>
             </ul>
         </div>
-        <a href='#/admin/video/create' id="admin-video-add-button"><h2 class="ng-binding">Add Video</h2></a>
+        <a href='/admin/video/create' id="admin-video-add-button"><h2 class="ng-binding">Add Video</h2></a>
     </div>
 </section>
 <section class="admin" data-ng-show="!!video">

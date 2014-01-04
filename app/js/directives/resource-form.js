@@ -7,7 +7,7 @@ HUMMEDIA_DIRECTIVES
      *  
      */
     .directive('resourceForm', ['$compile', '$http', function($compile, $http) {
-        var tpldir = 'partials/resource-forms/';
+        var tpldir = '/partials/resource-forms/';
 
         var linkFn = function(scope, iElement, iAttrs, controller) {
 

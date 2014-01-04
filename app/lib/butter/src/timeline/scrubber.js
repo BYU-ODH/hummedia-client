@@ -178,7 +178,13 @@ define( [ "util/time" ],
     }
 
     function setTimeTooltip() {
-      _timeTooltip.innerHTML = util.toTimecode( ( _timelineMousePos + _tracksContainer.element.scrollLeft ) / _tracksContainerWidth * _media.duration, 0 );
+      if( _isScrubbing ) {
+        _timeTooltip.innerHTML = util.toTimecode( Math.round( _media.currentTime ) );
+      }
+      else
+      {
+        _timeTooltip.innerHTML = util.toTimecode( ( _timelineMousePos + _tracksContainer.element.scrollLeft ) / _tracksContainerWidth * _media.duration, 0 );
+      }
     }
 
     function onMouseOver( e ) {

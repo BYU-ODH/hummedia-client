@@ -20,8 +20,8 @@ function SearchCtrl($scope, $routeParams, Collection, Video, $location, analytic
     // otherwise, take them to select appropriate annotations
     $scope.getUrl = function(video) {
         return video['ma:isMemberOf'].length ? 
-            '#/select-course/' + video.pid :
-            '#/video/' + video.pid;
+            '/select-course/' + video.pid :
+            '/video/' + video.pid;
     };
     
     // initialize advanced properties

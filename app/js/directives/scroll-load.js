@@ -16,9 +16,20 @@ HUMMEDIA_DIRECTIVES
         $window.addEventListener('scroll', setSrc);
 
         function setSrc() {
-            if( elm.offset()['top'] - $window.scrollY <= $($window).height() ) {
-                elm[0].src = attrs['scrollLoad'];
+            if( elm.offset()['top'] - $window.scrollY <= $($window).height()) {
+                elm.off('load');
                 $window.removeEventListener('scroll', setSrc);
+                
+                var tmp = new Image();
+                tmp.src = attrs['scrollLoad'];
+                
+                //Make sure the image is valid -- otherwise just let the onerror image load
+                tmp.onload = function(){
+                    
+                    elm[0].src = attrs['scrollLoad'];
+                    $window.removeEventListener('scroll', setSrc);
+                }
+                
             }
         };
 

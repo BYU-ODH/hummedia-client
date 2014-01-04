@@ -13,7 +13,7 @@ HUMMEDIA_DIRECTIVES
     .directive('rights', [function() {
         return {
             restrict: 'A',
-            templateUrl: 'partials/rights.html',
+            templateUrl: '/partials/rights.html',
             replace: true,
             require: '^ngModel',
             scope: {

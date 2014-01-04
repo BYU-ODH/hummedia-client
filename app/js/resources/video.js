@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hummedia.services').
-    factory('Video', ['$resource', 'appConfig', '$http', function($resource, config, $http){
+    factory('Video', ['$resource', 'appConfig', '$http', '$q', function($resource, config, $http, $q){
         var resource = $resource(config.apiBase + '/video/:identifier', {identifier: '@identifier'},
         {
             search: {method: 'GET', isArray: true, params: {searchtype: 'keyword', q: '@q'}},
@@ -11,9 +11,11 @@ angular.module('hummedia.services').
 	    resource.advancedParams = ['yearfrom','yearto','ma:title','ma:description'];
 
         resource.files = function() {
-            return $http.get(config.apiBase + '/batch/video/ingest').then(function(a){
-                return a.data;
+            var deferred = $q.defer();
+            $http.get(config.apiBase + '/batch/video/ingest').success(function(data){
+                deferred.resolve(data);
             });
+            return deferred.promise;
         };
 
         resource.ingest = function(filepath, pid, uniqueID) {
