@@ -191,9 +191,21 @@ for i in $(seq 0 9); do wget https://placeimg.com/300/200/any -O $i.jpg; done
 GLOBIGNORE=*thumb.jpg
 convert -format jpg -thumbnail 100x150 *.jpg -set filename:f '%t_thumb.%e' '%[filename:f]'
 
+cat << 'EOF' > /etc/init/flask_watcher.conf
+description     "Restarts Apache when Flask files are changed"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+
+script
+    exec /var/www/scripts/restartApache.sh
+end script
+EOF
+
 # ALL SYSTEMS GO
 a2ensite zelda.local
 service hummedia_ingest start
 service apache2 restart
-
-/var/www/scripts/restartApache2.sh &
+service flask_watcher start
