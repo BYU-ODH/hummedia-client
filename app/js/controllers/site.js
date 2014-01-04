@@ -1,4 +1,3 @@
-
 'use strict';
 function SiteCtrl($scope, $http, appConfig) {
     function getRandomInt (min, max) {
