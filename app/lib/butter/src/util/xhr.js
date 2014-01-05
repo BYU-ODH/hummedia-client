@@ -26,6 +26,7 @@
                 return;
             }
             options.error( this, "error");
+            return;
         }
 
         // If this is a fire-and-forget request
