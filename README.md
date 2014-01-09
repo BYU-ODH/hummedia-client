@@ -3,7 +3,7 @@ HUMMEDIA
 
 Starting Off
 --------------
-This project can be set up using (Vagrant)[http://docs.vagrantup.com/v2/].
+This project can be set up using [Vagrant](http://docs.vagrantup.com/v2/).
 
 * `$ apt-get install vagrant`
 * `$ vagrant plugin install vagrant-hostsupdater`
