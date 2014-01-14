@@ -71,7 +71,7 @@ function compressCSS(window, callback) {
         
         if(!new_css_link_added) {
             new_css_link_added = true;
-            $(this).before("<link rel='stylesheet' href='css/app.min." + versionstamp + ".css'></link>");
+            $(this).before("<link rel='stylesheet' href='/css/app.min." + versionstamp + ".css'></link>");
         }
         
         total_css += fs.readFileSync(app_dir + href);
@@ -123,7 +123,7 @@ function compressJS(window, callback) {
             return false;
         }
     });
-    $script_tags.first().before("<script src='js/app.min." + versionstamp + ".js'></script>");
+    $script_tags.first().before("<script src='/js/app.min." + versionstamp + ".js'></script>");
     $script_tags.remove();
     closure.compile(toCompress,{}, function(err, output) {
         if(err) {
