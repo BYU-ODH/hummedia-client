@@ -8,6 +8,8 @@
  *  {bool} exists -- whether or not the user is logged in.
  *  {bool} canCreate -- whether or not the user has the ability to create resources
  *  {bool} netIDRequired -- Whether or not the user needs to link their account with a NetID to continue
+ *  {bool} isSuperuser
+ *  {bool} isTA
  *  
  * Methods:
  *  {void} prompt [BOOL toggle, STRING returnPath] -- opens a modal window prompting the user to log in.
@@ -60,6 +62,13 @@ HUMMEDIA_SERVICES.factory('user', ['$http', 'appConfig', '$location', '$template
           enumerable: true,
           get: function() {
                 return user.exists && (user.data.role == "faculty" || user.data.superuser);
+          }
+     });
+     
+     Object.defineProperty(user, 'isTA', {
+          enumerable: true,
+          get: function() {
+                return user.exists && !!user.data.ta;
           }
      });
      
