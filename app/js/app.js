@@ -77,7 +77,7 @@ angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.serv
           var denied = function() {
               if(current.$$route.login && !user.exists)
                   return 1;
-              if(current.$$route.admin && !user.canCreate)
+              if(current.$$route.admin && !user.canCreate && !user.isTA)
                   return 2;
               return 0;
           }
@@ -98,7 +98,7 @@ angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.serv
                    setTimeout(function(){
                        if(!user.exists)
                           user.prompt(false, redirect);
-                       else if(denyStatus == 2 && !user.canCreate)
+                       else if(denyStatus == 2)
                           alert("You are not authorized to view that page.");
                    },1); // has to happen after path change
               });
