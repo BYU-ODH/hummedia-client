@@ -106,6 +106,9 @@ msgstr ""
 msgid "Owner's NetID"
 msgstr ""
 
+msgid "Please send us this error message so we can fix the problem."
+msgstr ""
+
 msgid "Preferred Language:"
 msgstr ""
 
@@ -161,6 +164,9 @@ msgid "Users"
 msgstr ""
 
 msgid "Videos"
+msgstr ""
+
+msgid "We've encountered an error."
 msgstr ""
 
 msgid "Which annotation experience do you prefer?"

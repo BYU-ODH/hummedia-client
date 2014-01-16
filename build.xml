@@ -34,8 +34,9 @@
         <exec executable="git" outputproperty="version">
             <arg value="describe" />
         </exec>
-        <exec executable="node" failonerror="true">
+        <exec executable="nodejs" failonerror="true">
             <arg value="scripts/compressor.js" />
+            <arg value="${version}" />
         </exec>
         <exec executable="tar" failonerror="true">
             <arg value="-zcvf" />
