@@ -18,7 +18,8 @@
             <div class="form-table">
                 <label for="firstname">{{"First Name:" | tr}}</label><input id="firstname" data-ng-model="user.firstname">
                 <label for="lastname">{{"Last Name:" | tr}}</label><input id="lastname" data-ng-model="user.lastname">
-                <label for="superuser">{{"Superuser:" | tr}}</label><input type="checkbox" data-ng-model="user.superuser">
+                <label for="ta">{{"TA:" | tr}}</label><input id="ta" type="checkbox" data-ng-model="user.ta">
+                <label for="superuser">{{"Superuser:" | tr}}</label><input id="superuser" type="checkbox" data-ng-model="user.superuser">
                 <label for="role">{{"Role:" | tr}}</label><select id="role" data-ng-options="value for value in roles" data-ng-model="user.role"></select>
                 <label for="preferredlang">{{"Preferred Language:" | tr}}</label><select id="preferredlang" data-ng-options="lang.value as lang.label | language for lang in languages" data-ng-model="user.preferredLanguage"></select>
                 <label for="email">{{"Email:" | tr}}</label><input type="email" id="email" data-ng-model="user.email">
