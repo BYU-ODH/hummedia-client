@@ -43,7 +43,8 @@ var output_dir = __dirname + "/../production/"
         removeRedundantAttributes: false,
         lint: false
     }
-
+    
+var version_number = process.argv[2];
 /**
  * Tells us whether or not our url is local
  * @param string
@@ -182,6 +183,10 @@ jsdom.env(input, [jquery], function(errors, window) {
                 var output = fs.openSync(output_file,"w");
                     newContents = window.document.doctype.toString() + window.document.innerHTML,
                     minified = htmlmin.minify(newContents, htmlmin_opts);//.replace(/&amp;&amp;/g,'&');
+                                
+                var version_string = "<!-- Hummedia Version: " + version_number + " -->";
+                var doctype_string = "<!doctype html>";
+                minified = minified.replace(/<!doctype html>/,doctype_string+version_string);
 
                 fs.write(output, minified);
                 fs.close(output);
