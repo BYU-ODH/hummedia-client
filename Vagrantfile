@@ -12,5 +12,5 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "192.168.99.99"
 
   config.hostsupdater.remove_on_suspend = true
-  config.vm.hostname = "zelda.local"
+  config.vm.hostname = "milo.byu.edu"
 end

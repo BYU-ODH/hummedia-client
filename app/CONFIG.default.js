@@ -4,7 +4,7 @@
 window.HUMMEDIA_GLOBALS = {
   
   // the URL to the Hummedia API
-  apiBase: 'https://zelda.local/api/v2/',
+  apiBase: 'https://milo.byu.edu/api/v2/',
 
   // a flickr API key for use with rotating backgrounds
   flickrKey: 'YOUR FLICKR API KEY HERE',

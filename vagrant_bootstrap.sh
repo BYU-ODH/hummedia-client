@@ -8,13 +8,13 @@ ln -fs /vagrant /var/www
 
 a2enmod rewrite ssl wsgi python
 
-cat << 'EOF' > /etc/apache2/sites-available/zelda.local
+cat << 'EOF' > /etc/apache2/sites-available/milo.byu.edu
 <VirtualHost *:443>
     AddDefaultCharset UTF-8
     AddType 'text/vtt; charset=UTF-8' .vtt
     AddType 'text/plain; charset=UTF-8' .srt
 
-    ServerName zelda.local
+    ServerName milo.byu.edu
 
     DocumentRoot /var/www/app
     
@@ -66,7 +66,7 @@ if [ ! -f /var/www/api/flask/hummedia/config.py ]; then
 from flask import Response
 import os
 
-HOST="https://zelda.local"
+HOST="https://milo.byu.edu"
 APIHOST=HOST+"/api/v2"
 REDIRECT_URI="/account/callback"
 
@@ -87,7 +87,7 @@ BYU_SHARED_SECRET = "byu_shared_secret_goes_here"
 
 SECRET_KEY = 'app_secret_goes_here'
 COOKIE_NAME = 'hummedia-session'
-COOKIE_DOMAIN = ".zelda.local"
+COOKIE_DOMAIN = ".milo.byu.edu"
 APPLICATION_ROOT = "/"
 
 MONGODB_DB = 'hummedia'
@@ -205,7 +205,7 @@ end script
 EOF
 
 # ALL SYSTEMS GO
-a2ensite zelda.local
+a2ensite milo.byu.edu
 service hummedia_ingest start
 service apache2 restart
 service flask_watcher start
