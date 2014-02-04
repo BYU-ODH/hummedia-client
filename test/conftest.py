@@ -74,7 +74,7 @@ def browser(request, tunnel):
       name = 'ie'
     elif name.lower() == 'phantomjs':
       name = 'PhantomJS'
-      cli_args.append('--ignore-ssl-errors=true')
+      cli_args.append('--ignore-ssl-errors=yes')
     else:
       name = name.capitalize()
     driver = getattr(webdriver, name)(service_args=cli_args)
