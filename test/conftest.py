@@ -69,15 +69,17 @@ def browser(request, tunnel):
            desired_capabilities=desired)
   else:
     name = request.param['browserName']
-    cli_args = []
+    driver = None
     if name == 'internet_explorer':
       name = 'ie'
     elif name.lower() == 'phantomjs':
       name = 'PhantomJS'
       cli_args.append('--ignore-ssl-errors=yes')
+      cli_args = []
+      driver = getattr(webdriver, name)(service_args=cli_args)
     else:
       name = name.capitalize()
-    driver = getattr(webdriver, name)(service_args=cli_args)
+      driver = getattr(webdriver, name)()
   
   def fin():
     driver.close()

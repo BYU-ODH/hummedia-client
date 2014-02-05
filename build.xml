@@ -1,6 +1,4 @@
 <project name="Hummedia" default="create" basedir=".">
-    <property name="e2e.config" value="config/karma-e2e.conf.js"/>
-
     <target name="json_translations">
         <exec executable="make" failonerror="true">
             <arg value="--directory=l10n" />
@@ -14,15 +12,6 @@
             <arg value="pot" />
         </exec>
     </target>
-
-    <target name="test" description="Runs the E2E test-suite on different browsers">
-        <exec executable="karma" failonerror="false">
-            <arg value="start" />
-            <arg value="${e2e.config}" />
-        </exec>
-        <exec executable="scripts/browserstack/kill_tunnel.sh"/>
-    </target>
-
 
     <target name="scripts" description="Builds any scripts in the scripts directory.">
         <exec executable="npm" failonerror="true" dir="scripts">
