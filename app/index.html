@@ -18,6 +18,10 @@
   <link rel="stylesheet/less" href="/css/app.less"/>
   <link rel="stylesheet/less" href="/css/font-awesome.less"/>
   <script src="/CONFIG.js" data-exclude-compress></script>
+  <script type="text/javascript">
+        //Display an error message if AngularJS doesn't load in 5 seconds
+        setTimeout(function(){$('#angular_error_message').fadeIn("slow");},5000);
+  </script>
 </head>
 <body>
     <!--[if lte IE 8]>
@@ -44,6 +48,13 @@
             </p>
         </div>
     <![endif]-->
+
+    <!-- Error Messages -->
+    <noscript>Please enable JavaScript in order to view this page.</noscript>
+    <div id="angular_error_message" data-ng-hide="true" style="display:none">
+        <p>Unable to load AngularJS<br />Check if your browser extensions are disabling AngularJS</p>
+    </div>
+    
     <div id='error-modal' api-error-modal blur='#background, #view'></div>
     <div id="container">
     <div id="background" data-ng-style="style">
