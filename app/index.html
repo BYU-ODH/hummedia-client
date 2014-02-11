@@ -20,7 +20,7 @@
   <script src="/CONFIG.js" data-exclude-compress></script>
   <script type="text/javascript">
         //Display an error message if AngularJS doesn't load in 5 seconds
-        setTimeout(function(){$('#angular_error_message').fadeIn("slow");},5000);
+        setTimeout(function(){document.getElementById("angular_error_message").setAttribute("style","display:block;")},5000);
   </script>
 </head>
 <body>
