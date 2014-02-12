@@ -213,7 +213,7 @@ end script
 EOF
 
 # ALL SYSTEMS GO
-a2dissite * # kill any vestiges from previous provisions
+rm /etc/apache2/sites-enabled/* # kill any vestiges from previous provisions
 a2ensite milo.byu.edu
 service hummedia_ingest restart
 service apache2 restart
