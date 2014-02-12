@@ -1,5 +1,16 @@
 #!/bin/bash
 
+HOSTNAME=$1
+DOCROOT=$2
+
+if [[ -z "$HOSTNAME" ]]; then
+  HOSTNAME="milo.byu.edu"
+fi
+
+if [[ -z "$DOCROOT" ]]; then
+  DOCROOT="/var/www/app"
+fi
+
 apt-get update
 apt-get install -y apache2 mongodb python libapache2-mod-python libapache2-mod-wsgi python-pip python-dev libxml2-dev libxslt1-dev gearman imagemagick
 
@@ -8,17 +19,17 @@ ln -fs /vagrant /var/www
 
 a2enmod rewrite ssl wsgi python
 
-cat << 'EOF' > /etc/apache2/sites-available/milo.byu.edu
+cat << EOF > /etc/apache2/sites-available/milo.byu.edu
 <VirtualHost *:443>
     AddDefaultCharset UTF-8
     AddType 'text/vtt; charset=UTF-8' .vtt
     AddType 'text/plain; charset=UTF-8' .srt
 
-    ServerName milo.byu.edu
+    ServerName $HOSTNAME
 
-    DocumentRoot /var/www/app
+    DocumentRoot $DOCROOT
     
-    <Directory /var/www/app/>
+    <Directory $DOCROOT/>
         AllowOverride All
     </Directory>
 
@@ -29,22 +40,22 @@ cat << 'EOF' > /etc/apache2/sites-available/milo.byu.edu
     WSGIPassAuthorization On
     WSGIScriptAlias /api/v2 /var/www/api/flask/flask.wsgi
 
-    AliasMatch ^/posters/.*([0-9])_thumb.jpg$ /var/www/api/posters/$1_thumb.jpg
-    AliasMatch ^/posters/.*([0-9]).jpg$ /var/www/api/posters/$1.jpg
-    AliasMatch ^/posters/(.*)$ /var/www/api/posters/$1
+    AliasMatch ^/posters/.*([0-9])_thumb.jpg$ /var/www/api/posters/\$1_thumb.jpg
+    AliasMatch ^/posters/.*([0-9]).jpg$ /var/www/api/posters/\$1.jpg
+    AliasMatch ^/posters/(.*)$ /var/www/api/posters/\$1
 
     RewriteEngine On
     
-    RewriteRule ^/text/(.*)$ /var/www/api/text/$1
+    RewriteRule ^/text/(.*)$ /var/www/api/text/\$1
     RewriteMap subtitles rnd:/etc/apache2/maps/subtitles.txt
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_URI} ^/text/.*
-    RewriteRule ^.*.(srt|vtt)$ /var/www/api/text/${subtitles:file}.$1 [L] 
+    RewriteRule ^.*.(srt|vtt)$ /var/www/api/text/\${subtitles:file}.\$1 [L] 
 </VirtualHost>
 EOF
 
-if [ ! -f /var/www/app/CONFIG.js ]; then
-    cp /var/www/app/CONFIG.default.js /var/www/app/CONFIG.js
+if [ ! -f $DOCROOT/CONFIG.js ]; then
+    cp $DOCROOT/CONFIG.default.js $DOCROOT/CONFIG.js
 fi
 
 # Allows for randomly selecting subtitles when they don't exist
@@ -59,14 +70,13 @@ echo "file teenagers|gulliver|santa" > /etc/apache2/maps/subtitles.txt
 #
 ################
 
-if [ ! -f /var/www/api/flask/hummedia/config.py ]; then
 
-    # create config file (if it doesn't already exist)
-    cat << 'EOF' > /var/www/api/flask/hummedia/config.py
+# create config file (if it doesn't already exist)
+cat << EOF > /var/www/api/flask/hummedia/config.py
 from flask import Response
 import os
 
-HOST="https://milo.byu.edu"
+HOST="https://$HOSTNAME"
 APIHOST=HOST+"/api/v2"
 REDIRECT_URI="/account/callback"
 
@@ -87,7 +97,7 @@ BYU_SHARED_SECRET = "byu_shared_secret_goes_here"
 
 SECRET_KEY = 'app_secret_goes_here'
 COOKIE_NAME = 'hummedia-session'
-COOKIE_DOMAIN = ".milo.byu.edu"
+COOKIE_DOMAIN = ".$HOSTNAME"
 APPLICATION_ROOT = "/"
 
 MONGODB_DB = 'hummedia'
@@ -103,8 +113,6 @@ INGEST_DIRECTORY = "/var/www/api/ingest/" # where ingestable media are found
 MEDIA_DIRECTORY = "/var/www/api/movies/" # where ingested media should be moved to
 POSTER_DIRECTORY = "/var/www/api/posters/"
 EOF
-
-fi
 
 # Create ingest service
 cat << 'EOF' > /etc/init/hummedia_ingest.conf
@@ -205,7 +213,8 @@ end script
 EOF
 
 # ALL SYSTEMS GO
+a2dissite * # kill any vestiges from previous provisions
 a2ensite milo.byu.edu
-service hummedia_ingest start
+service hummedia_ingest restart
 service apache2 restart
-service flask_watcher start
+service flask_watcher restart
