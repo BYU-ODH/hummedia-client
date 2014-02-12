@@ -142,6 +142,9 @@ msgstr ""
 msgid "Superuser:"
 msgstr ""
 
+msgid "TA:"
+msgstr ""
+
 msgid "Term"
 msgstr ""
 
