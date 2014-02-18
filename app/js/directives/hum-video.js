@@ -80,6 +80,24 @@ HUMMEDIA_DIRECTIVES
                         frameAnimation: true // allows for more accurate timing
                     });
 
+                    //Adding Event Listeners to video element
+                    
+                    //Hide the video before the data loads
+                    pop.media.addEventListener("loadstart",function(){
+                        $('video').hide();
+                    });
+                    //Hide the loading message and show the video once it loads
+                    pop.media.addEventListener("loadeddata",function(){
+                        $('#video-loading').fadeOut("slow");
+                        $('video').fadeIn("slow");
+                    });
+                    //Show an error message if the video is unable to load
+                    pop.media.addEventListener("error",function(){
+                        $('#video-loading').fadeOut("slow");
+                        $('#video-error').fadeIn("slow");
+                    });
+
+
                     var annotation = new AnnotationHelper(pop, vId, cId, video['ma:hasPolicy']),
                         subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
 
