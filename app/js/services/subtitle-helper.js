@@ -9,7 +9,7 @@ HUMMEDIA_SERVICES
             if(this.constructor !== SubtitleHelper) {
                 throw "Subtitle Helper must be called with the 'new' keyword.";
             }
-            if(!popcornInstance instanceof window.Popcorn) {
+            if(! (popcornInstance instanceof window.Popcorn) ) {
                 throw "popcornInstance not a valid instance of Popcorn";
             }
             
