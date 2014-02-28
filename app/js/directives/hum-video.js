@@ -84,6 +84,7 @@ HUMMEDIA_DIRECTIVES
                     
                     //Hide the video before the data loads
                     pop.media.addEventListener("loadstart",function(){
+                        $('#video-loading').show();
                         $('video').hide();
                     });
                     //Hide the loading message and show the video once it loads
