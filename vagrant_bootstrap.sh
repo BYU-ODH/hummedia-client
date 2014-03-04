@@ -12,10 +12,28 @@ if [[ -z "$DOCROOT" ]]; then
 fi
 
 apt-get update
-apt-get install -y apache2 mongodb python libapache2-mod-python libapache2-mod-wsgi python-pip python-dev libxml2-dev libxslt1-dev gearman imagemagick
+apt-get install -y apache2 mongodb python libapache2-mod-python libapache2-mod-wsgi python-pip python-dev libxml2-dev libxslt1-dev gearman imagemagick make automake apache2-threaded-dev
 
 rm -rf /var/www
 ln -fs /vagrant /var/www
+
+# Download the authentication module
+cd /tmp
+rm -rf mod_auth_token*
+wget https://mod-auth-token.googlecode.com/files/mod_auth_token-1.0.6-beta.tar.gz
+tar -xvzf mod_auth_token-1.0.6-beta.tar.gz
+chmod +x mod_auth_token
+cd mod_auth_token
+chmod +x configure
+# symlinks are incorrect; need to patch them
+ln -fs /usr/share/automake-1.11/config.guess config.guess
+ln -fs /usr/share/automake-1.11/config.sub config.sub
+ln -fs /usr/share/automake-1.11/COPYING COPYING
+ln -fs /usr/share/automake-1.11/install-sh install-sh
+ln -fs /usr/share/automake-1.11/missing missing
+# configure auth module's Makefile and build
+./configure
+make install # will automatically enable it
 
 a2enmod rewrite ssl wsgi python
 
@@ -32,6 +50,16 @@ cat << EOF > /etc/apache2/sites-available/milo.byu.edu
     <Directory $DOCROOT/>
         AllowOverride All
     </Directory>
+    
+    Alias /movies/ /var/www/api/movies/ 
+    <Location /movies/>
+        AuthTokenSecret     "secret string"
+        AuthTokenPrefix     /movies/
+        
+        #4 hours 
+        AuthTokenTimeout    14400 
+        AuthTokenLimitByIp  on
+    </Location>
 
     SSLEngine On
     SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
@@ -69,7 +97,6 @@ echo "file teenagers|gulliver|santa" > /etc/apache2/maps/subtitles.txt
 # SET UP API
 #
 ################
-
 
 # create config file (if it doesn't already exist)
 cat << EOF > /var/www/api/flask/hummedia/config.py
@@ -112,6 +139,10 @@ GEARMAN_SERVERS = ['localhost:4730'] # specify host and port
 INGEST_DIRECTORY = "/var/www/api/ingest/" # where ingestable media are found
 MEDIA_DIRECTORY = "/var/www/api/movies/" # where ingested media should be moved to
 POSTER_DIRECTORY = "/var/www/api/posters/"
+
+AUTH_TOKEN_SECRET      = "secret string"
+AUTH_TOKEN_PREFIX      = "/movies/"
+AUTH_TOKEN_IP          = False
 EOF
 
 # Create ingest service
