@@ -142,7 +142,7 @@ POSTER_DIRECTORY = "/var/www/api/posters/"
 
 AUTH_TOKEN_SECRET      = "secret string"
 AUTH_TOKEN_PREFIX      = "/movies/"
-AUTH_TOKEN_IP          = False
+AUTH_TOKEN_IP          = True
 EOF
 
 # Create ingest service
