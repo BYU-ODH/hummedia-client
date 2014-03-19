@@ -83,7 +83,7 @@ function AdminCreateVideo($scope, Youtube, Video, $routeParams, $location) {
     $scope.save = function() {
         $scope.isSaving = true;
         Video.save($scope.data, function(data) {
-           $location.search(null);
+           $location.search({});
            $location.path('/video/' + data.pid); 
         });
     };
