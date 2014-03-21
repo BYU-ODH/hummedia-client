@@ -49,7 +49,8 @@ HUMMEDIA_DIRECTIVES
             scope: {
                 '_humVideo': '=?humVideoObject',
                 'annotationsEnabled': '=?humVideoAnnotations',
-                'subtitlesEnabled': '=?humVideoSubtitles'
+                'subtitlesEnabled': '=?humVideoSubtitles',
+                'playbackSpeed': '=?humVideoPlaybackSpeed'
             },
             template: '<div><div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}"></div></div>',
             replace: true,
@@ -116,6 +117,11 @@ HUMMEDIA_DIRECTIVES
 
                     $scope.$watch('subtitlesEnabled', function(value){
                         value === false ? subtitles.disable() : subtitles.enable();
+                    });
+
+                    
+                    $scope.$watch('playbackSpeed', function(value){
+                        pop.media.playbackRate = value;
                     });
 
                     // Unless we pause the movie when the page loses focus, annotations
