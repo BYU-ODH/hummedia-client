@@ -30,6 +30,8 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE) {
     $scope.subtitlesEnabled = true;
     $scope.editorMode = ANNOTATION_MODE;
     
+    $scope.playbackSpeed = 1;
+    
     $scope.toggleDescription = function() {
         $('#description').slideToggle();
         $('#description-toggle-icon').toggleClass('icon-minus');
