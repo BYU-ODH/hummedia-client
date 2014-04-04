@@ -170,15 +170,10 @@ EOF
 touch /var/www/api/flask/flask_err.log
 chmod ugo+w /var/www/api/flask/flask_err.log
 
-# install all required python modules
-pip install flask
-pip install flask_oauth
-pip install mongokit
-pip install byu_ws_sdk
-pip install lxml
-pip install gearman
-
 cd /var/www/api/
+
+# install all required python modules
+pip install -r flask/requirements.txt
 
 #rm -rf real_files ingest movies posters
 mkdir -p real_files
