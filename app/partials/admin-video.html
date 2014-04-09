@@ -32,21 +32,38 @@
         </div>
     </div>
 </section>
-<section class="admin" data-ng-show="!!video && user.isSuperuser">
-    <div id="listwrapper" data-ng-animate=" 'blur' ">
-        <div id="list_scrolling_block">
-            <h2>{{"Attached Collections" | tr}}</h2>
-            <ul>
-                <li data-ng-repeat="course in video['ma:isMemberOf']">
-                    <table id="listvideotable"><tr>
+<section id="admin-video-attachments">
+    <section class="admin" data-ng-show="!!video">
+        <div id="listwrapper" data-ng-animate=" 'blur' ">
+            <div id="list_scrolling_block">
+                <h2>{{"Attached Collections" | tr}}</h2>
+                <ul>
+                    <li data-ng-repeat="course in video['ma:isMemberOf']">
+                        <table id="listvideotable"><tr>
                             <td>{{course['title']}}</td>
                             <td id="righttd"><button data-ng-click="annotate(course['@id'])">{{"Annotate" | tr}}</button><button data-ng-click="deleteCollection(course['@id'], course['title'])">{{"Remove" | tr}}</button></td></tr>
-                    </table>
-                </li>
-            </ul>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+            <div class="centered-bwbutton"><button class="bwbuttondark" data-ng-click="getCollections(); toggleModal('#modal-add-video')">Add Collection</button></div>
         </div>
-        <div class="centered-bwbutton"><button class="bwbuttondark" data-ng-click="getCollections(); toggleModal('#modal-add-video')">Add Collection</button></div>
-    </div>
+    </section>
+    <section class="admin" data-ng-show="!!video">
+        <div id="listwrapper" data-ng-animate=" 'blur' ">
+            <div id="list_scrolling_block">
+                <h2>{{"Subtitles" | tr}}</h2>
+                <ul>
+                    <li data-ng-repeat="subtitle in video['ma:hasRelatedResource']">
+                        <table id="listvideotable"><tr>
+                            <td>{{subtitle['@id']}}</td>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+            <div class="centered-bwbutton"><button class="bwbuttondark" data-ng-click="toggleModal('#modal-add-subtitle')">Add Subtitle</button></div>
+        </div>
+    </section>
 </section>
 
 <div id='blur-box'> 
@@ -66,4 +83,7 @@
     <br />
     <p>{{selected_collections_count}} Collections Selected</p>
     <button class="bwbuttondark" data-ng-click="toggleModal('#modal-add-video'); addVideoToCollections()">Add Video to Selected</button>
+</div>
+<div class='modal' id='modal-add-subtitle'>
+    <i data-ng-click="toggleModal('#modal-add-subtitle')" class="icon-remove-sign close-icon"></i>
 </div>
