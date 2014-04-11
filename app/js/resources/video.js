@@ -26,9 +26,14 @@ angular.module('hummedia.services').
          * Uploads a subtitle asynchronously to the given video.
          * @param file Blob the file to upload
          * @param pid String the identifier of the video
+         * @param data An object with any additional form data to pass up
+         *        {
+         *          'name': ?, // the name of the subtitle
+         *          'lang': ?  // the two-letter language code for the subtitle
+         *        }
          * @return promise Resolves when the web server returns favorably
          */
-        resource.addSubtitle = function(file, pid) {
+        resource.addSubtitle = function(file, pid, data) {
             var deferred = $q.defer(),
                 formData = new FormData(),
                 request  = new XMLHttpRequest();

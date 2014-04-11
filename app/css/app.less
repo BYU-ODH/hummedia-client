@@ -296,6 +296,18 @@ strong {
         float: left;
         clear: left;
     }
+    .control-buttons {
+        overflow: hidden;
+        text-align: center;
+        button:last-child {
+            float:right;
+        }
+        button:first-child {
+            float: left;
+        }
+    }
+}
+[class|=admin] {
     .form-table {
         .field-row {
             overflow: hidden;
@@ -322,16 +334,6 @@ strong {
             margin-bottom: 10px;
         }
         padding: 10px 0;
-    }
-    .control-buttons {
-        overflow: hidden;
-        text-align: center;
-        button:last-child {
-            float:right;
-        }
-        button:first-child {
-            float: left;
-        }
     }
 }
 #admin-user-select{
@@ -1197,6 +1199,19 @@ strong {
         li {
             margin-top:5px;
             font-size:100%;
+        }
+    }
+    .admin-editor {
+        border: none;
+        select {
+            width: 74%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            float: right;
+            clear: right;
+        }
+        input[type='submit'] {
+            width: 50%;
         }
     }
 }
