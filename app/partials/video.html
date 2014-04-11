@@ -32,9 +32,10 @@
     <label id="toggle-annotations" data-ng-show="video.hasAnnotations && !editorMode"><input type="checkbox" checked="checked" ng-model="annotationsEnabled"/>&nbsp;{{"Annotations" | tr}}&nbsp;</label>
     <label id="toggle-subtitles" data-ng-show="video.hasSubtitles && !editorMode"><input type="checkbox" checked="checked" ng-model="subtitlesEnabled"/>&nbsp;{{"Subtitles" | tr}}&nbsp;</label>
     
-    <div id="playback-speed">
+    <div id="playback-speed" data-ng-show="video_tag_exists()">
         <p>Playback Speed</p>
-        <input type="range" ng-model="playbackSpeed" min=".25" max="2" step=".125" value="1"/>
+        <input type="range" ng-model="playbackSpeed" min="0" max="2" step=".125" value="1"/>
+        <p>{{playbackSpeed | number:2}}x</p>
     </div>
     
     <div id="target-4" data-butter="target">

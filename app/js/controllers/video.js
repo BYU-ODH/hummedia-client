@@ -31,6 +31,9 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE) {
     $scope.editorMode = ANNOTATION_MODE;
     
     $scope.playbackSpeed = 1;
+    $scope.video_tag_exists = function(){
+        return $('video').length;
+    };
     
     $scope.toggleDescription = function() {
         $('#description').slideToggle();
