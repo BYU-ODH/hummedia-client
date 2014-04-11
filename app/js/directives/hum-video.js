@@ -90,6 +90,7 @@ HUMMEDIA_DIRECTIVES
                     //Hide the loading message and show the video once it loads
                     pop.media.addEventListener("loadeddata",function(){
                         $('#video-loading').fadeOut("slow");
+                        $('#video-error').fadeOut("slow");
                         $('video').fadeIn("slow");
                     });
                     //Show an error message if the video is unable to load
