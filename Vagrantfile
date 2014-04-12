@@ -21,7 +21,10 @@ Vagrant.configure("2") do |config|
     config.hostsupdater.remove_on_suspend = true
     config.vm.hostname = hostname
   end
-  
+
+  config.vm.synced_folder "api/text", "/vagrant/api/text",
+    :owner => "www-data", :group => "www-data"
+
   config.vm.provision :shell,
     :path => "vagrant_bootstrap.sh",
     :args => args
