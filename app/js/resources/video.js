@@ -35,10 +35,15 @@ angular.module('hummedia.services').
          */
         resource.addSubtitle = function(file, pid, data) {
             var deferred = $q.defer(),
-                formData = new FormData(),
+                formdata = new FormData(),
                 request  = new XMLHttpRequest();
 
-            request.append('subtitle', file);
+            formdata.append('subtitle', file);
+
+            Object.keys(data).forEach(function(i) {
+                formdata.append(i, data[i]);
+            });
+
             request.open('PATCH', config.apiBase + '/video/' + pid);
             request.onload = function() {
                 if(request.status == 200) {
@@ -53,7 +58,7 @@ angular.module('hummedia.services').
                     deferred.reject("Server returned status " + request.status);
                 }
             };
-            request.send(formData);
+            request.send(formdata);
             return deferred;
         }
 
