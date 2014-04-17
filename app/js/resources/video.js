@@ -59,7 +59,7 @@ angular.module('hummedia.services').
                 }
             };
             request.send(formdata);
-            return deferred;
+            return deferred.promise;
         }
 
         return resource;

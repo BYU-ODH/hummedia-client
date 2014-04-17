@@ -84,17 +84,17 @@
     <p>{{selected_collections_count}} Collections Selected</p>
     <button class="bwbuttondark" data-ng-click="toggleModal('#modal-add-video'); addVideoToCollections()">Add Video to Selected</button>
 </div>
-<div class='modal' id='modal-add-subtitle' ng-controller='SubtitleCtrl'>
+<div class='modal' data-ctrl-id='{{subtitleModalId}}' id='modal-add-subtitle' ng-controller='SubtitleCtrl'>
     <i data-ng-click="toggleModal('#modal-add-subtitle')" class="icon-remove-sign close-icon"></i>
     <div class='admin-editor'>
       <h2>{{"Add Subtitle to" | tr}} {{video['ma:title']}}</h2>
       <p class=error ng-show=error>{{error}}</p>
-      <form class='form-table'>
+      <form ng-hide=waiting class='form-table'>
           <div class="field-row"><label for='sub-name'>Name:</label><input type="text" name='sub-name' ng-model='subName' name="name"></div>
           <div class="field-row"><label for='sub-lang'>Language:</label><div id='sub-lang' select-language name="language" ng-model="subLang"></div></div>
           <div class="field-row"><label for='sub-file'>Subtitle File:</label><input id='sub-file' type="file" humfile ng-model='subFile' accept='.vtt, .srt' name="subtitle" value='Subtitle File'></div>
           <div class="field-row"><input ng-disabled=waiting type='submit' ng-click='upload()' value='Upload'></div>
       </form>
-      <progress ng-show=waiting value={{progress}} max=100></progress>
+      <progress ng-show=waiting value='{{progress}}' max='{{maxProgress}}'></progress>
     </div>
 </div>
