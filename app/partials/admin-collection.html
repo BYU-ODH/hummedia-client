@@ -6,7 +6,7 @@
                 {{"Filter:" | tr}} <input type=search ng-model=filterTitle>
             </div>
             <ul>
-            <li class="selectable listvideo" data-ng-repeat="collection in collections | filter: {'dc:title': filterTitle} | orderBy:orderTitle:false" id="{{collection.pid}}" data-ng-click="showCollection(collection.pid)">
+            <li class="selectable listvideo" data-ng-repeat="collection in collections | filter: {'dc:title': filterTitle} | orderColon:'ma:title'" id="{{collection.pid}}" data-ng-click="showCollection(collection.pid)">
                 <p>{{collection['dc:title']}}</p>
             </li>
             </ul>

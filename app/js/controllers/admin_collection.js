@@ -275,10 +275,6 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
         $scope.toggleModal('#modal-add-course');
 
     };
-
-    $scope.orderTitle = function(collection) {
-        return collection['dc:title'];
-    }
 }
 // always inject this in so we can later compress this JavaScript
 AdminCollectionCtrl.$inject = ['$scope', 'Collection', 'Video', '$routeParams', '$location', 'Course', '$http', 'user'];

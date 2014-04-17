@@ -28,7 +28,7 @@
             <hr>
         
         </div>
-        <a title="{{video['ma:description']}}" href="/video/{{video.pid}}?collection={{collection.pid}}" data-ng-repeat="video in collection['videos'] | filter: video_filter" class="video_blocks plain_link">
+        <a title="{{video['ma:description']}}" href="/video/{{video.pid}}?collection={{collection.pid}}" data-ng-repeat="video in collection['videos'] | filter: video_filter | orderColon:'ma:title'" class="video_blocks plain_link">
             <img data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>
             <cite href="/video/{{video.pid}}?collection={{collection.pid}}">{{video['ma:title']}}</cite>
             <small>{{video['ma:date']}} [{{video['ma:hasLanguage'][0] | language}}]</small>
