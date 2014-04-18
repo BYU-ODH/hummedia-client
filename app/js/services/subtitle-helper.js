@@ -5,7 +5,7 @@ HUMMEDIA_SERVICES
             return typeof video.addTextTrack === 'function'
         })();
 
-        return function SubtitleHelper(popcornInstance, resources) {
+        return function SubtitleHelper(popcornInstance, subtitles) {
             if(this.constructor !== SubtitleHelper) {
                 throw "Subtitle Helper must be called with the 'new' keyword.";
             }
@@ -13,28 +13,31 @@ HUMMEDIA_SERVICES
                 throw "popcornInstance not a valid instance of Popcorn";
             }
             
-            var _exists = false,
-                _track  = document.createElement("track");
+            var _exists       = false,
+                _media        = popcornInstance.media,
+                _currentIndex = 0; // which subtitle is currently selected
             
             this.enable = function() {
-                popcornInstance.enable('subtitle');
-
                 if(TRACK_ELEMENT_SUPPORTED) {
-                    var media = popcornInstance.media;
-                    for(var i = 0; i<media.textTracks.length; i++) {
-                        media.textTracks[i].mode = "showing";
+                    if(_media.textTracks[_currentIndex]) {
+                        _media.textTracks[_currentIndex].mode = "showing";
                     }
+                }
+                else
+                {
+                    popcornInstance.enable('subtitle');
                 }
             };
             
             this.disable = function() {
-                popcornInstance.disable('subtitle');
-
                 if(TRACK_ELEMENT_SUPPORTED) {
-                    var media = popcornInstance.media;
-                    for(var i = 0; i<media.textTracks.length; i++) {
-                        media.textTracks[i].mode = "hidden";
+                    if(_media.textTracks[_currentIndex]) {
+                        _media.textTracks[_currentIndex].mode = "disabled";
                     }
+                }
+                else
+                {
+                    popcornInstance.disable('subtitle');
                 }
             };
             
@@ -42,33 +45,65 @@ HUMMEDIA_SERVICES
                 return _exists;
             };
 
-            if(resources && resources.length) {
-                /** @TODO: Allow for multiple subtitles **/
-                var url = resources[0]['@id'],
-                    type = resources[0]['type'];
+            this.loadSubtitle = function(subtitle) {
+                var index = subtitles.indexOf(subtitle);
+                
+                // make sure we're passing in only what we have
+                if(index === -1) {
+                    throw new Error("Subtitle not available. " +
+                        "Must come from constructor method.");
+                }
 
-                _exists = true;
-                switch(type) {
+                _currentIndex = index;
+
+                switch(subtitle.type) {
                     case 'vtt':
-                        _addVTT(url);
-                        break;
-                    case 'srt':
-                        popcornInstance.parseSRT(url);
+                        _addVTT(index);
                         break;
                     default:
-                        throw new Error("Parser for " + type + " not implemented.");
+                        throw new Error("Parser for " + subtitle.type +
+                                " not implemented.");
                 }
+            }
+
+            if(subtitles && subtitles.length) {
+                if(TRACK_ELEMENT_SUPPORTED) {
+                    subtitles.forEach(function(subtitle) {
+                        var track = document.createElement("track");
+
+                        track.kind    = 'subtitles';
+                        track.src     = subtitle['@id'];
+                        track.srclang = subtitle['lang'];
+                        track.label   = subtitle['name'];
+
+                        _media.appendChild(track);
+                    });
+                }
+
+                this.loadSubtitle(subtitles[0]);
             };
 
-            function _addVTT(url) {
+            function _addVTT(index) {
+                _exists = true;
+
+
                 if(TRACK_ELEMENT_SUPPORTED) {
-                    _track.kind = 'subtitles';
-                    _track.src  = url;
-                    popcornInstance.media.appendChild(_track);
+                    var tracks = _media.textTracks;
+
+                    for(var i = 0; i<tracks.length; i++) {
+                        track = tracks[i];
+                        if(i === index) {
+                            track.mode = 'showing';
+                        }
+                        else
+                        {
+                            track.mode = 'disabled';
+                        }
+                    }
                 }
                 else
                 {
-                    popcornInstance.parseVTT(url);
+                    popcornInstance.parseVTT(subtitles[index]['@id']);
                 }
             };
         };
