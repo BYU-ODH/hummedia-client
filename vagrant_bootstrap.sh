@@ -139,6 +139,7 @@ GEARMAN_SERVERS = ['localhost:4730'] # specify host and port
 INGEST_DIRECTORY = "/var/www/api/ingest/" # where ingestable media are found
 MEDIA_DIRECTORY = "/var/www/api/movies/" # where ingested media should be moved to
 POSTER_DIRECTORY = "/var/www/api/posters/"
+SUBTITLE_DIRECTORY = "/var/www/api/text/"
 
 AUTH_TOKEN_SECRET      = "secret string"
 AUTH_TOKEN_PREFIX      = "/movies/"
