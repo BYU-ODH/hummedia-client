@@ -47,9 +47,11 @@ HUMMEDIA_DIRECTIVES
                 'annotationsEnabled': '=?humVideoAnnotations',
             },
             template: '<div>' +
-                      '<div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}"></div>' +
-                      '<select ng-model="subtitle" ng-options="s.name for s in subtitles">' +
-                      '   <option value="">Disable Subtitles</option>' +
+                      '   <div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}">' +
+                      '   <select ng-model="subtitle" ng-show="subtitles" ng-options="s.name for s in subtitles">' +
+                      '       <option value="">Disable Subtitles</option>' +
+                      '   </select>' +
+                      '   </div>' +
                       '</div>',
             replace: true,
             restrict: 'A',
@@ -78,6 +80,9 @@ HUMMEDIA_DIRECTIVES
                     var pop = window.Popcorn.smart(elId, video.url, {
                         frameAnimation: true // allows for more accurate timing
                     });
+                    
+                    // the select box shows up before the video; swap them
+                    el.insertBefore(pop.media, el.parentNode.getElementsByTagName('select')[0])
 
                     //Adding Event Listeners to video element
                     
@@ -121,7 +126,7 @@ HUMMEDIA_DIRECTIVES
                     });
 
 
-                    /** @TODO: change to a promise **/
+                    /** @TODO: change to a promise...or something **/
                     $scope.$watch(function(){return subtitles.exists();}, function(val){
                         if(val) {
                             $scope.subtitles = subtitles.subtitles;
@@ -141,9 +146,6 @@ HUMMEDIA_DIRECTIVES
                         value === false ? annotation.disable() : annotation.enable();
                     });
 
-                    $scope.$watch('subtitles', function(value){
-                        value === false ? subtitles.disable() : subtitles.enable();
-                    });
 
                     // Unless we pause the movie when the page loses focus, annotations
                     // will not continue to be used even though the movie will play in

@@ -92,13 +92,11 @@ HUMMEDIA_SERVICES
                         _media.appendChild(track);
                     });
                 }
-
                 this.loadSubtitle(subtitles[0]);
             };
 
             function _addVTT(index) {
                 _exists = true;
-
 
                 if(TRACK_ELEMENT_SUPPORTED) {
                     var tracks = _media.textTracks;
