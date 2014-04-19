@@ -15,11 +15,7 @@
  *     hum-video {string/required}: the video id to watch
  *     
  *     hum-video-collection {string/optional}: the collection ID to tie in to the video 
- *                           
- *     hum-video-subtitles {bool/optional}: whether or not to show subtitles.
- *                                          defaults to true. DOES NOT APPLY WHEN
- *                                          hum-video-editor IS TRUE.
- *     
+ * 
  *     hum-video-annotations {bool/optional}: whether or not to show non-required
  *                                            annotations. defaults to true.
  *                                            DOES NOT APPLY WHEN hum-video-editor
@@ -49,9 +45,12 @@ HUMMEDIA_DIRECTIVES
             scope: {
                 '_humVideo': '=?humVideoObject',
                 'annotationsEnabled': '=?humVideoAnnotations',
-                'subtitlesEnabled': '=?humVideoSubtitles'
             },
-            template: '<div><div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}"></div></div>',
+            template: '<div>' +
+                      '<div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}"></div>' +
+                      '<select ng-model="subtitle" ng-options="s.name for s in subtitles">' +
+                      '   <option value="">Disable Subtitles</option>' +
+                      '</div>',
             replace: true,
             restrict: 'A',
             link: function($scope, element, attrs, controller) {
@@ -75,7 +74,7 @@ HUMMEDIA_DIRECTIVES
                         });
                         return;
                     }
-                    
+
                     var pop = window.Popcorn.smart(elId, video.url, {
                         frameAnimation: true // allows for more accurate timing
                     });
@@ -121,15 +120,28 @@ HUMMEDIA_DIRECTIVES
                         makeSpaceForAnnotations(pop.getTrackEvents());
                     });
 
+
+                    /** @TODO: change to a promise **/
                     $scope.$watch(function(){return subtitles.exists();}, function(val){
-                        $scope._humVideo.hasSubtitles = val;
+                        if(val) {
+                            $scope.subtitles = subtitles.subtitles;
+                            $scope.subtitle = subtitles.current;
+                        }
+                    });
+
+                    $scope.$watch('subtitle', function(selected) {
+                        if(!selected) {
+                            subtitles.disable();
+                            return;
+                        }
+                        subtitles.loadSubtitle(selected);
                     });
 
                     $scope.$watch('annotationsEnabled', function(value){
                         value === false ? annotation.disable() : annotation.enable();
                     });
 
-                    $scope.$watch('subtitlesEnabled', function(value){
+                    $scope.$watch('subtitles', function(value){
                         value === false ? subtitles.disable() : subtitles.enable();
                     });
 

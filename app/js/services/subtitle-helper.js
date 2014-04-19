@@ -15,9 +15,11 @@ HUMMEDIA_SERVICES
             
             var _exists       = false,
                 _media        = popcornInstance.media,
-                _currentIndex = 0; // which subtitle is currently selected
+                _currentIndex = 0, // which subtitle is currently selected
+                _enabled      = true;
             
             this.enable = function() {
+                _enabled = true;
                 if(TRACK_ELEMENT_SUPPORTED) {
                     if(_media.textTracks[_currentIndex]) {
                         _media.textTracks[_currentIndex].mode = "showing";
@@ -30,6 +32,7 @@ HUMMEDIA_SERVICES
             };
             
             this.disable = function() {
+                _enabled = false;
                 if(TRACK_ELEMENT_SUPPORTED) {
                     if(_media.textTracks[_currentIndex]) {
                         _media.textTracks[_currentIndex].mode = "disabled";
@@ -66,6 +69,16 @@ HUMMEDIA_SERVICES
                 }
             }
 
+            Object.defineProperty(this, 'subtitles', {
+                get: function() { return subtitles; }
+            });
+            
+            Object.defineProperty(this, 'current', {
+                get: function() {
+                    return _enabled ? subtitles[_currentIndex] : null;
+                }
+            });
+
             if(subtitles && subtitles.length) {
                 if(TRACK_ELEMENT_SUPPORTED) {
                     subtitles.forEach(function(subtitle) {
@@ -73,7 +86,7 @@ HUMMEDIA_SERVICES
 
                         track.kind    = 'subtitles';
                         track.src     = subtitle['@id'];
-                        track.srclang = subtitle['lang'];
+                        track.srclang = subtitle['language'];
                         track.label   = subtitle['name'];
 
                         _media.appendChild(track);
