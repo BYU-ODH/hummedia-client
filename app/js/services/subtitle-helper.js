@@ -34,8 +34,8 @@ HUMMEDIA_SERVICES
             this.disable = function() {
                 _enabled = false;
                 if(TRACK_ELEMENT_SUPPORTED) {
-                    if(_media.textTracks[_currentIndex]) {
-                        _media.textTracks[_currentIndex].mode = "disabled";
+                    for(var i = 0; i<_media.textTracks.length; i++) {
+                        _media.textTracks[i].mode = "disabled";
                     }
                 }
                 else
@@ -91,13 +91,11 @@ HUMMEDIA_SERVICES
 
                         _media.appendChild(track);
                     });
+                    this.disable();
                 }
-                this.loadSubtitle(subtitles[0]);
             };
 
             function _addVTT(index) {
-                _exists = true;
-
                 if(TRACK_ELEMENT_SUPPORTED) {
                     var tracks = _media.textTracks;
 

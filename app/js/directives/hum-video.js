@@ -49,7 +49,7 @@ HUMMEDIA_DIRECTIVES
             template: '<div>' +
                       '   <div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}">' +
                       '   <select ng-model="subtitle" ng-show="subtitles" ng-options="s.name for s in subtitles">' +
-                      '       <option value="">Disable Subtitles</option>' +
+                      '       <option value="">No Subtitle Selected</option>' +
                       '   </select>' +
                       '   </div>' +
                       '</div>',
@@ -127,7 +127,7 @@ HUMMEDIA_DIRECTIVES
 
 
                     /** @TODO: change to a promise...or something **/
-                    $scope.$watch(function(){return subtitles.exists();}, function(val){
+                    $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
                         if(val) {
                             $scope.subtitles = subtitles.subtitles;
                             $scope.subtitle = subtitles.current;
