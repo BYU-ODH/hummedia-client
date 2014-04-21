@@ -5,7 +5,7 @@
             <button ng-class="{active: !all}" ng-click="loadCollectionList(false)">Mine</button>
         </div>
         <ul id="tabs" data-ng-show="collections.length || showTabs">
-            <li data-ng-repeat="tabcollection in collections" data-ng-class="{highlighted: collection.pid==tabcollection.pid}" data-ng-click="showVideos(tabcollection.pid)">
+            <li data-ng-repeat="tabcollection in collections | orderColon:'dc:title'" data-ng-class="{highlighted: collection.pid==tabcollection.pid}" data-ng-click="showVideos(tabcollection.pid)">
                 <a ng-show='canEdit(tabcollection)' class='edit-button' ng-href="/admin/collection?id={{tabcollection.pid}}"><i data-tooltip="Edit this collection" class="icon-edit"></i></a>
                 <a ng-href="/collection?id={{tabcollection['pid']}}" id="tab-{{tabcollection['pid']}}">{{tabcollection['dc:title']}}</a>
             </li>
