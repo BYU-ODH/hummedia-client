@@ -25,8 +25,8 @@ angular.module('hummedia.filters', [])
         return;
       }
       items.sort(function(item1, item2) {
-        var a = item1[field].replace(ignore,''),
-            b = item2[field].replace(ignore,'');
+        var a = item1[field].replace(ignore,'').toLowerCase(),
+            b = item2[field].replace(ignore,'').toLowerCase();
         
         var aDigits = a.match(/\d+/),
             bDigits = b.match(/\d+/);
