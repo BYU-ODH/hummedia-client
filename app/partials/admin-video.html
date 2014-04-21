@@ -90,8 +90,8 @@
       <h2>{{"Add Subtitle to" | tr}} {{video['ma:title']}}</h2>
       <p class=error ng-show=error>{{error}}</p>
       <form ng-hide=waiting class='form-table'>
-          <div class="field-row"><label for='sub-name'>Name:</label><input type="text" name='sub-name' ng-model='subName' name="name"></div>
           <div class="field-row"><label for='sub-lang'>Language:</label><div id='sub-lang' select-language name="language" ng-model="subLang"></div></div>
+          <div class="field-row"><label for='sub-name'>Name:</label><input type="text" name='sub-name' ng-model='subName' name="name"></div>
           <div class="field-row"><label for='sub-file'>Subtitle File:</label><input id='sub-file' type="file" humfile ng-model='subFile' accept='.vtt, .srt' name="subtitle" value='Subtitle File'></div>
           <div class="field-row"><input ng-disabled=waiting type='submit' ng-click='upload()' value='Upload'></div>
       </form>

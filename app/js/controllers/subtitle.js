@@ -1,7 +1,7 @@
 /**
  * Used for uploading subtitles
  */
-function SubtitleCtrl($scope, Video) {
+function SubtitleCtrl($scope, Video, language) {
   'use strict';
     
   $scope.subtitleModalId = 'SUBTITLE-CTRL-MODAL';
@@ -13,6 +13,15 @@ function SubtitleCtrl($scope, Video) {
     $scope.progress      = null;
   };
   init();
+
+  var langListener = $scope.$watch('subLang', function(val) {
+    if(val) {
+      if(!$scope.subName) {
+        $scope.subName = language.nameFromCode(val);
+      }
+      langListener(); // only watch for one
+    }
+  });
 
   $scope.upload = function() {
     var data = {name: $scope.subName, lang: $scope.subLang}
@@ -37,4 +46,4 @@ function SubtitleCtrl($scope, Video) {
     });
   };
 };
-SubtitleCtrl.$inject = ['$scope', 'Video'];
+SubtitleCtrl.$inject = ['$scope', 'Video', 'language'];
