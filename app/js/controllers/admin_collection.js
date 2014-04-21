@@ -5,11 +5,6 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
     
     $scope.user = user;
 
-    $scope.togglePanel = function(panel_id, toggle_id){
-        $(panel_id).slideToggle('slow');
-        $(toggle_id).toggleClass("icon-plus icon-minus");
-    }
-    
     $scope.toggleModal = function(modal_id){
         $('#blur-box').toggle();
         $(modal_id).toggle();
@@ -22,12 +17,6 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
     $scope.videos = [];
     $scope.selected_videos = {};
     $scope.selected_courses = {};
-    
-    $scope.tinymceOptions = {
-        plugins: "link",
-        toolbar: "bold italic | link image",
-        menubar: false
-    };
     
     var updateCollectionData = function(){
         $scope.collection_data = Collection.get({identifier:$routeParams.id}, function getCoursesAsReadableStrings(){
