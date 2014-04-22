@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.services', 'hummedia.directives', 'ngLocale', 'ngSanitize','ui.tinymce', 'ngRoute']).
+angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.services', 'hummedia.directives', 'ngLocale', 'ngSanitize', 'ngRoute']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/search', {title: "Hummedia | Search", templateUrl: '/partials/search/search.html', controller: SearchCtrl, reloadOnSearch: false});
     $routeProvider.when('/', {title: "Hummedia", templateUrl: '/partials/home.html', controller: HomeCtrl});
