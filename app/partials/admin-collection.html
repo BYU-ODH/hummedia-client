@@ -68,7 +68,7 @@
         <div id="list_scrolling_block">
             <h2>{{"Videos" | tr}}</h2>
             <ul>
-                <li data-ng-repeat="video in collection_data.videos">
+                <li data-ng-repeat="video in collection_data.videos | orderColon:'ma:title'">
                     <table id="listvideotable"><tr>
                             <td>{{video['ma:title']}}</td>
                             <td id="righttd"><button data-ng-click="annotate(video.pid, collection_data.pid)">{{"Annotate" | tr}}</button><button data-ng-click="deleteVideo(video.pid, collection_data.pid)">{{"Remove" | tr}}</button></td></tr>
@@ -114,7 +114,7 @@
         </div>
         <hr>
         <ul>
-            <li data-ng-repeat="video in videos | filter: {'ma:title': title_filter}">
+            <li data-ng-repeat="video in videos | filter: {'ma:title': title_filter} | orderColon:'ma:title'">
                 <label><input data-ng-model="selected_videos[video.pid]" type='checkbox' value='{{video.pid}}'/> {{video['ma:title']}}</label>
             </li>
         </ul>
