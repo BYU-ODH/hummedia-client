@@ -35,6 +35,11 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE) {
         $('#description-toggle-icon').toggleClass('icon-minus');
         $('#description-toggle-icon').toggleClass('icon-plus');
     };
+    
+    $scope.toggleAnnotationPane = function() {
+        $('#view').toggleClass("text-align-center");
+        $('#annotations-wrapper').toggle();
+    };
 }
 // always inject this in so we can later compress this JavaScript
 VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE'];
