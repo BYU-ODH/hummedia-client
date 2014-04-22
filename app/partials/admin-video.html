@@ -56,7 +56,7 @@
                 <ul>
                     <li data-ng-repeat="subtitle in video['ma:hasRelatedResource']">
                         <table id="listvideotable">
-                            <tr><td>{{subtitle.language | language}} - {{subtitle.name}}</td></tr>
+                            <tr><td>{{subtitle.name}} [{{subtitle.language}}]</td></tr>
                         </table>
                     </li>
                 </ul>
