@@ -103,17 +103,16 @@ HUMMEDIA_DIRECTIVES
                     var annotation = new AnnotationHelper(pop, vId, cId, video['ma:hasPolicy']),
                         subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
 
-                    var makeSpaceForAnnotations = function(events){
-                        console.log(events);
-                        
+                    var makeSpaceForAnnotations = function(events){                        
                         for(var i=0; i<events.length; i++){
-                            var whitelist = ["skip"];
+                            var whitelist = ["skip","blank","mutePlugin"];
                             //check if plugin is on whitelist
                             if(whitelist.indexOf(events[i]["_natives"]["plugin"])==-1){
-                                console.log('time to switch to ghetto mode');
+                                //Switch to the annotations layout
+                                $('#view').removeClass('text-align-center');
+                                $('#annotations-wrapper').css("display","inline-block");                                
                                 break;
                             }
-                            console.log(events[i]["_natives"]["plugin"]);
                         }
                     }
 
