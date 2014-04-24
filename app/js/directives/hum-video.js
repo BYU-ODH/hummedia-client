@@ -103,11 +103,11 @@ HUMMEDIA_DIRECTIVES
                     var annotation = new AnnotationHelper(pop, vId, cId, video['ma:hasPolicy']),
                         subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
 
-                    var makeSpaceForAnnotations = function(events){                        
+                    var makeSpaceForAnnotations = function(events){
+                        var whitelist = {"skip":true,"blank":true,"mutePlugin":true};
                         for(var i=0; i<events.length; i++){
-                            var whitelist = ["skip","blank","mutePlugin"];
                             //check if plugin is on whitelist
-                            if(whitelist.indexOf(events[i]["_natives"]["plugin"])==-1){
+                            if(!whitelist[events[i]["_natives"]["plugin"]]){
                                 //Switch to the annotations layout
                                 $('#view').removeClass('text-align-center');
                                 $('#annotations-wrapper').css("display","inline-block");                                
