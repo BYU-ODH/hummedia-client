@@ -103,8 +103,22 @@ HUMMEDIA_DIRECTIVES
                     var annotation = new AnnotationHelper(pop, vId, cId, video['ma:hasPolicy']),
                         subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
 
+                    var makeSpaceForAnnotations = function(events){
+                        var whitelist = {"skip":true,"blank":true,"mutePlugin":true};
+                        for(var i=0; i<events.length; i++){
+                            //check if plugin is on whitelist
+                            if(!whitelist[events[i]["_natives"]["plugin"]]){
+                                //Switch to the annotations layout
+                                $('#view').removeClass('text-align-center');
+                                $('#annotations-wrapper').css("display","inline-block");                                
+                                break;
+                            }
+                        }
+                    }
+
                     annotation.ready(function(){
                         $scope._humVideo.hasAnnotations = annotation.hasNonrequired;
+                        makeSpaceForAnnotations(pop.getTrackEvents());
                     });
 
                     $scope.$watch(function(){return subtitles.exists();}, function(val){
