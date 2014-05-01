@@ -1,7 +1,7 @@
 /**
  * Used for uploading subtitles
  */
-function SubtitleCtrl($scope, Video, language) {
+function SubtitleCtrl($scope, Subtitle, language) {
   'use strict';
     
   $scope.subtitleModalId = 'SUBTITLE-CTRL-MODAL';
@@ -25,7 +25,7 @@ function SubtitleCtrl($scope, Video, language) {
 
   $scope.upload = function() {
     var data = {name: $scope.subName, lang: $scope.subLang}
-    var promise = Video.addSubtitle($scope.subFile, $scope.video.pid, data);
+    var promise = Subtitle.add($scope.subFile, $scope.video.pid, data);
     $scope.waiting = true;
 
     promise.then(function success(data) {
@@ -46,4 +46,4 @@ function SubtitleCtrl($scope, Video, language) {
     });
   };
 };
-SubtitleCtrl.$inject = ['$scope', 'Video', 'language'];
+SubtitleCtrl.$inject = ['$scope', 'Subtitle', 'language'];
