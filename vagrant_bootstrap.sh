@@ -17,23 +17,31 @@ apt-get install -y apache2 mongodb python libapache2-mod-python libapache2-mod-w
 rm -rf /var/www
 ln -fs /vagrant /var/www
 
-# Download the authentication module
-cd /tmp
-rm -rf mod_auth_token*
-wget https://mod-auth-token.googlecode.com/files/mod_auth_token-1.0.6-beta.tar.gz
-tar -xvzf mod_auth_token-1.0.6-beta.tar.gz
-chmod +x mod_auth_token
-cd mod_auth_token
-chmod +x configure
-# symlinks are incorrect; need to patch them
-ln -fs /usr/share/automake-1.11/config.guess config.guess
-ln -fs /usr/share/automake-1.11/config.sub config.sub
-ln -fs /usr/share/automake-1.11/COPYING COPYING
-ln -fs /usr/share/automake-1.11/install-sh install-sh
-ln -fs /usr/share/automake-1.11/missing missing
-# configure auth module's Makefile and build
-./configure
-make install # will automatically enable it
+# Download the authentication module if we need it
+if ! apache2ctl -M | grep auth_token_module; then
+  cd /tmp
+  rm -rf mod_auth_token*
+  wget --no-verbose https://mod-auth-token.googlecode.com/files/mod_auth_token-1.0.6-beta.tar.gz
+  tar -xvzf mod_auth_token-1.0.6-beta.tar.gz
+  chmod +x mod_auth_token
+  cd mod_auth_token
+  chmod +x configure
+  # symlinks are incorrect; need to patch them
+  ln -fs /usr/share/automake-1.11/config.guess config.guess
+  ln -fs /usr/share/automake-1.11/config.sub config.sub
+  ln -fs /usr/share/automake-1.11/COPYING COPYING
+  ln -fs /usr/share/automake-1.11/install-sh install-sh
+  ln -fs /usr/share/automake-1.11/missing missing
+  # configure auth module's Makefile and build
+  ./configure
+  make install # will automatically enable it
+fi
+
+# install Node.js, if needed
+if ! which node; then
+  wget --no-verbose http://nodejs.org/dist/v0.10.26/node-v0.10.26-linux-x86.tar.gz -O /tmp/node.tar.gz
+  cd /usr/local && tar --strip-components 1 -xzf /tmp/node.tar.gz
+fi
 
 a2enmod rewrite ssl wsgi python
 
@@ -186,17 +194,17 @@ cd real_files
 
 # download some sample MP4s and webms
 if [ ! -f trailer.webm ]; then
-    wget http://video.webmfiles.org/big-buck-bunny_trailer.webm -O trailer.webm --no-verbose
+    wget --no-verbose http://video.webmfiles.org/big-buck-bunny_trailer.webm -O trailer.webm --no-verbose
 fi
 
 if [ ! -f trailer.mp4 ]; then
-    wget http://video.blendertestbuilds.de/download.blender.org/peach/trailer_480p.mov -O trailer.mp4 --no-verbose
+    wget --no-verbose http://video.blendertestbuilds.de/download.blender.org/peach/trailer_480p.mov -O trailer.mp4 --no-verbose
 fi
 
 cd ../ingest
 
 if [ ! -f ingest-me.mp4 ]; then
-    wget https://archive.org/download/Video_Diary__Short_Version_PSP/MAQ11112_512kb.mp4 -O ingest-me.mp4 --no-verbose
+    wget --no-verbose https://archive.org/download/Video_Diary__Short_Version_PSP/MAQ11112_512kb.mp4 -O ingest-me.mp4 --no-verbose
 fi
 
 # initialize the database
@@ -205,8 +213,6 @@ mongoimport --db hummedia --collection annotations --file annotations.json
 mongoimport --db hummedia --collection users --file users.json
 mongoimport --db hummedia --collection assets --file assets.json
 mongoimport --db hummedia --collection assetgroups --file assetgroups.json
-
-echo "Sleeping five seconds to make sure all mongo data is imported correctly."
 
 # go through each file we reference in the database and symlink it to a real file
 FILES=`mongo hummedia /var/www/scripts/get_video_filenames.js`
@@ -222,7 +228,7 @@ done
 
 # Download images
 cd ../posters
-for i in $(seq 0 9); do wget https://placeimg.com/300/200/any -O $i.jpg; done
+for i in $(seq 0 9); do wget --no-verbose http://placeimg.com/300/200/any -O $i.jpg; done
 GLOBIGNORE=*thumb.jpg
 convert -format jpg -thumbnail 100x150 *.jpg -set filename:f '%t_thumb.%e' '%[filename:f]'
 
