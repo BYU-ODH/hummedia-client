@@ -81,9 +81,15 @@ cat << EOF > /etc/apache2/sites-available/milo.byu.edu
     AliasMatch ^/posters/(.*)$ /var/www/api/posters/\$1
 
     RewriteEngine On
-    
+    RewriteCond %{REQUEST_METHOD} ^(PUT|DELETE)$
+    RewriteRule ^/text/(.*)$ /api/v2/text/\$1 [PT,L]
+
+    RewriteCond %{REQUEST_METHOD} !PUT
+    RewriteCond %{REQUEST_METHOD} !DELETE
     RewriteRule ^/text/(.*)$ /var/www/api/text/\$1
+    
     RewriteMap subtitles rnd:/etc/apache2/maps/subtitles.txt
+    
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_URI} ^/text/.*
     RewriteRule ^.*.(srt|vtt)$ /var/www/api/text/\${subtitles:file}.\$1 [L] 
