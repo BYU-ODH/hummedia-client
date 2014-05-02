@@ -56,7 +56,10 @@
                 <ul>
                     <li data-ng-repeat="subtitle in video['ma:hasRelatedResource']">
                         <table id="listvideotable">
-                            <tr><td>{{subtitle.name}} [{{subtitle.language}}]</td></tr>
+                            <tr>
+                              <td>{{subtitle.name}} [{{subtitle.language}}]</td>
+                              <td id="righttd"><button data-ng-click="deleteSubtitle(subtitle['@id'])">{{"Delete" | tr}}</button></td>
+                            </tr>
                         </table>
                     </li>
                 </ul>
