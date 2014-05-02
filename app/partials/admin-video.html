@@ -57,7 +57,12 @@
                     <li data-ng-repeat="subtitle in video['ma:hasRelatedResource']">
                         <table id="listvideotable">
                             <tr>
-                              <td>{{subtitle.name}} [{{subtitle.language}}]</td>
+                              <td>
+                                <span ng-show="subtitle.name">{{subtitle.name}}</span>
+                                <!-- show the filename if we can't find a given name -->
+                                <span ng-hide="subtitle.name">{{subtitle['@id'].split("/").pop()}}</span>
+                                <span ng-show="subtitle.language">[{{subtitle.language}}]</span>
+                              </td>
                               <td id="righttd"><button data-ng-click="deleteSubtitle(subtitle['@id'])">{{"Delete" | tr}}</button></td>
                             </tr>
                         </table>

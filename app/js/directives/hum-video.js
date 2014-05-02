@@ -48,7 +48,7 @@ HUMMEDIA_DIRECTIVES
             },
             template: '<div>' +
                       '   <div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}">' +
-                      '   <select ng-model="subtitle" ng-show="subtitles" ng-options="s.name for s in subtitles">' +
+                      '   <select ng-model="subtitle" ng-show="subtitles" ng-options="s.displayName for s in subtitles | orderBy:\'displayName\'">' +
                       '       <option value="">No Subtitle Selected</option>' +
                       '   </select>' +
                       '   </div>' +
@@ -59,7 +59,7 @@ HUMMEDIA_DIRECTIVES
                 var cId    = attrs['humVideoCollection'],
                     vId    = attrs['humVideo'],
                     editor = $scope.$eval(attrs['humVideoEditor']);
-                    
+
                 $scope._humVideo = Video.get({identifier: vId}, function initialize(video) {
                     var el = element.children()[0];
                     var elId = el.id || addId(el); // the element MUST have an ID for Popcorn AND Butter to work
@@ -129,7 +129,19 @@ HUMMEDIA_DIRECTIVES
                     /** @TODO: change to a promise...or something **/
                     $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
                         if(val) {
-                            $scope.subtitles = subtitles.subtitles;
+                            $scope.subtitles = subtitles.subtitles.map(function(sub) {
+                              if(!sub.name) {
+                                // gets the filename
+                                sub.displayName = sub['@id'].split('/').pop();
+                              }else{
+                                sub.displayName = sub.name;
+                              }
+                              
+                              if(sub.language) {
+                                sub.displayName += " [" + sub.language + "]";
+                              }
+                              return sub;
+                            });
                             $scope.subtitle = subtitles.current;
                         }
                     });
