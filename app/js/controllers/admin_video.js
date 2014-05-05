@@ -107,19 +107,6 @@ function AdminVideoCtrl($scope, Video, language, $routeParams, $location, Collec
         Video.update({identifier: $scope.video.pid, 'ma:isMemberOf': $scope.video['ma:isMemberOf']});
     }
 
-    $scope.deleteSubtitle = function(filepath) {
-        if(!confirm("Are you sure you want to remove the subtitle at " + filepath)) {
-            return;
-        }
-
-        Subtitle['delete'](filepath).then(function success(data){
-            console.log(data);
-        }, function failure(){
-            // hrrmmmm
-            alert("There was an error deleting the subtitle.");
-        });
-    };
-
     $scope.addVideoToCollections = function() {
         //$scope.toggleModal('modal-add-video');
 
