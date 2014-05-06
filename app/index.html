@@ -95,22 +95,10 @@
           baseUrl: '/lib/butter/src',
           paths: {
               "editors": '../assets/editors/',
-              "tinymce": [
-                  "../../tinymce/tinymce.min"
-              ],
               "less": [
                   "//cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min",
                   "../../less/less-1.3.3.min"
               ]
-          },
-          shim: {
-              "tinymce": {
-                  "exports": "tinymce",
-                  "init": function() {
-                      this.tinymce.DOM.events.domLoaded = true;
-                      return this.tinymce;
-                  }
-              }
           }
       });
   </script>
@@ -173,7 +161,6 @@
   <script src="/js/directives/rights.js"></script>
   <script src="/js/directives/scroll-load.js"></script>
   <script src="/js/directives/hum-video.js"></script>
-  <script src="/lib/angular-ui/tinymce.js"></script>
  
   <!-- RESOURCES --> 
   <script src="/js/resources/video.js"></script>

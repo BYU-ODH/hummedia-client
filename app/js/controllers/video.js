@@ -15,6 +15,7 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE) {
     
     //Add page-specific styles
     $('html').addClass('video-page');
+    $('#view').addClass('text-align-center');
     
     //Event handler for leaving the page
     $scope.$on('$locationChangeStart', function removeResizeListener() {
@@ -30,6 +31,12 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE) {
     $scope.subtitlesEnabled = true;
     $scope.editorMode = ANNOTATION_MODE;
     
+    if($scope.editorMode){
+        //In editor mode, use the annotation layout
+        $('#view').removeClass('text-align-center');
+        $('#annotations-wrapper').css("display","inline-block"); 
+    }
+
     $scope.playbackSpeed = 1;
     $scope.video_tag_exists = function(){
         return $('video').length;

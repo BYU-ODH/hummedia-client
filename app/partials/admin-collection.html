@@ -6,7 +6,7 @@
                 {{"Filter:" | tr}} <input type=search ng-model=filterTitle>
             </div>
             <ul>
-            <li class="selectable listvideo" data-ng-repeat="collection in collections | filter: {'dc:title': filterTitle} | orderBy:orderTitle:false" id="{{collection.pid}}" data-ng-click="showCollection(collection.pid)">
+            <li class="selectable listvideo" data-ng-repeat="collection in collections | filter: {'dc:title': filterTitle} | orderColon:'dc:title'" id="{{collection.pid}}" data-ng-click="showCollection(collection.pid)">
                 <p>{{collection['dc:title']}}</p>
             </li>
             </ul>
@@ -28,12 +28,10 @@
             </p>
             <p>
                 {{"Description" | tr}}
-                <i class='collToggle icon-plus' id='description_toggle' data-ng-click="togglePanel('#editable-description-wrapper', '#description_toggle')"></i>
             </p>
-            <div style='display:none; text-align: left;' id='editable-description-wrapper'>
-                    <textarea ui-tinymce="tinymceOptions" ng-model="collection_data['dc:description']" class="tinymce-textarea">{{collection_data['dc:description']}}</textarea>
+            <div style='text-align: left;' id='editable-description-wrapper'>
+                    <textarea ng-model="collection_data['dc:description']">{{collection_data['dc:description']}}</textarea>
             </div>
-            <hr>
         <hr>
         <div data-ng-hide="createMode">
             <h2>Courses Using the Collection</h2>
@@ -68,7 +66,7 @@
         <div id="list_scrolling_block">
             <h2>{{"Videos" | tr}}</h2>
             <ul>
-                <li data-ng-repeat="video in collection_data.videos">
+                <li data-ng-repeat="video in collection_data.videos | orderColon:'ma:title'">
                     <table id="listvideotable"><tr>
                             <td>{{video['ma:title']}}</td>
                             <td id="righttd"><button data-ng-click="annotate(video.pid, collection_data.pid)">{{"Annotate" | tr}}</button><button data-ng-click="deleteVideo(video.pid, collection_data.pid)">{{"Remove" | tr}}</button></td></tr>
@@ -114,7 +112,7 @@
         </div>
         <hr>
         <ul>
-            <li data-ng-repeat="video in videos | filter: {'ma:title': title_filter}">
+            <li data-ng-repeat="video in videos | filter: {'ma:title': title_filter} | orderColon:'ma:title'">
                 <label><input data-ng-model="selected_videos[video.pid]" type='checkbox' value='{{video.pid}}'/> {{video['ma:title']}}</label>
             </li>
         </ul>

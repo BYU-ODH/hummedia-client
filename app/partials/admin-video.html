@@ -8,7 +8,7 @@
             <div data-ng-show="!videos.length && !no_videos" class="loading_message">{{"Loading Videos..." | tr}}</div>
             <div data-ng-show="no_videos" class="loading_message">{{"No Videos" | tr}}</div>
             <ul>
-                <li class="selectable" data-ng-repeat="v in videos | filter: {'ma:title': title_filter} | orderBy:orderTitle:false" data-ng-class="{selected: v.pid == video.pid}" data-ng-click="setVideo(v)">{{v["ma:title"]}}</li>
+                <li class="selectable" data-ng-repeat="v in videos | filter: {'ma:title': title_filter} | orderColon:'ma:title'" data-ng-class="{selected: v.pid == video.pid}" data-ng-click="setVideo(v)">{{v["ma:title"]}}</li>
             </ul>
         </div>
         <a href='/admin/video/create' id="admin-video-add-button"><h2 class="ng-binding">Add Video</h2></a>
