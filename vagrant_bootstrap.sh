@@ -204,7 +204,7 @@ if [ ! -f trailer.webm ]; then
 fi
 
 if [ ! -f trailer.mp4 ]; then
-    wget --no-verbose http://video.blendertestbuilds.de/download.blender.org/peach/trailer_480p.mov -O trailer.mp4 --no-verbose
+    wget --no-verbose http://hlrdev.byu.edu/downloads/how-to-draw.mp4 -O trailer.mp4 --no-verbose
 fi
 
 cd ../ingest
