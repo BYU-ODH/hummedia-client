@@ -56,6 +56,7 @@ HUMMEDIA_SERVICES
                 }
 
                 _currentIndex = index;
+                this.enable();
 
                 switch(subtitle.type) {
                     case 'vtt':
@@ -110,8 +111,28 @@ HUMMEDIA_SERVICES
                 }
                 else
                 {
+                    removePopcornSubtitles();
                     popcornInstance.parseVTT(subtitles[index]['@id']);
                 }
             };
+
+            function removePopcornSubtitles() {
+                if(TRACK_ELEMENT_SUPPORTED) {
+                    throw "Track element is supported, so there are no Popcorn subtitles to remove.";
+                }
+                // this is a hack to get around Popcorn's hack of how it adds
+                // subtitle events. Alternatively, we could find a separate
+                // JavaScript vtt parser and add subtitle events manually.
+                // That way, we'd have specific track event IDs to remove and
+                // wouldn't have to comb through all existing IDs.
+
+                // e.g., 00:00:02.400 --> 00:00:03.594
+                var re = new RegExp(/^\d{2}:\d{2}:\d{2}.\d{3} --> \d{2}:\d{2}:\d{2}.\d{3}$/);
+                popcornInstance.getTrackEvents().forEach(function kill(ev) {
+                    if(re.test(ev.id)) {
+                        popcornInstance.removeTrackEvent(ev.id);
+                    }
+                });
+            }
         };
     });
