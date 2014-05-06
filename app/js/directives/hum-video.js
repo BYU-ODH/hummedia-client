@@ -81,8 +81,8 @@ HUMMEDIA_DIRECTIVES
                         frameAnimation: true // allows for more accurate timing
                     });
                     
-                    // the select box shows up before the video; swap them
-                    el.insertBefore(pop.media, el.parentNode.getElementsByTagName('select')[0])
+                    // the select box shows up before the video; put it at the end
+                    el.appendChild(el.getElementsByTagName('select')[0]);
 
                     //Adding Event Listeners to video element
                     

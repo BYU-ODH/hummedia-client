@@ -1,10 +1,5 @@
 HUMMEDIA_SERVICES
     .service('SubtitleHelper', function() {
-        var TRACK_ELEMENT_SUPPORTED = (function(){
-            var video = document.createElement('video');
-            return typeof video.addTextTrack === 'function'
-        })();
-
         return function SubtitleHelper(popcornInstance, subtitles) {
             if(this.constructor !== SubtitleHelper) {
                 throw "Subtitle Helper must be called with the 'new' keyword.";
@@ -12,6 +7,9 @@ HUMMEDIA_SERVICES
             if(! (popcornInstance instanceof window.Popcorn) ) {
                 throw "popcornInstance not a valid instance of Popcorn";
             }
+
+            var TRACK_ELEMENT_SUPPORTED =
+                    typeof popcornInstance.media.addTextTrack === 'function';
             
             var _exists       = false,
                 _media        = popcornInstance.media,
