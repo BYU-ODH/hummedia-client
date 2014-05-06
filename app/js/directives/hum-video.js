@@ -154,6 +154,12 @@ HUMMEDIA_DIRECTIVES
                         subtitles.loadSubtitle(selected);
                     });
 
+                    $scope.$watch(function(){return subtitles.current;},
+                        function(current) {
+                            $scope.subtitle = current;
+                        }
+                    );
+
                     $scope.$watch('annotationsEnabled', function(value){
                         value === false ? annotation.disable() : annotation.enable();
                     });

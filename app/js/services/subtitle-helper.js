@@ -1,5 +1,5 @@
 HUMMEDIA_SERVICES
-    .service('SubtitleHelper', function() {
+    .service('SubtitleHelper', ['$rootScope', function($rootScope) {
         return function SubtitleHelper(popcornInstance, subtitles) {
             if(this.constructor !== SubtitleHelper) {
                 throw "Subtitle Helper must be called with the 'new' keyword.";
@@ -11,12 +11,16 @@ HUMMEDIA_SERVICES
             var TRACK_ELEMENT_SUPPORTED =
                     typeof popcornInstance.media.addTextTrack === 'function';
             
-            var _exists       = false,
-                _media        = popcornInstance.media,
+            var _media        = popcornInstance.media,
                 _currentIndex = 0, // which subtitle is currently selected
-                _enabled      = true;
+                _enabled      = true,
+                _that         = this;
             
             this.enable = function() {
+                if(_enabled) {
+                    return;
+                }
+
                 _enabled = true;
                 if(TRACK_ELEMENT_SUPPORTED) {
                     if(_media.textTracks[_currentIndex]) {
@@ -30,6 +34,10 @@ HUMMEDIA_SERVICES
             };
             
             this.disable = function() {
+                if(!_enabled) {
+                    return;
+                }
+
                 _enabled = false;
                 if(TRACK_ELEMENT_SUPPORTED) {
                     for(var i = 0; i<_media.textTracks.length; i++) {
@@ -40,10 +48,6 @@ HUMMEDIA_SERVICES
                 {
                     popcornInstance.disable('subtitle');
                 }
-            };
-            
-            this.exists = function() {
-                return _exists;
             };
 
             this.loadSubtitle = function(subtitle) {
@@ -78,20 +82,53 @@ HUMMEDIA_SERVICES
                 }
             });
 
-            if(subtitles && subtitles.length) {
-                if(TRACK_ELEMENT_SUPPORTED) {
-                    subtitles.forEach(function(subtitle) {
-                        var track = document.createElement("track");
+            if(subtitles && subtitles.length && TRACK_ELEMENT_SUPPORTED) {
+                subtitles.forEach(function(subtitle) {
+                    var track = document.createElement("track");
 
-                        track.kind    = 'subtitles';
-                        track.src     = subtitle['@id'];
-                        track.srclang = subtitle['language'];
-                        track.label   = subtitle['name'];
+                    track.kind    = 'subtitles';
+                    track.src     = subtitle['@id'];
+                    track.srclang = subtitle['language'];
+                    track.label   = subtitle['name'];
 
-                        _media.appendChild(track);
-                    });
-                    this.disable();
-                }
+                    _media.appendChild(track);
+                });
+
+                // if we don't call disable, all subtitles will be present at once
+                this.disable(); 
+
+                // text tracks might become disabled by a user's click on
+                // the closed captioning button; this listens for those kinds
+                // of events and flips our enabled or disabled flag.
+                _media.textTracks.addEventListener('change', function checkIsDisabled() {
+                    var tracks = _media.textTracks;
+
+                    for(var i = 0; i<tracks.length; i++) {
+                        var track = tracks.item(i);
+
+                        if(track.mode === 'showing') {
+                            if(i === _currentIndex && _enabled) {
+                                return;
+                            }
+                            
+                            /**
+                             * There's a weird issue (at least in Chrome 34)
+                             * where selecting a subtitle and clicking the
+                             * CC button on and off again will select the
+                             * topmost subtitle in the TextTracksList, NOT
+                             * the most recently used subtitle. This aims
+                             * to fix that by resetting it
+                             */
+                            track.mode = 'disabled';
+                            _that.enable();
+                            $rootScope.$apply();
+                            return;
+                        }
+                    };
+
+                    _that.disable();
+                    $rootScope.$apply();
+                });
             };
 
             function _addVTT(index) {
@@ -135,4 +172,4 @@ HUMMEDIA_SERVICES
                 });
             }
         };
-    });
+    }]);
