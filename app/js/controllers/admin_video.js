@@ -1,4 +1,4 @@
-function AdminVideoCtrl($scope, Video, language, $routeParams, $location, Collection) {
+function AdminVideoCtrl($scope, Video, language, $routeParams, $location, Collection, Subtitle) {
     "use strict";
     
     $scope.videos =  Video.query(function(){
@@ -156,4 +156,4 @@ function AdminVideoCtrl($scope, Video, language, $routeParams, $location, Collec
         }
     };
 };
-AdminVideoCtrl.$inject = ['$scope','Video', 'language', '$routeParams', '$location', 'Collection'];
+AdminVideoCtrl.$inject = ['$scope','Video', 'language', '$routeParams', '$location', 'Collection', 'Subtitle'];

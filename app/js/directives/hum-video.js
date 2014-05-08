@@ -52,7 +52,13 @@ HUMMEDIA_DIRECTIVES
                 'subtitlesEnabled': '=?humVideoSubtitles',
                 'playbackSpeed': '=?humVideoPlaybackSpeed'
             },
-            template: '<div><div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}"></div></div>',
+            template: '<div>' +
+                      '   <div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}">' +
+                      '   <select ng-model="subtitle" ng-show="subtitles" ng-options="s.displayName for s in subtitles | orderBy:\'displayName\'">' +
+                      '       <option value="">No Subtitle Selected</option>' +
+                      '   </select>' +
+                      '   </div>' +
+                      '</div>',
             replace: true,
             restrict: 'A',
             link: function($scope, element, attrs, controller) {
@@ -80,6 +86,9 @@ HUMMEDIA_DIRECTIVES
                     var pop = window.Popcorn.smart(elId, video.url, {
                         frameAnimation: true // allows for more accurate timing
                     });
+                    
+                    // the select box shows up before the video; put it at the end
+                    el.appendChild(el.getElementsByTagName('select')[0]);
 
                     //Adding Event Listeners to video element
                     
@@ -122,17 +131,46 @@ HUMMEDIA_DIRECTIVES
                         makeSpaceForAnnotations(pop.getTrackEvents());
                     });
 
-                    $scope.$watch(function(){return subtitles.exists();}, function(val){
-                        $scope._humVideo.hasSubtitles = val;
+
+                    /** @TODO: change to a promise...or something **/
+                    $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
+                        if(val) {
+                            $scope.subtitles = subtitles.subtitles.map(function(sub) {
+                              if(!sub.name) {
+                                // gets the filename
+                                sub.displayName = sub['@id'].split('/').pop();
+                              }else{
+                                sub.displayName = sub.name;
+                              }
+                              
+                              if(sub.language) {
+                                sub.displayName += " [" + sub.language + "]";
+                              }
+                              return sub;
+                            });
+                            $scope.subtitle = subtitles.current;
+                        }
                     });
+
+                    $scope.$watch('subtitle', function(selected) {
+                        if(!selected) {
+                            subtitles.disable();
+                            return;
+                        }
+                        subtitles.loadSubtitle(selected);
+                    });
+
+                    $scope.$watch(function(){return subtitles.current;},
+                        function(current) {
+                            $scope.subtitle = current;
+                        }
+                    );
 
                     $scope.$watch('annotationsEnabled', function(value){
                         value === false ? annotation.disable() : annotation.enable();
                     });
 
-                    $scope.$watch('subtitlesEnabled', function(value){
-                        value === false ? subtitles.disable() : subtitles.enable();
-                    });
+       
 
                     
                     $scope.$watch('playbackSpeed', function(value){

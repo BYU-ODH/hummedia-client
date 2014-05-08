@@ -3,7 +3,7 @@
 	url = git://github.com/mozilla/popcorn-js.git
 [submodule "app/lib/hummedia-popcorn-plugins"]
 	path = app/lib/hummedia-popcorn-plugins
-	url = git@bitbucket.org:htrscdev/popcorn-plugins.git
+	url = git@github.com:BYU-ODH/ODH-popcornjs-plugins.git
 [submodule "api/flask"]
 	path = api/flask
 	url = git@github.com:jlmcdonald/byu-hummedia-api.git

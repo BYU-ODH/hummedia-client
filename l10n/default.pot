@@ -1,6 +1,9 @@
 msgid "About"
 msgstr ""
 
+msgid "Add Subtitle to"
+msgstr ""
+
 msgid "Admin"
 msgstr ""
 
