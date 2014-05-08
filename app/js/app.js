@@ -34,7 +34,6 @@ angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.serv
   }]).
   config(['$httpProvider', function($httpProvider) {
       $httpProvider.defaults.headers.patch = {"Content-Type": "application/json"};
-      $httpProvider.defaults.withCredentials = true; /** @TODO: THIS LINE NEEDS TO BE REMOVED IN PRODUCTION; ONLY HERE FOR TESTING PURPOSES **/
       // Intercepts HTTP requests to display API-related errors to the user
       // see http://docs.angularjs.org/api/ng.$http
       $httpProvider.responseInterceptors.push(['$q', 'appConfig', '$rootScope', function($q, appConfig, $rootScope){
