@@ -20,7 +20,7 @@ function SiteCtrl($scope, $http, appConfig) {
     
     // sets up a default background image if something breaks with Flickr
     var defaultImage = function() {
-        img_url = tag.src = 'img/beetle-rock.jpg';
+        img_url = tag.src = '/img/beetle-rock.jpg';
         $scope.image_title = "Beetle Rock Sunset #1, Sequoia National Park";
         $scope.img_profile = "//www.flickr.com/photos/flatworldsedge/7874109806/";
         $scope.img_username = "H Matthew Howarth";
