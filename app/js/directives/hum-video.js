@@ -15,11 +15,7 @@
  *     hum-video {string/required}: the video id to watch
  *     
  *     hum-video-collection {string/optional}: the collection ID to tie in to the video 
- *                           
- *     hum-video-subtitles {bool/optional}: whether or not to show subtitles.
- *                                          defaults to true. DOES NOT APPLY WHEN
- *                                          hum-video-editor IS TRUE.
- *     
+ * 
  *     hum-video-annotations {bool/optional}: whether or not to show non-required
  *                                            annotations. defaults to true.
  *                                            DOES NOT APPLY WHEN hum-video-editor
@@ -49,16 +45,21 @@ HUMMEDIA_DIRECTIVES
             scope: {
                 '_humVideo': '=?humVideoObject',
                 'annotationsEnabled': '=?humVideoAnnotations',
-                'subtitlesEnabled': '=?humVideoSubtitles'
             },
-            template: '<div><div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}"></div></div>',
+            template: '<div>' +
+                      '   <div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}">' +
+                      '   <select ng-model="subtitle" ng-show="subtitles" ng-options="s.displayName for s in subtitles | orderBy:\'displayName\'">' +
+                      '       <option value="">No Subtitle Selected</option>' +
+                      '   </select>' +
+                      '   </div>' +
+                      '</div>',
             replace: true,
             restrict: 'A',
             link: function($scope, element, attrs, controller) {
                 var cId    = attrs['humVideoCollection'],
                     vId    = attrs['humVideo'],
                     editor = $scope.$eval(attrs['humVideoEditor']);
-                    
+
                 $scope._humVideo = Video.get({identifier: vId}, function initialize(video) {
                     var el = element.children()[0];
                     var elId = el.id || addId(el); // the element MUST have an ID for Popcorn AND Butter to work
@@ -75,10 +76,13 @@ HUMMEDIA_DIRECTIVES
                         });
                         return;
                     }
-                    
+
                     var pop = window.Popcorn.smart(elId, video.url, {
                         frameAnimation: true // allows for more accurate timing
                     });
+                    
+                    // the select box shows up before the video; put it at the end
+                    el.appendChild(el.getElementsByTagName('select')[0]);
 
                     //Adding Event Listeners to video element
                     
@@ -121,17 +125,45 @@ HUMMEDIA_DIRECTIVES
                         makeSpaceForAnnotations(pop.getTrackEvents());
                     });
 
-                    $scope.$watch(function(){return subtitles.exists();}, function(val){
-                        $scope._humVideo.hasSubtitles = val;
+
+                    /** @TODO: change to a promise...or something **/
+                    $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
+                        if(val) {
+                            $scope.subtitles = subtitles.subtitles.map(function(sub) {
+                              if(!sub.name) {
+                                // gets the filename
+                                sub.displayName = sub['@id'].split('/').pop();
+                              }else{
+                                sub.displayName = sub.name;
+                              }
+                              
+                              if(sub.language) {
+                                sub.displayName += " [" + sub.language + "]";
+                              }
+                              return sub;
+                            });
+                            $scope.subtitle = subtitles.current;
+                        }
                     });
+
+                    $scope.$watch('subtitle', function(selected) {
+                        if(!selected) {
+                            subtitles.disable();
+                            return;
+                        }
+                        subtitles.loadSubtitle(selected);
+                    });
+
+                    $scope.$watch(function(){return subtitles.current;},
+                        function(current) {
+                            $scope.subtitle = current;
+                        }
+                    );
 
                     $scope.$watch('annotationsEnabled', function(value){
                         value === false ? annotation.disable() : annotation.enable();
                     });
 
-                    $scope.$watch('subtitlesEnabled', function(value){
-                        value === false ? subtitles.disable() : subtitles.enable();
-                    });
 
                     // Unless we pause the movie when the page loses focus, annotations
                     // will not continue to be used even though the movie will play in

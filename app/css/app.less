@@ -159,6 +159,13 @@ strong {
     border-left-style: none;
     border-right-style: none;
 }
+#admin-video-attachments {
+  display: inline-block;
+  .admin {
+    display: block;
+    text-align: center;
+  }
+}
 .admin{
     padding:10px;
     .inline-block-top;
@@ -289,6 +296,18 @@ strong {
         float: left;
         clear: left;
     }
+    .control-buttons {
+        overflow: hidden;
+        text-align: center;
+        button:last-child {
+            float:right;
+        }
+        button:first-child {
+            float: left;
+        }
+    }
+}
+[class|=admin] {
     .form-table {
         .field-row {
             overflow: hidden;
@@ -315,16 +334,6 @@ strong {
             margin-bottom: 10px;
         }
         padding: 10px 0;
-    }
-    .control-buttons {
-        overflow: hidden;
-        text-align: center;
-        button:last-child {
-            float:right;
-        }
-        button:first-child {
-            float: left;
-        }
     }
 }
 #admin-user-select{
@@ -1164,6 +1173,7 @@ strong {
  * Modal
 ***************************/
 #blur-box{
+    z-index: 50;
     display: none;
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -1173,6 +1183,7 @@ strong {
     left: 0;
 }
 .modal{
+    z-index: 100;
     display: none;
     position: fixed;
     top: 10%;
@@ -1184,6 +1195,12 @@ strong {
     background-color: white;
     padding: 10px;
 
+    progress {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     ul {
         max-height: 300px;
         overflow-y: scroll;
@@ -1192,9 +1209,32 @@ strong {
             font-size:100%;
         }
     }
+    .admin-editor {
+        border: none;
+        select {
+            width: 74%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            float: right;
+            clear: right;
+        }
+        input[type='submit'] {
+            width: 50%;
+        }
+    }
 }
 .close-icon{
     color: red;
     float: left;
     cursor: pointer;
+}
+#subtitle-modal-submit{
+    text-align: center;
+    input{
+        float: none;
+    }
+}
+#subtitle-modal-header{
+    text-align: center;
+    font-size: 110%;
 }
