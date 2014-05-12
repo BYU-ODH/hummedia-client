@@ -44,7 +44,7 @@ HUMMEDIA_DIRECTIVES
             transclude: true,
             scope: {
                 '_humVideo': '=?humVideoObject',
-                'annotationsEnabled': '=?humVideoAnnotations',
+                'annotationsEnabled': '=?humVideoAnnotations'
             },
             template: '<div>' +
                       '   <div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}">' +
