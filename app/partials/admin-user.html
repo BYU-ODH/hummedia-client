@@ -25,9 +25,9 @@
                 <label for="email">{{"Email:" | tr}}</label><input type="email" id="email" data-ng-model="user.email">
             </div>
             <div class="control-buttons">
-                <button id="admin-user-cancel" data-ng-readonly="user.isSaving" data-ng-click="cancel()" class="icon-cancel"> {{"Cancel" | tr}}</button>
+                <button id="admin-user-cancel" data-ng-readonly="user.isSaving" data-ng-click="cancel()"> {{"Cancel" | tr}}</button>
                 <button id="admin-user-delete" data-ng-readonly="user.isSaving" data-ng-click="delete(user)" class="icon-trash"> {{"Delete" | tr}}</button>
-                <button id="admin-user-save" data-ng-readonly="user.isSaving" data-ng-click="update()"class="icon-save"> <span data-ng-switch="user.isSaving"><span data-ng-switch-default>{{"Save Changes" | tr}}</span><span data-ng-switch-when="true">{{"Saving…" | tr}}</span></span></button>
+                <button id="admin-user-save" data-ng-readonly="user.isSaving" data-ng-click="update()"class="icon-floppy"> <span data-ng-switch="user.isSaving"><span data-ng-switch-default>{{"Save Changes" | tr}}</span><span data-ng-switch-when="true">{{"Saving…" | tr}}</span></span></button>
             </div>
         </form>
     </div>

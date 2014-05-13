@@ -3,7 +3,7 @@
 <div id="video-wrapper">
     <div id="player-header">
         <div>
-            <p>{{video['ma:title']}} <i analytics="{category: 'video', label: 'description toggle'}" ng-show="video['ma:description']" class="icon-info-sign" id="show-description" onclick="$('#description').fadeToggle(800);"></i></p>
+            <p>{{video['ma:title']}} <i analytics="{category: 'video', label: 'description toggle'}" ng-show="video['ma:description']" class="icon-info-circled" id="show-description" onclick="$('#description').fadeToggle(800);"></i></p>
             <span style="font-size:80%;">{{video['ma:date']}}
             <ul class="language-list">
                 <li data-ng-repeat="lg in video['ma:hasLanguage']">{{lg | language}}</li>

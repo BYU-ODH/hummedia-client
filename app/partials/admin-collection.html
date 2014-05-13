@@ -57,7 +57,7 @@
         </div>
         <p>    
             <button data-ng-hide="createMode" id="deletebutton" data-ng-click="deleteCollection(collection_data.pid)"><i class="icon-trash"></i> {{"Delete" | tr}}</button>
-            <button type='submit' id="savebutton" data-ng-click="saveChanges()"><i class="icon-save"></i> {{"Save Changes" | tr}}</button>
+            <button type='submit' id="savebutton" data-ng-click="saveChanges()"><i class="icon-floppy"></i> {{"Save Changes" | tr}}</button>
         </p>
     </div>
     
@@ -81,7 +81,7 @@
     <div id='blur-box'> 
     </div>
     <div class='modal' id='modal-add-course'>
-        <i data-ng-click="toggleModal('#modal-add-course')" class="icon-remove-sign close-icon"></i>
+        <i data-ng-click="toggleModal('#modal-add-course')" class="icon-cancel-circled close-icon"></i>
         <h2>Add Course</h2>
         <p>Enter the course number and section<br />
            Include any one letter if necessary (358R)</p>
@@ -105,7 +105,7 @@
         </form>
     </div>
     <div class='modal' id='modal-add-video'>
-        <i data-ng-click="toggleModal('#modal-add-video')" class="icon-remove-sign close-icon"></i>
+        <i data-ng-click="toggleModal('#modal-add-video')" class="icon-cancel-circled close-icon"></i>
         <h2>Select a Video</h2>
         <div class="filter">
                 Filter: <input type="search" data-ng-model="title_filter">

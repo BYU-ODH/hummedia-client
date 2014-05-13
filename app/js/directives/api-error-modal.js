@@ -20,7 +20,7 @@ HUMMEDIA_DIRECTIVES
         return {
             restrict: 'A',
             scope: false,
-            template: '<section><div id="error-message"><menu><button ng-click="close()" class="error-exit icon-remove-sign"> {{"Close" | tr}}</button></menu><h1 class="error-code">{{code}}</h1><p ng-include="page"></p></div></section>',
+            template: '<section><div id="error-message"><menu><button ng-click="close()" class="error-exit icon-cancel-circled"> {{"Close" | tr}}</button></menu><h1 class="error-code">{{code}}</h1><p ng-include="page"></p></div></section>',
             transclude: true,
             replace: true,
             compile: function(element, attrs, transclude) {
