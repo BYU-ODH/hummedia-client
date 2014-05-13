@@ -65,7 +65,7 @@ HUMMEDIA_DIRECTIVES
                 var cId    = attrs['humVideoCollection'],
                     vId    = attrs['humVideo'],
                     editor = $scope.$eval(attrs['humVideoEditor']);
-                    
+
                 $scope._humVideo = Video.get({identifier: vId}, function initialize(video) {
                     var el = element.children()[0];
                     var elId = el.id || addId(el); // the element MUST have an ID for Popcorn AND Butter to work
@@ -82,7 +82,7 @@ HUMMEDIA_DIRECTIVES
                         });
                         return;
                     }
-                    
+
                     var pop = window.Popcorn.smart(elId, video.url, {
                         frameAnimation: true // allows for more accurate timing
                     });
