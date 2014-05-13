@@ -38,6 +38,11 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE) {
     }
 
     $scope.playbackSpeed = 1;
+    
+    $scope.resetPlaybackSpeed = function(){
+        $scope.playbackSpeed = 1;
+    };
+    
     $scope.video_tag_exists = function(){
         return $('video').length;
     };
