@@ -36,6 +36,16 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE) {
         $('#view').removeClass('text-align-center');
         $('#annotations-wrapper').css("display","inline-block"); 
     }
+
+    $scope.playbackSpeed = 1;
+    
+    $scope.resetPlaybackSpeed = function(){
+        $scope.playbackSpeed = 1;
+    };
+    
+    $scope.video_tag_exists = function(){
+        return $('video').length;
+    };
     
     $scope.toggleDescription = function() {
         $('#description').slideToggle();

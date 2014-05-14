@@ -27,7 +27,7 @@
             <div class="control-buttons">
                 <button id="admin-video-cancel" data-ng-readonly="video.isSaving" data-ng-click="cancel()"> {{"Cancel" | tr}}</button>
                 <button id="admin-video-delete" data-ng-readonly="video.isSaving" data-ng-click="delete(video)" class="icon-trash"> {{"Delete" | tr}}</button>
-                <button id="admin-video-save" data-ng-readonly="video.isSaving" data-ng-click="update()"class="icon-save"> <span data-ng-switch="video.isSaving"><span data-ng-switch-default>{{"Save Changes" | tr}}</span><span data-ng-switch-when="true">{{"Saving…" | tr}}</span></span></button>
+                <button id="admin-video-save" data-ng-readonly="video.isSaving" data-ng-click="update()"class="icon-floppy"> <span data-ng-switch="video.isSaving"><span data-ng-switch-default>{{"Save Changes" | tr}}</span><span data-ng-switch-when="true">{{"Saving…" | tr}}</span></span></button>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
             <div class="centered-bwbutton"><button class="bwbuttondark" data-ng-click="showSubtitleModal()">Add Subtitle</button></div>
         </div>
         <div class='modal' data-ctrl-id='{{subtitleModalId}}' id='modal-add-subtitle'>
-            <i data-ng-click="toggleModal('#modal-add-subtitle')" class="icon-remove-sign close-icon"></i>
+            <i data-ng-click="toggleModal('#modal-add-subtitle')" class="icon-cancel-circled close-icon"></i>
             <div class='admin-editor'>
               <h2 id="subtitle-modal-header">{{"Add Subtitle to" | tr}} {{video['ma:title']}}</h2>
               <p class=error ng-show=error>{{error}}</p>
@@ -91,7 +91,7 @@
 <div id='blur-box'> 
 </div>
 <div class='modal' id='modal-add-video'>
-    <i data-ng-click="toggleModal('#modal-add-video')" class="icon-remove-sign close-icon"></i>
+    <i data-ng-click="toggleModal('#modal-add-video')" class="icon-cancel-circled close-icon"></i>
     <h2>Select a Collection</h2>
     <div class="filter">
             Filter: <input type="search" data-ng-model="collection_filter">

@@ -15,7 +15,7 @@
  *     hum-video {string/required}: the video id to watch
  *     
  *     hum-video-collection {string/optional}: the collection ID to tie in to the video 
- * 
+ *                           
  *     hum-video-annotations {bool/optional}: whether or not to show non-required
  *                                            annotations. defaults to true.
  *                                            DOES NOT APPLY WHEN hum-video-editor
@@ -44,7 +44,8 @@ HUMMEDIA_DIRECTIVES
             transclude: true,
             scope: {
                 '_humVideo': '=?humVideoObject',
-                'annotationsEnabled': '=?humVideoAnnotations'
+                'annotationsEnabled': '=?humVideoAnnotations',
+                'playbackSpeed': '=?humVideoPlaybackSpeed'
             },
             template: '<div>' +
                       '   <div class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{_humVideo.url.join(\',\')}}">' +
@@ -164,6 +165,12 @@ HUMMEDIA_DIRECTIVES
                         value === false ? annotation.disable() : annotation.enable();
                     });
 
+       
+
+                    
+                    $scope.$watch('playbackSpeed', function(value){
+                        pop.media.playbackRate = value;
+                    });
 
                     // Unless we pause the movie when the page loses focus, annotations
                     // will not continue to be used even though the movie will play in

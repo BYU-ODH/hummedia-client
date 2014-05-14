@@ -13,10 +13,10 @@
           display: none !important;
       }
   </style>
+  <link rel="stylesheet" type="text/css" href="/css/fontello/css/custom_font_awesome.css">
   <link rel="stylesheet/less" href="/css/admin-collection.less"/>
   <link rel="stylesheet/less" href="/css/video.less"/>
   <link rel="stylesheet/less" href="/css/app.less"/>
-  <link rel="stylesheet/less" href="/css/font-awesome.less"/>
   <script src="/CONFIG.js" data-exclude-compress></script>
   <script type="text/javascript">
         //Display an error message if AngularJS doesn't load in 5 seconds
@@ -79,8 +79,8 @@
            <a href="/admin/user" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Users" | tr}}</a> 
            <a href="/admin/video/ingest" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Ingest Videos" | tr}}</a> 
         </nav>
-        <div id="warn-login" data-ng-class="!user.exists && hasCheckedUser ? 'active' : ''" data-ng-show="!user.exists && hasCheckedUser && !warningDismissed" data-ng-cloak data-ng-animate="'warn'"><i class="icon-remove-sign" ng-click="warningDismissed = true" analytics="{category: 'login-warning', label: 'dismiss'}"></i>You are not logged in. You may not be able to view all of your courses' material until you <a data-ng-click="user.prompt(true)" analytics="{category: 'login-warning', label: 'login'}">login</a>.</div>
-        <div id="warn-maintenance" data-ng-class="maintenance ? 'active' : ''" data-ng-show="maintenance" data-ng-cloak data-ng-animate="'warn'"><i class="icon-remove-sign" ng-click="maintenance = null"></i>{{maintenance}}</div>
+        <div id="warn-login" data-ng-class="!user.exists && hasCheckedUser ? 'active' : ''" data-ng-show="!user.exists && hasCheckedUser && !warningDismissed" data-ng-cloak data-ng-animate="'warn'"><i class="icon-cancel-circled" ng-click="warningDismissed = true" analytics="{category: 'login-warning', label: 'dismiss'}"></i>You are not logged in. You may not be able to view all of your courses' material until you <a data-ng-click="user.prompt(true)" analytics="{category: 'login-warning', label: 'login'}">login</a>.</div>
+        <div id="warn-maintenance" data-ng-class="maintenance ? 'active' : ''" data-ng-show="maintenance" data-ng-cloak data-ng-animate="'warn'"><i class="icon-cancel-circled" ng-click="maintenance = null"></i>{{maintenance}}</div>
     </div>
     <div ng-view id="view">
 

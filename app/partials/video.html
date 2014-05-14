@@ -3,7 +3,7 @@
 <div id="video-wrapper">
     <div id="player-header">
         <div>
-            <p>{{video['ma:title']}} <i analytics="{category: 'video', label: 'description toggle'}" ng-show="video['ma:description']" class="icon-info-sign" id="show-description" onclick="$('#description').fadeToggle(800);"></i></p>
+            <p>{{video['ma:title']}} <i analytics="{category: 'video', label: 'description toggle'}" ng-show="video['ma:description']" class="icon-info-circled" id="show-description" onclick="$('#description').fadeToggle(800);"></i></p>
             <span style="font-size:80%;">{{video['ma:date']}}
             <ul class="language-list">
                 <li data-ng-repeat="lg in video['ma:hasLanguage']">{{lg | language}}</li>
@@ -27,9 +27,19 @@
         hum-video-annotations="annotationsEnabled"
         hum-video-object="video"
         hum-video-editor="{{editorMode}}"
+        hum-video-playback-speed = "playbackSpeed"
         ></div>
     <label id="toggle-annotations" data-ng-show="video.hasAnnotations && !editorMode"><input type="checkbox" checked="checked" ng-model="annotationsEnabled"/>&nbsp;{{"Annotations" | tr}}&nbsp;</label>
     <label id="toggle-subtitles" data-ng-show="video.hasSubtitles && !editorMode"><input type="checkbox" checked="checked" ng-model="subtitlesEnabled"/>&nbsp;{{"Subtitles" | tr}}&nbsp;</label>
+    
+    <div id="playback-speed" data-ng-show="video_tag_exists()">
+        <i class="icon-turtle"></i>
+        <input type="range" ng-model="playbackSpeed" min=".5" max="2" step="any" value="1"/>
+        <i class="icon-rabbit"></i>
+        <p>
+            <button data-ng-click="resetPlaybackSpeed()" style="cursor:pointer;"> Reset Speed</button>
+        </p>
+    </div>
     
     <div id="target-4" data-butter="target">
     </div>

@@ -31,7 +31,7 @@ define( [ "util/time" ], function( util ){
         var icons = _button.getElementsByClassName('icon-eye');
         for(var i=0; i<icons.length; i++){
             icons[i].classList.add('icon-eye-open');
-            icons[i].classList.remove('icon-eye-close');
+            icons[i].classList.remove('icon-eye-off');
         }
       }
       else {
@@ -54,7 +54,7 @@ define( [ "util/time" ], function( util ){
         // Set the eye icon closed
         var icons = _button.getElementsByClassName('icon-eye');
         for(var i=0; i<icons.length; i++){
-            icons[i].classList.add('icon-eye-close');
+            icons[i].classList.add('icon-eye-off');
             icons[i].classList.remove('icon-eye-open');
         }
       }
