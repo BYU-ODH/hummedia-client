@@ -16,10 +16,6 @@
  *     
  *     hum-video-collection {string/optional}: the collection ID to tie in to the video 
  *                           
- *     hum-video-subtitles {bool/optional}: whether or not to show subtitles.
- *                                          defaults to true. DOES NOT APPLY WHEN
- *                                          hum-video-editor IS TRUE.
- *     
  *     hum-video-annotations {bool/optional}: whether or not to show non-required
  *                                            annotations. defaults to true.
  *                                            DOES NOT APPLY WHEN hum-video-editor
@@ -49,7 +45,6 @@ HUMMEDIA_DIRECTIVES
             scope: {
                 '_humVideo': '=?humVideoObject',
                 'annotationsEnabled': '=?humVideoAnnotations',
-                'subtitlesEnabled': '=?humVideoSubtitles',
                 'playbackSpeed': '=?humVideoPlaybackSpeed'
             },
             template: '<div>' +
