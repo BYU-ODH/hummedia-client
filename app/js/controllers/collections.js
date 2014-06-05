@@ -2,6 +2,10 @@
 function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
     
     $scope.all = true;
+
+    function setReady() {
+        $scope.ready = true;
+    };
     
     $scope.loadCollectionList = function(all, callback) {
         var data = {};
@@ -31,17 +35,18 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
             $scope.loadCollectionList(false, function(data) {
                 if(!data.length) {
                     $scope.showTabs = false;
-                    $scope.loadCollectionList(true);
+                    $scope.loadCollectionList(true, setReady);
                 }
                 else
                 {
                     $scope.showTabs = true;
+                    setReady();
                 }
             });
         }
         else
         {
-            $scope.loadCollectionList(true);
+            $scope.loadCollectionList(true, setReady);
         }
     });
     
