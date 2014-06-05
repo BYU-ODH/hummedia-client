@@ -2,6 +2,10 @@
 function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
     
     $scope.all = true;
+
+    function setReady() {
+        $scope.ready = true;
+    };
     
     $scope.loadCollectionList = function(all, callback) {
         var data = {};
@@ -15,10 +19,7 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
         }
         $scope.message = null; // reset message
         $scope.collections = Collection.query(data, function establishCollections(){
-            if(!$scope.collections.length){
-                $scope.message = 'There are no collections to display.';
-            }
-            else if(!$location.search().id){ //If no id is specified then show the first collection
+            if($scope.collections.length && !$location.search().id){ //If no id is specified then show the first collection
                 showVideos($scope.collections[0]['pid']);
             }
             
@@ -27,23 +28,25 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
             }
         });
     };
-    
+
     user.checkStatus().then(function initialize(){
+        $scope.loggedIn = user.exists;
         if(user.data.role === 'faculty') {
             $scope.loadCollectionList(false, function(data) {
                 if(!data.length) {
                     $scope.showTabs = false;
-                    $scope.loadCollectionList(true);
+                    $scope.loadCollectionList(true, setReady);
                 }
                 else
                 {
                     $scope.showTabs = true;
+                    setReady();
                 }
             });
         }
         else
         {
-            $scope.loadCollectionList(true);
+            $scope.loadCollectionList(true, setReady);
         }
     });
     
