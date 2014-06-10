@@ -43,8 +43,8 @@ angular.module('hummedia.filters', [])
               bSansDigits = b.slice(0, bIdx) + b.slice(bIdx + lastB.length);
 
           if(aSansDigits === bSansDigits) {
-            var intA = Number.parseInt(lastA),
-                intB = Number.parseInt(lastB);
+            var intA = parseInt(lastA,10),
+                intB = parseInt(lastB,10);
 
             return intA > intB ? 1 : intA < intB ? -1 : 0;
           }
