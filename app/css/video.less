@@ -28,6 +28,13 @@ html.video-page{
 #video-content{
     height: inherit;
     color: darkgray;
+    text-align: center;
+    &.has-annotations{
+      text-align: inherit;
+      #annotations-wrapper {
+        display: inline-block;
+      }
+    }
     hr{
         border-color: darkgray;
         border-style: dashed;
@@ -185,9 +192,6 @@ html.video-page{
     text-align: center;
     font-size: 200%;
     display: none;
-}
-.text-align-center{
-    text-align: center;
 }
 
 #playback-speed{

@@ -64,6 +64,10 @@ function AdminVideoCtrl($scope, Video, language, $routeParams, $location, Collec
             u.isSaving = false;
         });
     }
+    
+    $scope.toggleTranscript = function(coll) {
+      Video.toggleTranscript($scope.video.pid, coll['@id'], coll.transcript);
+    };
 
     $scope.getCollections = function() {
         $scope.collections = Collection.query();

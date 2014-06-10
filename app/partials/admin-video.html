@@ -40,6 +40,7 @@
                 <ul>
                     <li data-ng-repeat="course in video['ma:isMemberOf']">
                         <table id="listvideotable"><tr>
+                            <td class='admin-enable-transcript'><label data-tooltip='Enable Transcripts'><input type='checkbox' ng-model='course.transcript' ng-change='toggleTranscript(course)'><i class='icon-doc-text'></i></label></td>
                             <td>{{course['title']}}</td>
                             <td id="righttd"><button data-ng-click="annotate(course['@id'])">{{"Annotate" | tr}}</button><button data-ng-click="deleteCollection(course['@id'], course['title'])">{{"Remove" | tr}}</button></td></tr>
                         </table>

@@ -1,0 +1,96 @@
+@jump-width: 50px;
+@import "../mixins.less";
+
+.popcorn-transcript-definition {
+  
+  .popcorn-transcript-clear-definitions {
+    float: right;
+    visibility: hidden;
+    .transition(visibility linear 0.5s);
+  }
+
+  height: 0px;
+  overflow-y: auto;
+  .transition(height linear 0.5s);
+
+  &.active {
+    height: 50px;
+
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px 0;
+    .popcorn-transcript-clear-definitions {
+      visibility: visible;
+      display: inline;
+    }
+  }
+
+  dt {
+    color: white;
+    font-style: italic;
+  }
+  dd {
+    text-indent: 1em;
+    &:before {
+      content: '● ';
+    }
+  }
+}
+
+.highlight() {
+  0% { .box-shadow(0px 0px 0px yellow); }
+  50% { .box-shadow(0px 0px 10px yellow); } 
+  100% { .box-shadow(0px 0px 0px yellow); }
+}
+@-webkit-keyframes highlight-on {.highlight;}
+@-moz-keyframes highlight-on {.highlight;}
+@-ms-keyframes highlight-on {.highlight;}
+@-o-keyframes highlight-on {.highlight;}
+@keyframes highlight-on {.highlight;}
+
+@-webkit-keyframes highlight-off {.highlight;}
+@-moz-keyframes highlight-off {.highlight;}
+@-ms-keyframes highlight-off {.highlight;}
+@-o-keyframes highlight-off {.highlight;}
+@keyframes highlight-off {.highlight;}
+
+.popcorn-transcript-toggle-scroll {
+  input:not(:checked) {
+    .animation(highlight-off 1s);
+  }
+}
+
+.popcorn-transcript-cuelist {
+  height: 200px; // @TODO: fix
+  overflow-y: scroll;
+  text-align: left;
+  .popcorn-transcript-cue {
+    overflow: auto;
+    padding-bottom: 0.5em;
+    q {
+      &:hover:after {
+        .tooltip("Highlight to translate");
+      }
+      padding-left: @jump-width + 10px;
+      display: block;
+    }
+    .popcorn-transcript-jump {
+      float: left;
+      opacity: 0;
+      width: @jump-width;
+      font-size: 80%;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    &:hover .popcorn-transcript-jump {
+      opacity: 1;
+    }
+    &.active q {
+      color: white;
+    }
+  }
+}

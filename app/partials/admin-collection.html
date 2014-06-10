@@ -68,6 +68,7 @@
             <ul>
                 <li data-ng-repeat="video in collection_data.videos | orderColon:'ma:title'">
                     <table id="listvideotable"><tr>
+                            <td class='admin-enable-transcript'><label data-tooltip='Enable Transcripts'><input type='checkbox' ng-model='video.transcript' ng-change='toggleTranscript(video)'><i class='icon-doc-text'></i></label></td>
                             <td>{{video['ma:title']}}</td>
                             <td id="righttd"><button data-ng-click="annotate(video.pid, collection_data.pid)">{{"Annotate" | tr}}</button><button data-ng-click="deleteVideo(video.pid, collection_data.pid)">{{"Remove" | tr}}</button></td></tr>
                     </table>

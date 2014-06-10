@@ -16,10 +16,11 @@
  *      void ready(callback{function}) - called as soon as the annotations have finished loading
  *      
  *  Properties:
- *      bool hasNonrequired - Returns whether or not this instance has any annotations
- *                            that can be disabled.
- *      array reqIDs        - required annotation IDs -- usually identical to reqAnnotationArray
- *      array nonReqIDs     - non-required annotation IDs
+ *      bool hasNonrequired    - Returns whether or not this instance has any annotations
+ *                               that can be disabled.
+ *      array reqIDs           - required annotation IDs -- usually identical to reqAnnotationArray
+ *      array nonReqIDs        - non-required annotation IDs
+ *      bool transcriptEnabled - whether or not transcripts are turned on for this annotation
  */
 HUMMEDIA_SERVICES
     .service('AnnotationHelper', ['Annotation', 'Sanitize', '$q', function(Annotation, Sanitize, $q) {
@@ -44,6 +45,7 @@ HUMMEDIA_SERVICES
                 // full list of IDs added
                 _addedSets   = [],
                 _self        = this,
+                _transcript  = false, // whether or not transcripts are allowed
                 _ready       = $q.defer(), // relies on _reqLoad and _nonreqLoad
                 _reqLoad     = $q.defer(),
                 _nonreqLoad  = $q.defer();
@@ -134,6 +136,12 @@ HUMMEDIA_SERVICES
                     get: function() {
                         return _nonReqIDs;
                     }
+                },
+                "transcriptEnabled": {
+                    enumerable: true,
+                    get: function() {
+                        return _transcript;
+                    }
                 }
             });
             
@@ -174,6 +182,10 @@ HUMMEDIA_SERVICES
                     if(_exists(track.id)) {
                         return;
                     }
+                    // note that this ignores any negatives
+                    if(track.settings && track.settings['vcp:showTranscript']){
+                      _transcript = true;
+                    }
                     _addedSets.push(track.id);
                     track.trackEvents.forEach(function(event){
                         Sanitize(event, _isEditor);
@@ -211,7 +223,7 @@ HUMMEDIA_SERVICES
                     "collection":  collectionId,
                     "client":      "popcorn"
                 };
-                Annotation.query(params, function(){
+                Annotation.query(params, function(data){
                     _initAnnotation.apply(this, arguments);
                     _nonreqLoad.resolve();
                 });
