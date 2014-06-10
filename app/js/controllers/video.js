@@ -1,6 +1,6 @@
 'use strict';
 function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
-    Video, AnnotationHelper, SubtitleHelper, Butter, $window) {
+    Video, AnnotationHelper, SubtitleHelper, Butter, $window, config) {
 
   //Code to style the page correctly
   //
@@ -16,7 +16,6 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     
     //Add page-specific styles
     $('html').addClass('video-page');
-    $('#view').addClass('text-align-center');
     
     //Event handler for leaving the page
     $scope.$on('$locationChangeStart', function removeResizeListener() {
@@ -31,11 +30,11 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     $scope.annotationsEnabled = true;
     $scope.subtitlesEnabled = true;
     $scope.editorMode = ANNOTATION_MODE;
+    $scope.annotationsLayout = false;
     
     if($scope.editorMode){
         //In editor mode, use the annotation layout
-        $('#view').removeClass('text-align-center');
-        $('#annotations-wrapper').css("display","inline-block"); 
+        $scope.annotationsLayout = true;
     }
 
     $scope.playbackSpeed = 1;
@@ -95,14 +94,19 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']),
             subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
 
+        annotation.ready(function handleSettings() {
+          if(video['ma:hasRelatedResource'].length && annotation.transcriptEnabled) {
+              $scope.annotationsLayout = true;
+          };
+        });
+
         var makeSpaceForAnnotations = function(events){
             var whitelist = {"skip":true,"blank":true,"mutePlugin":true};
             for(var i=0; i<events.length; i++){
                 //check if plugin is on whitelist
                 if(!whitelist[events[i]["_natives"]["plugin"]]){
                     //Switch to the annotations layout
-                    $('#view').removeClass('text-align-center');
-                    $('#annotations-wrapper').css("display","inline-block");                                
+                    $scope.annotationsLayout = true;
                     break;
                 }
             }
@@ -134,12 +138,19 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             }
         });
 
-        $scope.$watch('subtitle', function(selected) {
-            if(!selected) {
+        $scope.$watch('subtitle', function(subtitle) {
+            pop.removePlugin('transcript');
+            if(!subtitle) {
                 subtitles.disable();
                 return;
             }
-            subtitles.loadSubtitle(selected);
+            annotation.ready(function handleSettings() {
+                if(annotation.transcriptEnabled) {
+                    $scope.annotationsLayout = true;
+                    subtitles.loadSubtitle(subtitle);
+                    pop.transcript({target: 'target-1', srcLang: subtitle.language, destLang: 'en', api: config.dictionary});
+                };
+            });
         });
 
         $scope.$watch(function(){return subtitles.current;},
@@ -174,4 +185,4 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     });
 }
 // always inject this in so we can later compress this JavaScript
-VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window'];
+VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig'];

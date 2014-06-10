@@ -14,6 +14,7 @@ angular.module('hummedia.config', []).
       flickrKey: c.flickrKey,
       googleAnalyticsKey: c.googleAnalyticsKey,
       googleKey: c.googleKey,
-      debugMode: c.debugMode
+      debugMode: c.debugMode,
+      dictionary: c.dictionary
     };
   });

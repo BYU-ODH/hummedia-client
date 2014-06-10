@@ -62,6 +62,7 @@ HUMMEDIA_SERVICES
                 _currentIndex = index;
                 this.enable();
 
+
                 switch(subtitle.type) {
                     case 'vtt':
                         _addVTT(index);

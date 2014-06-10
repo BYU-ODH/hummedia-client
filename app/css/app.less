@@ -1,3 +1,5 @@
+@import "mixins.less";
+
 /**************
  * Colors
 ***************/
@@ -25,165 +27,7 @@
 	z-index:999;
 }
 
-.animate-spin {
-  -moz-animation: spin 2s infinite linear;
-  -o-animation: spin 2s infinite linear;
-  -webkit-animation: spin 2s infinite linear;
-  animation: spin 2s infinite linear;
-  display: inline-block;
-}
-@-moz-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
 
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-@-webkit-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-@-o-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-@-ms-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-@keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-.icon-spin {
-  .animate-spin;
-}
-
-/*************
- * Tooltips
-*************/
-[data-tooltip]:not(.time-bar-scrubber-node):hover:after {
-    content: attr(data-tooltip);
-    border-radius: 0px 5px 5px 0px;
-    position: absolute;
-    background-color: rgba(0,0,0,.9);
-    color: white;
-    text-shadow: none;
-    font-size: 10px;
-    padding: 5px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    box-shadow: 2px 2px 5px 1px black;
-}
-
-/*************************
- * "Functions"
-**************************/
-.transition(@rules) {
-    -webkit-transition: @rules;
-    -o-transition: @rules;
-    -moz-transition: @rules;
-    -ie-transition: @rules;
-    transition: @rules;
-}
-.background-size(@rules) {
-    -webkit-background-size: @rules;
-    -moz-background-size: @rules;
-    -o-background-size: @rules;
-    background-size: @rules;
-}
-.box-shadow(@rules) {
-    -webkit-box-shadow: @rules;
-    -moz-box-shadow: @rules;
-    -ie-box-shadow: @rules;
-    -o-box-shadow: @rules;
-    box-shadow: @rules;
-}
-.appearance(@rule) {
-    -webkit-appearance: @rule;
-    -moz-appearance: @rule;
-    appearance: @rule;
-}
-.transform(@rule) {
-    -webkit-transform: @rule;
-    -moz-transform: @rule;
-    transform: @rule;
-}
-.filter(@rule) {
-    -webkit-filter: @rule;
-    -moz-filter: @rule;
-    -ie-filter: @rule;
-    filter: @rule;
-}
-.box {
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-}
-.box-align(@rule) {
-    -webkit-box-align: @rule;
-    -moz-box-align: @rule;
-    box-align: @rule;
-}
-.noscroll {
-    overflow: hidden;
-}
-.heading {
-    font-size: 150%;
-    text-shadow: 2px 2px rgba(167, 167, 167, 0.59);
-}
 /**************************
  * Main
 ***************************/
@@ -329,6 +173,9 @@ strong {
         .selectable;
         width: 100%;
         height: 30px;
+        .admin-enable-transcript {
+          width: 50px;
+        }
     }
     
     .collectioninfo{
@@ -1000,6 +847,7 @@ a {
   }
 
 }
+
 /**************
  * Error Pop-up
  **************/

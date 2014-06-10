@@ -15,6 +15,9 @@ window.HUMMEDIA_GLOBALS = {
   // Your Google API key for use with YouTube and Freebase annotations
   googleKey: 'YOUR GOOGLE API KEY HERE',
 
+  // location of dictionary for transcript translation
+  dictionary: 'http://sartre3.byu.edu:9010/api/v1/',
+
   // Whether or not to show the developer button and include other debugging resources
   debugMode: true
 };

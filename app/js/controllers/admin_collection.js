@@ -9,7 +9,7 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
         $('#blur-box').toggle();
         $(modal_id).toggle();
     }
-    
+
     //Set variables
     $scope.collections = Collection.query();
     $scope.semesters = Course.getSemesterArray();
@@ -19,7 +19,7 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
     $scope.selected_courses = {};
     
     var updateCollectionData = function(){
-        $scope.collection_data = Collection.get({identifier:$routeParams.id}, function getCoursesAsReadableStrings(){
+        $scope.collection_data = Collection.get({identifier:$routeParams.id, full: "true"}, function getCoursesAsReadableStrings(){
             $scope.collection_data.courses = Course.getReadableStringsFromArray($scope.collection_data['dc:relation']);
         });    
     };
@@ -66,6 +66,10 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
             return false;
         }
     }
+
+    $scope.toggleTranscript = function(video) {
+      Video.toggleTranscript(video.pid, $scope.collection_data.pid, video.transcript);
+    };
     
     $scope.showCollection = function(pid){
         $location.search({'id':pid});
