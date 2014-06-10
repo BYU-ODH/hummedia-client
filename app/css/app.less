@@ -461,6 +461,38 @@ strong {
     display: inline-block;
     vertical-align: top;
 }
+
+a {
+  svg {
+    position: absolute;
+    z-index: 10;
+    .cassette-text {
+      font-size:20px;
+      font-family:'Permanent Marker','Purisa',cursive;
+    }
+  }
+  &:nth-of-type(2), &:nth-of-type(6){
+    img.cassette, svg {
+      .filter(~"saturate(0) invert()") !important;
+    }
+  }
+  &:nth-of-type(3n) {
+    img.cassette, svg {
+      .filter(~"saturate(5) hue-rotate(190deg) invert()");
+    }
+  }
+  &:nth-of-type(4n) {
+    img.cassette, svg {
+      .filter(~"hue-rotate(180deg) saturate(75%)");
+    }
+  }
+  &:nth-of-type(5n) {
+    img.cassette, svg {
+      .filter(none);
+    }
+  }
+}
+
 #collections_content{
     #collection_content;
     padding-left:0px;
@@ -951,20 +983,23 @@ strong {
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
-    &[disabled] {
-        color: gray;
-        cursor: default;
-    }
-}.bwbuttondark:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #b8b8b8), color-stop(1, #ededed) );
-	background:-moz-linear-gradient( center top, #b8b8b8 5%, #ededed 100% );
-	background:-ms-linear-gradient( center top, #b8b8b8 5%, #ededed 100% );
-	background-color:#b8b8b8;
-}.bwbuttondark:active {
-	position:relative;
-	top:1px;
-}
+  &[disabled] {
+      color: gray;
+      cursor: default;
+  }
+  &:hover {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #b8b8b8), color-stop(1, #ededed) );
+    background:-moz-linear-gradient( center top, #b8b8b8 5%, #ededed 100% );
+    background:-ms-linear-gradient( center top, #b8b8b8 5%, #ededed 100% );
+    background:gradient( linear, left top, left bottom, color-stop(0.05, #b8b8b8), color-stop(1, #ededed) );
+    background-color:#b8b8b8;
+  }
+  &:active {
+    position:relative;
+    top:1px;
+  }
 
+}
 /**************
  * Error Pop-up
  **************/
@@ -1121,8 +1156,11 @@ strong {
         margin-top:10px;
         border-radius: 10px;
 }
-#admin-video-add-button{
+.admin-video-add-button{
     .bwbuttondark;
+    &:not(:last-of-type) {
+      margin-bottom: 12px;
+    }
     display: block;
     text-align: center;
 }
@@ -1152,6 +1190,20 @@ strong {
     table td.button {
        text-align: right;
     }
+}
+/***************************
+ * UPLOAD AUDIO FILES
+****************************/
+#admin-create-audio {
+  .icon-cog {
+    display: block;
+    text-align: center;
+  }
+  ul {
+    margin-top: 10px;
+    list-style-type: disc;
+    margin-left: 1em;
+  }
 }
 /***************************
  * SELECT AN ANNOTATION SET!

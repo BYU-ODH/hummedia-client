@@ -1,23 +1,23 @@
 <section class="admin" id="admin-video-select">
     <div id="listwrapper">
         <div id="list_scrolling_block">
-            <h2>{{"Videos" | tr}}</h2>
+            <h2>{{"Media" | tr}}</h2>
             <div class="filter">
                 {{"Filter:" | tr}} <input type="search" ng-model="title_filter">
             </div>
-            <div data-ng-show="!videos.length && !no_videos" class="loading_message">{{"Loading Videos..." | tr}}</div>
-            <div data-ng-show="no_videos" class="loading_message">{{"No Videos" | tr}}</div>
+            <div data-ng-show="!videos.length && !no_videos" class="loading_message">{{"Loading Media..." | tr}}</div>
+            <div data-ng-show="no_videos" class="loading_message">{{"No Media" | tr}}</div>
             <ul>
                 <li class="selectable" data-ng-repeat="v in videos | filter: {'ma:title': title_filter} | orderColon:'ma:title'" data-ng-class="{selected: v.pid == video.pid}" data-ng-click="setVideo(v)">{{v["ma:title"]}}</li>
             </ul>
         </div>
-        <a href='/admin/video/create' id="admin-video-add-button"><h2 class="ng-binding">Add Video</h2></a>
+        <a href='/admin/video/create' class="admin-video-add-button"><h2 class="ng-binding">Add Video</h2></a>
     </div>
 </section>
 <section class="admin" data-ng-show="!!video">
     <div class="admin-editor">
         <h2>{{"Modify" | tr}} {{video["ma:title"]}}</h2>
-        <button data-ng-click="previewVideo()"><i class="icon-play"></i> Preview Video</button>
+        <button data-ng-click="previewVideo()"><i class="icon-play"></i> Preview Media</button>
         <div>
             <div class="form-table">
                 <div resource-form="video" resource-model="video"></div>
@@ -104,5 +104,5 @@
     </ul>
     <br />
     <p>{{selected_collections_count}} Collections Selected</p>
-    <button class="bwbuttondark" data-ng-click="toggleModal('#modal-add-video'); addVideoToCollections()">Add Video to Selected</button>
+    <button class="bwbuttondark" data-ng-click="toggleModal('#modal-add-video'); addVideoToCollections()">Add Media to Selected</button>
 </div>

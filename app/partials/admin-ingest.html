@@ -12,7 +12,7 @@
         </div>
         <form id="ingest" ng-show="!!video">
             <input type="text" ng-model="imdb" placeholder="IMDb ID"><br>
-            <button ng-click="createVideo()" id=admin-video-add-button ng-disabled="!imdb"><h2 class="ng-binding">Create Video for {{video['ma:title']}}</h2></button>
+            <button ng-click="createVideo()" class=admin-video-add-button ng-disabled="!imdb"><h2 class="ng-binding">Create Video for {{video['ma:title']}}</h2></button>
         </div>
     </form>
 </section>

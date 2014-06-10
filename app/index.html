@@ -5,7 +5,7 @@
   <meta name="description" content="Watch videos for your BYU courses here at Hummedia">
   <!--Google Web Fonts-->
   <link rel="icon" href="favicon.ico">
-  <link href='//fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Rambla|Permanent+Marker' rel='stylesheet' type='text/css'>
   <title data-ng-bind="title">Hummedia</title>
   <link rel="stylesheet" href="/css/cssreset-min.css"/>
   <style>
@@ -75,9 +75,10 @@
         </nav>
         <nav data-ng-show="showAdminMenu && (user.canCreate || user.isTA)" id="nav-admin" data-ng-cloak>
            <a href="/admin/collection" analytics="{category: 'admin-nav', label: 'collections'}">{{"Collections" | tr}}</a>
-           <a href="/admin/video" analytics="{category: 'admin-nav', label: 'videos'}">{{"Videos" | tr}}</a>
+           <a href="/admin/video" analytics="{category: 'admin-nav', label: 'videos'}">{{"Media" | tr}}</a>
            <a href="/admin/user" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Users" | tr}}</a> 
            <a href="/admin/video/ingest" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Ingest Videos" | tr}}</a> 
+           <a href="/admin/audio/create" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Ingest Audio" | tr}}</a> 
         </nav>
         <div id="warn-login" data-ng-class="!user.exists && hasCheckedUser ? 'active' : ''" data-ng-show="!user.exists && hasCheckedUser && !warningDismissed" data-ng-cloak data-ng-animate="'warn'"><i class="icon-cancel-circled" ng-click="warningDismissed = true" analytics="{category: 'login-warning', label: 'dismiss'}"></i>You are not logged in. You may not be able to view all of your courses' material until you <a data-ng-click="user.prompt(true)" analytics="{category: 'login-warning', label: 'login'}">login</a>.</div>
         <div id="warn-maintenance" data-ng-class="maintenance ? 'active' : ''" data-ng-show="maintenance" data-ng-cloak data-ng-animate="'warn'"><i class="icon-cancel-circled" ng-click="maintenance = null"></i>{{maintenance}}</div>
@@ -146,6 +147,7 @@
   <script src="/js/services/annotation-helper.js"></script>
   <script src="/js/services/butter.js"></script>
   <script src="/js/services/sanitize.js"></script>
+  <script src="/js/services/send_file.js"></script>
   
   <!-- DIRECTIVES -->
   <script src="/js/directives.js"></script>
@@ -182,6 +184,7 @@
   <script src="/js/controllers/admin_user.js"></script>
   <script src="/js/controllers/admin_video.js"></script>
   <script src="/js/controllers/admin_create_video.js"></script>
+  <script src="/js/controllers/admin_ingest_audio.js"></script>
   <script src="/js/controllers/admin_ingest_video.js"></script>
   <script src="/js/controllers/subtitle.js"></script>
   <script src="/js/controllers/video_search.js"></script>
