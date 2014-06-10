@@ -51,7 +51,7 @@
 
             <hr>
             <div data-rights data-ng-model="collection_data['dc:rights']"></div>
-            <p style="max-width: 300px;">I certify that these videos are required assignments for this class.</p><br />
+            <p style="max-width: 300px;">I certify that these media are required assignments for this class.</p><br />
             <input data-ng-model="collection_data['authorized']" type='checkbox'> Authorize Collection<br />
             <hr>
         </div>
@@ -64,7 +64,7 @@
     <span data-ng-hide="createMode">
     <div id="listwrapper" data-ng-show="inCreateOrEditMode()" data-ng-animate=" 'blur' ">
         <div id="list_scrolling_block">
-            <h2>{{"Videos" | tr}}</h2>
+            <h2>{{"Media" | tr}}</h2>
             <ul>
                 <li data-ng-repeat="video in collection_data.videos | orderColon:'ma:title'">
                     <table id="listvideotable"><tr>
@@ -74,7 +74,7 @@
                 </li>
             </ul>
         </div>
-        <div class="centered-bwbutton"><button class="bwbuttondark" data-ng-click="getVideos(); toggleModal('#modal-add-video')">Add Video</button></div>
+        <div class="centered-bwbutton"><button class="bwbuttondark" data-ng-click="getVideos(); toggleModal('#modal-add-video')">Add Media</button></div>
     </div>
     </span>
     <!-- Modal Windows -->
@@ -106,7 +106,7 @@
     </div>
     <div class='modal' id='modal-add-video'>
         <i data-ng-click="toggleModal('#modal-add-video')" class="icon-cancel-circled close-icon"></i>
-        <h2>Select a Video</h2>
+        <h2>Select Media</h2>
         <div class="filter">
                 Filter: <input type="search" data-ng-model="title_filter">
         </div>
@@ -117,7 +117,7 @@
             </li>
         </ul>
         <br />
-        <p>{{selected_videos_count}} Videos Selected</p>
+        <p>{{selected_videos_count}} Items Selected</p>
         <button class="bwbuttondark" data-ng-click="addVideosToCollection()">Add Selected to Collection</button>
         <hr>
         <p>Can't find what you're looking for?  <a href='/admin/video' class='classic_link'>Create</a> a new video.</p>

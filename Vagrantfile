@@ -24,6 +24,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder "api/text", "/vagrant/api/text",
     :owner => "www-data", :group => "www-data"
+  
+  config.vm.synced_folder "api/movies", "/vagrant/api/movies",
+    :owner => "www-data", :group => "www-data"
 
   config.vm.provision :shell,
     :path => "vagrant_bootstrap.sh",

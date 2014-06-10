@@ -1,5 +1,5 @@
 'use strict';
-function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
+function CollectionsCtrl($scope, Collection, $routeParams, $location, user, $http) {
     
     $scope.all = true;
 
@@ -79,4 +79,4 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user) {
     };
 }
 // always inject this in so we can later compress this JavaScript
-CollectionsCtrl.$inject = ['$scope', 'Collection', '$routeParams', '$location', 'user'];
+CollectionsCtrl.$inject = ['$scope', 'Collection', '$routeParams', '$location', 'user', '$http'];

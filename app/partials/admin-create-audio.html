@@ -1,0 +1,21 @@
+<section id=admin-create-audio class=admin>
+  <div class=admin-editor>
+    <h2>Upload MP3 Files</h2>
+    <p ng-show=message>{{message}}</p>
+    <p ng-show=uploaded.length>
+      The following files have been uploaded. <a href='/admin/collection'>You may now add them to a collection.</a>
+      <ul>
+        <li ng-repeat='file in uploaded'>{{file['ma:title']}}</li>
+      </ul>
+    </p>
+    <i class='icon-spin icon-cog' ng-show=waiting title='Uploading Audio Files'></i>
+    <form ng-hide='waiting || uploaded.length' class=form-table>
+      <div class='field-row'>
+        <label>Files</label><input multiple type=file ng-disabled=waiting humfile ng-model=file accept=.mp3 name=audio[] value='Audio files'>
+      </div>
+      <div class='field-row'>
+        <input type=submit ng-click='upload()' value=Upload ng-disabled=waiting>
+      </div>
+    </form>
+  </div>
+</section>

@@ -11,7 +11,14 @@ window.HUMMEDIA_DIRECTIVES
             if(!ngModel) return;
 
             element.on('change', function() {
-                ngModel.$setViewValue(element[0].files[0]);
+                var files = element[0].files;
+                if(files.length === 1) {
+                    ngModel.$setViewValue(files[0]);
+                }
+                else
+                {
+                    ngModel.$setViewValue(files);
+                }
             });
         }
     }
