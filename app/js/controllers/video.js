@@ -1,6 +1,7 @@
 'use strict';
 function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
-    Video, AnnotationHelper, SubtitleHelper, Butter, $window, config) {
+    Video, AnnotationHelper, SubtitleHelper, Butter, $window, config,
+    $compile) {
 
   //Code to style the page correctly
   //
@@ -37,16 +38,6 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         $scope.annotationsLayout = true;
     }
 
-    $scope.playbackSpeed = 1;
-    
-    $scope.resetPlaybackSpeed = function(){
-        $scope.playbackSpeed = 1;
-    };
-    
-    $scope.video_tag_exists = function(){
-        return $('video').length;
-    };
-    
     $scope.toggleDescription = function() {
         $('#description').slideToggle();
         $('#description-toggle-icon').toggleClass('icon-minus');
@@ -70,7 +61,28 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         var pop = window.Popcorn.smart('hum-video', video.url, {
             frameAnimation: true // allows for more accurate timing
         });
-        
+        pop.media.classList.add('video-js','vjs-default-skin','vjs-big-play-centered');
+
+        if(video.type !== 'yt') {
+            var vjs_opts = {
+                playbackRates: [0.5, 1, 1.5, 2],
+                height: "100%",
+                width: null
+            };
+            videojs(pop.media, vjs_opts, function placeCaptionButton() {
+                // I'm only doing it this way because it's the easiest way at the moment.
+                // feel free to change this to something less repulsive.
+                var div = document.createElement('div');
+                div.innerHTML = '<div ng-show="subtitles" class="vjs-captions-button vjs-menu-button vjs-control">' +
+                    '<select ng-model="subtitle" ng-options="s.displayName for s in subtitles | orderBy:\'displayName\'">' +
+                      '<option value="">None</option>' +
+                    '</select>' +
+                  '</div>';
+                this.controlBar.el().appendChild(div.children[0]);
+                $compile(this.controlBar.el())($scope);
+            });
+        }
+
         //Adding Event Listeners to video element
         
         //Hide the video before the data loads
@@ -163,13 +175,6 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             value === false ? annotation.disable() : annotation.enable();
         });
 
-
-
-        
-        $scope.$watch('playbackSpeed', function(value){
-            pop.media.playbackRate = value;
-        });
-
         // Unless we pause the movie when the page loses focus, annotations
         // will not continue to be used even though the movie will play in
         // the background
@@ -185,4 +190,4 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     });
 }
 // always inject this in so we can later compress this JavaScript
-VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig'];
+VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig','$compile'];

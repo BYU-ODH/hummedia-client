@@ -21,21 +21,9 @@
 
     <div id='hum-video' class="hum-video-container" data-repaint data-butter="media" data-butter-source="{{video.url.join(',')}}">
     </div>
-    <select ng-model="subtitle" ng-show="subtitles" ng-options="s.displayName for s in subtitles | orderBy:'displayName'">
-      <option value="">No Subtitle Selected</option>
-    </select>
 
     <label id="toggle-annotations" data-ng-show="video.hasAnnotations && !editorMode"><input type="checkbox" checked="checked" ng-model="annotationsEnabled"/>&nbsp;{{"Annotations" | tr}}&nbsp;</label>
     <label id="toggle-subtitles" data-ng-show="video.hasSubtitles && !editorMode"><input type="checkbox" checked="checked" ng-model="subtitlesEnabled"/>&nbsp;{{"Subtitles" | tr}}&nbsp;</label>
-    
-    <div id="playback-speed" data-ng-show="video_tag_exists()">
-        <i class="icon-turtle"></i>
-        <input type="range" ng-model="playbackSpeed" min=".5" max="2" step="any" value="1"/>
-        <i class="icon-rabbit"></i>
-        <p>
-            <button data-ng-click="resetPlaybackSpeed()" style="cursor:pointer;"> Reset Speed</button>
-        </p>
-    </div>
     
     <div id="target-4" data-butter="target">
     </div>
