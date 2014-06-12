@@ -1,0 +1,15 @@
+/**
+ * This is an addendum to the VideoJS CSS file that should already be loaded
+ */
+.vjs-control-bar {
+  z-index: 2; // the video element's z-index is 1
+}
+.vjs-menu-button select {
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  opacity: 0;
+  font-size: 150%; // VideoJS makes this tiny
+  cursor: pointer;
+}
