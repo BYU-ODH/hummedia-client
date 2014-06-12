@@ -53,7 +53,7 @@
             <img ng-if='video["type"]=="humaudio"' class='cassette' src="/img/cassette.svg">
 
             <!-- video files -->
-            <img ng-if='video["type"]=="humvideo"' data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>
+            <img ng-if='video["type"]!="humaudio"' data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>
 
             <!-- both audio and video -->
             <cite href="/video/{{video.pid}}?collection={{collection.pid}}">{{video['ma:title']}}</cite>
