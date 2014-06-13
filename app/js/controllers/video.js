@@ -61,7 +61,9 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         var pop = window.Popcorn.smart('hum-video', video.url, {
             frameAnimation: true // allows for more accurate timing
         });
-        pop.media.classList.add('video-js','vjs-default-skin','vjs-big-play-centered');
+        pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
+        pop.media.classList.add('vjs-default-skin');
+        pop.media.classList.add('vjs-big-play-centered');
 
         if(video.type !== 'yt') {
             var vjs_opts = {
