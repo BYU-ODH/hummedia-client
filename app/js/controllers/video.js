@@ -93,13 +93,16 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         else
         {
             var el = $('#hum-video')[0];
+           
             el.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
             el.classList.add('vjs-default-skin');
             el.classList.add('vjs-big-play-centered');
+            
             vjs_opts['techOrder'] = ['youtube'];
             vjs_opts['src'] = video.url[0];
+
             var vjs = videojs("hum-video", vjs_opts, function() {
-                pop = Popcorn.HTMLVideojsVideoElement( vjs );
+                pop = Popcorn(Popcorn.HTMLVideojsVideoElement( vjs ));
                 initializePopcornDependencies( pop );
             });
         }
@@ -206,12 +209,22 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         // will not continue to be used even though the movie will play in
         // the background
         function pauseVideo() {
-            pop.pause();
+            if(pop) {
+              pop.pause();
+            }
         };
         $window.addEventListener('blur', pauseVideo);
         $scope.$on('$destroy', function cleanup() {
-            annotation.destroy();
-            pop.destroy();
+            /**
+             * TODO: these can potentially be created AFTER leaving the page.
+             * we need to destroy them then
+             */
+            if(annotation) {
+              annotation.destroy();
+            }
+            if(pop) {
+              pop.destroy();
+            }
             $window.removeEventListener('blur', pauseVideo);
         });
     });
