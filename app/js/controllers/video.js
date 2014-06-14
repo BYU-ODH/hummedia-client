@@ -74,7 +74,6 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         var vjs_opts = {
             playbackRates: [0.5, 1, 1.5, 2],
             height: "100%",
-            controls: true,
             width: null
         };
         var pop = null;
@@ -100,9 +99,11 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             
             vjs_opts['techOrder'] = ['youtube'];
             vjs_opts['src'] = video.url[0];
+            vjs_opts['controls'] = true;
 
             var vjs = videojs("hum-video", vjs_opts, function() {
                 pop = Popcorn(Popcorn.HTMLVideojsVideoElement( vjs ));
+                placeCaptionButton.apply(this);
                 initializePopcornDependencies( pop );
             });
         }
