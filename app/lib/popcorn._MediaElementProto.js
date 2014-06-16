@@ -5,6 +5,11 @@
  *   - parentNode: the element owning the media div/iframe
  *   - _eventNamespace: the unique namespace for all events
  */
+ /**
+  * @license This comes from the Popcorn.js core project
+  * (https://github.com/mozilla/popcorn-js/tree/master/wrappers/common)
+  * and is available under the same MIT license
+  */
 (function( Popcorn, document ) {
 
   /*********************************************************************************
