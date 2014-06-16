@@ -3,6 +3,9 @@
  */
 .vjs-control-bar {
   z-index: 2; // the video element's z-index is 1
+  .vjs-live-controls {
+    display: none; // takes up space, and we will probably never use it
+  }
 }
 .vjs-menu-button select {
   width: 100%;
@@ -12,4 +15,16 @@
   opacity: 0;
   font-size: 150%; // VideoJS makes this tiny
   cursor: pointer;
+}
+.video-js .vjs-big-play-button {
+  // this is set as none in the default VideoJS CSS and prevents clicking.
+  // this turns it back on
+  pointer-events: all !important;
+}
+audio ~ .vjs-control-bar {
+  // always show the control bar if we're using an audio tag, because
+  // the audio tag has very little to click on or hover over, unlike a video
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
