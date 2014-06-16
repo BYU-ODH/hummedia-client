@@ -58,135 +58,187 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             return;
         }
 
-        var pop = window.Popcorn.smart('hum-video', video.url, {
-            frameAnimation: true // allows for more accurate timing
-        });
-        pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
-        pop.media.classList.add('vjs-default-skin');
-        pop.media.classList.add('vjs-big-play-centered');
-
-        if(video.type !== 'yt') {
-            var vjs_opts = {
-                playbackRates: [0.5, 1, 1.5, 2],
-                height: "100%",
-                width: null
-            };
-            videojs(pop.media, vjs_opts, function placeCaptionButton() {
-                // I'm only doing it this way because it's the easiest way at the moment.
-                // feel free to change this to something less repulsive.
-                var div = document.createElement('div');
-                div.innerHTML = '<div ng-show="subtitles" class="vjs-captions-button vjs-menu-button vjs-control">' +
-                    '<select ng-model="subtitle" ng-options="s.displayName for s in subtitles | orderBy:\'displayName\'">' +
-                      '<option value="">None</option>' +
-                    '</select>' +
-                  '</div>';
-                this.controlBar.el().appendChild(div.children[0]);
-                $compile(this.controlBar.el())($scope);
-            });
+        function placeCaptionButton() {
+            // I'm only doing it this way because it's the easiest way at the moment.
+            // feel free to change this to something less repulsive.
+            var div = document.createElement('div');
+            div.innerHTML = '<div ng-show="subtitles" class="vjs-captions-button vjs-menu-button vjs-control">' +
+                '<select ng-model="subtitle" ng-options="s.displayName for s in subtitles | orderBy:\'displayName\'">' +
+                  '<option value="">None</option>' +
+                '</select>' +
+              '</div>';
+            this.controlBar.el().appendChild(div.children[0]);
+            $compile(this.controlBar.el())($scope);
         }
 
-        //Adding Event Listeners to video element
+        var vjs_opts = {
+            height: '80%', // even though this is in the CSS, without it native videos are sized too small
+            width: null,
+            children: {}
+        };
+        var pop = null,
+            pop_opts =  {frameAnimation: true}; // allows for more accurate timing
         
-        //Hide the video before the data loads
-        pop.media.addEventListener("loadstart",function(){
-            $('#video-loading').show();
-            $('video').hide();
-        });
-        //Hide the loading message and show the video once it loads
-        pop.media.addEventListener("loadeddata",function(){
-            $('#video-loading').fadeOut("slow");
-            $('#video-error').fadeOut("slow");
-            $('video').fadeIn("slow");
-        });
-        //Show an error message if the video is unable to load
-        pop.media.addEventListener("error",function(){
-            $('#video-loading').fadeOut("slow");
-            $('#video-error').fadeIn("slow");
-        });
+        if(video.type === 'yt') {
+            var el = $('#hum-video')[0];
+           
+            el.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
+            el.classList.add('vjs-default-skin');
+            el.classList.add('vjs-big-play-centered');
+            
+            vjs_opts['techOrder'] = ['youtube'];
+            vjs_opts['src'] = video.url[0];
+            vjs_opts['controls'] = true;
 
+            vjs_opts.children.loadingSpinner = false;
+            vjs_opts.children.bigPlayButton = false;
+            vjs_opts.children.posterImage = false;
 
-        var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']),
-            subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
+            var vjs = videojs("hum-video", vjs_opts, function() {
+                var media_el = Popcorn.HTMLVideojsVideoElement( vjs );
+                pop = Popcorn(media_el, pop_opts);
+                placeCaptionButton.apply(this);
+                initializePopcornDependents( pop );
+            });
+        }
+        else
+        {
+            // if used on YT, shows 'undefined'
+            vjs_opts['playbackRates'] = [0.5, 1, 1.5, 2];
 
-        annotation.ready(function handleSettings() {
-          if(video['ma:hasRelatedResource'].length && annotation.transcriptEnabled) {
-              $scope.annotationsLayout = true;
-          };
-        });
-
-        var makeSpaceForAnnotations = function(events){
-            var whitelist = {"skip":true,"blank":true,"mutePlugin":true};
-            for(var i=0; i<events.length; i++){
-                //check if plugin is on whitelist
-                if(!whitelist[events[i]["_natives"]["plugin"]]){
-                    //Switch to the annotations layout
-                    $scope.annotationsLayout = true;
-                    break;
-                }
+            if(video.type === 'humaudio') {
+                vjs_opts.children.bigPlayButton = false;
             }
+
+            pop = window.Popcorn.smart('hum-video', video.url, pop_opts);
+            pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
+            pop.media.classList.add('vjs-default-skin');
+            pop.media.classList.add('vjs-big-play-centered');
+        
+            videojs(pop.media, vjs_opts, placeCaptionButton);
+            initializePopcornDependents( pop );
         }
 
-        annotation.ready(function(){
-            $scope.video.hasAnnotations = annotation.hasNonrequired;
-            makeSpaceForAnnotations(pop.getTrackEvents());
-        });
+        function initializePopcornDependents( pop ) {
+          //Adding Event Listeners to video element
+         
+          if(pop.media) { 
+              //Hide the video before the data loads
+              pop.media.addEventListener("loadstart",function(){
+                  $('#video-loading').show();
+                  $('video').hide();
+              });
+              //Hide the loading message and show the video once it loads
+              pop.media.addEventListener("loadeddata",function(){
+                  $('#video-loading').fadeOut("slow");
+                  $('#video-error').fadeOut("slow");
+                  $('video').fadeIn("slow");
+              });
+              //Show an error message if the video is unable to load
+              pop.media.addEventListener("error",function(){
+                  $('#video-loading').fadeOut("slow");
+                  $('#video-error').fadeIn("slow");
+              });
+          };
 
 
-        /** @TODO: change to a promise...or something **/
-        $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
-            if(val) {
-                $scope.subtitles = subtitles.subtitles.map(function(sub) {
-                  if(!sub.name) {
-                    // gets the filename
-                    sub.displayName = sub['@id'].split('/').pop();
-                  }else{
-                    sub.displayName = sub.name;
+          var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']),
+              subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
+
+          annotation.ready(function handleSettings() {
+            if(video['ma:hasRelatedResource'].length && annotation.transcriptEnabled) {
+                $scope.annotationsLayout = true;
+            };
+          });
+
+          var makeSpaceForAnnotations = function(events){
+              var whitelist = {"skip":true,"blank":true,"mutePlugin":true, "subtitle": true};
+              for(var i=0; i<events.length; i++){
+                  //check if plugin is on whitelist
+                  if(!whitelist[events[i]["_natives"]["plugin"]]){
+                      //Switch to the annotations layout
+                      $scope.annotationsLayout = true;
+                      break;
                   }
-                  
-                  if(sub.language) {
-                    sub.displayName += " [" + sub.language + "]";
-                  }
-                  return sub;
-                });
-                $scope.subtitle = subtitles.current;
-            }
-        });
+              }
+          }
 
-        $scope.$watch('subtitle', function(subtitle) {
-            pop.removePlugin('transcript');
-            if(!subtitle) {
-                subtitles.disable();
-                return;
-            }
-            annotation.ready(function handleSettings() {
-                if(annotation.transcriptEnabled) {
-                    $scope.annotationsLayout = true;
-                    subtitles.loadSubtitle(subtitle);
-                    pop.transcript({target: 'target-1', srcLang: subtitle.language, destLang: 'en', api: config.dictionary});
-                };
-            });
-        });
+          annotation.ready(function(){
+              $scope.video.hasAnnotations = annotation.hasNonrequired;
+              makeSpaceForAnnotations(pop.getTrackEvents());
+          });
 
-        $scope.$watch(function(){return subtitles.current;},
-            function(current) {
-                $scope.subtitle = current;
-            }
-        );
 
-        $scope.$watch('annotationsEnabled', function(value){
-            value === false ? annotation.disable() : annotation.enable();
-        });
+          /** @TODO: change to a promise...or something **/
+          $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
+              if(val) {
+                  $scope.subtitles = subtitles.subtitles.map(function(sub) {
+                    if(!sub.name) {
+                      // gets the filename
+                      sub.displayName = sub['@id'].split('/').pop();
+                    }else{
+                      sub.displayName = sub.name;
+                    }
+                    
+                    if(sub.language) {
+                      sub.displayName += " [" + sub.language + "]";
+                    }
+                    return sub;
+                  });
+                  $scope.subtitle = subtitles.current;
+              }
+          });
+
+          $scope.$watch('subtitle', function(subtitle) {
+              pop.removePlugin('transcript');
+              if(!subtitle) {
+                  subtitles.disable();
+                  return;
+              }
+              if(annotation.transcriptEnabled) {
+                  annotation.ready(function handleSettings() {
+                      $scope.annotationsLayout = true;
+                      subtitles.loadSubtitle(subtitle);
+                      pop.transcript({target: 'target-1', srcLang: subtitle.language, destLang: 'en', api: config.dictionary});
+                  });
+              }else{
+                  subtitles.loadSubtitle(subtitle);
+              }
+          });
+
+          $scope.$watch(function(){return subtitles.current;},
+              function(current) {
+                  $scope.subtitle = current;
+              }
+          );
+
+          $scope.$watch('annotationsEnabled', function(value){
+              value === false ? annotation.disable() : annotation.enable();
+          });
+
+        };
+
 
         // Unless we pause the movie when the page loses focus, annotations
         // will not continue to be used even though the movie will play in
         // the background
         function pauseVideo() {
-            pop.pause();
+            if(pop) {
+              pop.pause();
+            }
         };
         $window.addEventListener('blur', pauseVideo);
         $scope.$on('$destroy', function cleanup() {
-            annotation.destroy();
-            pop.destroy();
+            /**
+             * TODO: these can potentially be created AFTER leaving the page.
+             * we need to destroy them then
+             */
+            if(annotation) {
+              annotation.destroy();
+            }
+            if(pop) {
+              pop.destroy();
+            }
             $window.removeEventListener('blur', pauseVideo);
         });
     });

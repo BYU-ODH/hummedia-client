@@ -14,8 +14,9 @@
       }
   </style>
   <link rel="stylesheet" type="text/css" href="/css/fontello/css/custom_font_awesome.css">
-  <link href="//vjs.zencdn.net/4.6/video-js.css" type="text/css" rel="stylesheet">
+  <link href="//vjs.zencdn.net/4.6.3/video-js.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet/less" href="/css/plugins/transcript.less"/>
+  <link rel="stylesheet/less" href="/css/plugins/subtitles.less"/>
   <link rel="stylesheet/less" href="/css/admin-collection.less"/>
   <link rel="stylesheet/less" href="/css/videojs.less"/>
   <link rel="stylesheet/less" href="/css/video.less"/>
@@ -93,7 +94,7 @@
   <!--[if gt IE 8]> -->
 
   <!-- LIBRARIES -->
-  <script src="//vjs.zencdn.net/4.6/video.js"></script> <!--must come before require.js-->
+  <script src="/lib/video-js/video.js" data-cdn="//vjs.zencdn.net/4.6.3/video.js"></script> <!--must come before require.js-->
   <script src="/lib/require/require.js" data-cdn="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js"></script>
   <script>
       require.config({
@@ -112,10 +113,13 @@
   <script src="/lib/angular/angular.js" data-cdn="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
   <script src="/lib/angular/angular-resource.js" data-cdn="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular-resource.min.js"></script>
   <script src="/lib/angular/angular-route.js" data-cdn="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular-route.min.js"></script>
+  <script src="/lib/video-js/plugins/youtube.js"></script>
   <script src="/js/custom-sanitize.js"></script>
   
   <!-- POPCORN -->
   <script src="/lib/popcorn-956693f8/popcorn.js"></script>
+  <script src="/lib/popcorn._MediaElementProto.js"></script>
+  <script src="/lib/popcorn.HTMLVideojsVideoElement.js"></script>
   <script src="/lib/popcorn-js/modules/parser/popcorn.parser.js" ></script>
   <script src="/lib/popcorn-js/parsers/parserVTT/popcorn.parserVTT.js" ></script>
   <script src="/lib/popcorn-js/modules/player/popcorn.player.js" ></script>
