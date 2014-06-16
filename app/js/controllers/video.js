@@ -96,7 +96,7 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             var vjs = videojs("hum-video", vjs_opts, function() {
                 pop = Popcorn(Popcorn.HTMLVideojsVideoElement( vjs ));
                 placeCaptionButton.apply(this);
-                initializePopcornDependencies( pop );
+                initializePopcornDependents( pop );
             });
         }
         else
@@ -116,10 +116,10 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             pop.media.classList.add('vjs-big-play-centered');
         
             videojs(pop.media, vjs_opts, placeCaptionButton);
-            initializePopcornDependencies( pop );
+            initializePopcornDependents( pop );
         }
 
-        function initializePopcornDependencies( pop ) {
+        function initializePopcornDependents( pop ) {
           //Adding Event Listeners to video element
          
           if(pop.media) { 
