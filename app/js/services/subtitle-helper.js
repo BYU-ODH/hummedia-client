@@ -12,7 +12,7 @@ HUMMEDIA_SERVICES
                     typeof popcornInstance.media.addTextTrack === 'function';
             
             var _media        = popcornInstance.media,
-                _currentIndex = 0, // which subtitle is currently selected
+                _currentIndex = null, // which subtitle is currently selected
                 _enabled      = true,
                 _that         = this;
             
