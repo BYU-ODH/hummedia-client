@@ -76,7 +76,8 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             width: null,
             children: {}
         };
-        var pop = null;
+        var pop = null,
+            pop_opts =  {frameAnimation: true}; // allows for more accurate timing
         
         if(video.type === 'yt') {
             var el = $('#hum-video')[0];
@@ -94,7 +95,8 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             vjs_opts.children.posterImage = false;
 
             var vjs = videojs("hum-video", vjs_opts, function() {
-                pop = Popcorn(Popcorn.HTMLVideojsVideoElement( vjs ));
+                var media_el = Popcorn.HTMLVideojsVideoElement( vjs );
+                pop = Popcorn(media_el, pop_opts);
                 placeCaptionButton.apply(this);
                 initializePopcornDependents( pop );
             });
@@ -108,9 +110,7 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
                 vjs_opts.children.bigPlayButton = false;
             }
 
-            pop = window.Popcorn.smart('hum-video', video.url, {
-                frameAnimation: true // allows for more accurate timing
-            });
+            pop = window.Popcorn.smart('hum-video', video.url, pop_opts);
             pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
             pop.media.classList.add('vjs-default-skin');
             pop.media.classList.add('vjs-big-play-centered');
@@ -152,7 +152,7 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
           });
 
           var makeSpaceForAnnotations = function(events){
-              var whitelist = {"skip":true,"blank":true,"mutePlugin":true};
+              var whitelist = {"skip":true,"blank":true,"mutePlugin":true, "subtitle": true};
               for(var i=0; i<events.length; i++){
                   //check if plugin is on whitelist
                   if(!whitelist[events[i]["_natives"]["plugin"]]){
@@ -195,13 +195,15 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
                   subtitles.disable();
                   return;
               }
-              annotation.ready(function handleSettings() {
-                  if(annotation.transcriptEnabled) {
+              if(annotation.transcriptEnabled) {
+                  annotation.ready(function handleSettings() {
                       $scope.annotationsLayout = true;
                       subtitles.loadSubtitle(subtitle);
                       pop.transcript({target: 'target-1', srcLang: subtitle.language, destLang: 'en', api: config.dictionary});
-                  };
-              });
+                  });
+              }else{
+                  subtitles.loadSubtitle(subtitle);
+              }
           });
 
           $scope.$watch(function(){return subtitles.current;},

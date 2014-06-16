@@ -1,15 +1,22 @@
 (function( Popcorn, document ) {
+  "use strict";
 
   function HTMLVideojsVideoElement( vjs ) {
     var self = new Popcorn._MediaElementProto(),
         parent = vjs.el();
 
     vjs.ready( function playerReady() {
-      self.dispatchEvent( "durationchange" );
-      self.dispatchEvent( "loadedmetadata" );
-      self.dispatchEvent( "loadeddata" );
-      self.dispatchEvent( "canplay" );
-      self.dispatchEvent( "canplaythrough" ); 
+      // otherwise Popcorn (commit SHA1 956693f8) doesn't add the appropriate
+      // event listeners until AFTER we dispatch these events.
+      // TODO: set the 'readystate' value, so we don't have to worry about
+      // stacking this correctly
+      setTimeout(function(){
+        self.dispatchEvent( "durationchange" );
+        self.dispatchEvent( "loadedmetadata" );
+        self.dispatchEvent( "loadeddata" );
+        self.dispatchEvent( "canplay" );
+        self.dispatchEvent( "canplaythrough" ); 
+      });
     });
     
     self.parentNode = parent;
