@@ -20,6 +20,7 @@
     });
     
     self.parentNode = parent;
+    self.parentElement = parent;
     self._eventNamespace = Popcorn.guid( "HTMLVideojsVideoElement::" );
     self._util.type = "Videojs";
 
@@ -50,6 +51,9 @@
       width: {
         get: function() { return vjs.width() },
         set: function(val) { return vjs.width(val); }
+      },
+      offsetWidth: {
+        get: function() { return vjs.width() },
       },
       height: {
         get: function() { return vjs.height() },
