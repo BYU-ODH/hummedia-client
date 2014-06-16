@@ -1,5 +1,9 @@
 (function() {
   /**
+   * @license VideoJS YouTube plugin from https://github.com/eXon/videojs-youtube
+   */
+
+  /**
    * @fileoverview YouTube Media Controller - Wrapper for YouTube Media API
    */
 
