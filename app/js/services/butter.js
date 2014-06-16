@@ -17,7 +17,8 @@ HUMMEDIA_SERVICES.
                         video: videoID,
                         annotationID: null,// added in mediaReady method
                         requiredAnnotationID: null,//added in mediaReady method
-                        admin: user.isSuperuser
+                        admin: user.isSuperuser,
+                        canAddRequired: true
                     },
                     ready: function(butter) {
                         EditorHelper.init(butter);
