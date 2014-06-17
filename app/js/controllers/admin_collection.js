@@ -56,6 +56,7 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
     $scope.toggleCreateCollection = function(){
         $scope.createMode = true;
         $scope.collection_data = {};
+        $scope.collection_data['dc:description'] = "";
         $location.search({'create':'true'});
     }
     
