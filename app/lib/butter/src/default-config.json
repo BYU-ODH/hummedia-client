@@ -23,12 +23,14 @@
     "plugins": [
       {
         "type": "skip",
-        "icon": "{{baseDir}}assets/plugins/skip/skip-icon.png"
+        "icon": "{{baseDir}}assets/plugins/skip/skip-icon.png",
+        "targets": ["target-0"]
       },
       {
           "type": "mutePlugin",
           "displayName": "Mute",
-          "icon": "{{baseDir}}/../../hummedia-popcorn-plugins/mutePlugin/mute.png"
+          "icon": "{{baseDir}}/../../hummedia-popcorn-plugins/mutePlugin/mute.png",
+          "targets": ["target-0"]
       },
       {
         "type": "youtube-search",
@@ -46,7 +48,8 @@
       {
         "type": "pausePlugin",
         "displayName": "Pause",
-        "icon": "{{baseDir}}assets/plugins/pausePlugin/pause-icon.png"
+        "icon": "{{baseDir}}assets/plugins/pausePlugin/pause-icon.png",
+        "targets": ["target-0"]
       },
       {
         "type": "comment",
@@ -73,11 +76,13 @@
       },
       {
         "type": "modal",
-        "displayName": "Modal"
+        "displayName": "Modal",
+        "targets": ["target-0"]
       },
       {
         "type": "blank",
-        "displayName": "Blank"
+        "displayName": "Blank",
+        "targets": ["target-0"]
       }
     ]
   },
