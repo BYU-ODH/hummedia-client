@@ -34,11 +34,11 @@ define( [], function() {
             _element.classList.add( "toggled" );
             
             //Check for right chevron icons and change them to lefties            
-            var chevrons = _element.getElementsByClassName('icon-chevron-right');
+            var chevrons = _element.getElementsByClassName('icon-right-open');
                       
             for(var i=0; i<chevrons.length; i++){
-                chevrons[i].classList.add('icon-chevron-left');
-                chevrons[i].classList.remove('icon-chevron-right');
+                chevrons[i].classList.add('icon-left-open');
+                chevrons[i].classList.remove('icon-right-open');
             }
             
           }
@@ -46,11 +46,11 @@ define( [], function() {
             _element.classList.remove( "toggled" );
 
             //Check for left chevron icons and change them to righties            
-            var chevrons = _element.getElementsByClassName('icon-chevron-left');
+            var chevrons = _element.getElementsByClassName('icon-left-open');
                       
             for(var i=0; i<chevrons.length; i++){
-                chevrons[i].classList.add('icon-chevron-right');
-                chevrons[i].classList.remove('icon-chevron-left');
+                chevrons[i].classList.add('icon-right-open');
+                chevrons[i].classList.remove('icon-left-open');
             }
 
           }
