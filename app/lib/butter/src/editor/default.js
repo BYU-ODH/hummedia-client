@@ -43,7 +43,7 @@ define( [ "text!./default.html", "editor/editor", "util/lang", "text!default-con
 
       optionsContainer.appendChild( _this.createStartEndInputs( trackEvent, _this.updateTrackEventSafe ) );
 
-      if(butter.config.value('admin')) {
+      if(butter.config.value('canAddRequired')) {
           optionsContainer.appendChild( _this.createRequiredCheckbox( trackEvent, _this.updateTrackEventSafe ) );
       }
 

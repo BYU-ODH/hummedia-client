@@ -385,8 +385,8 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
       function projectSaved() {
           count++;
 
-          // how many saves do we need before this is complete? If admin, we have to save required as well
-          required = butter.config.value('admin') ? 2 : 1;
+          // how many saves do we need before this is complete? If permitted, we have to save required as well
+          required = butter.config.value('canAddRequired') ? 2 : 1;
           if(count === required) {
               success();
           }
@@ -412,7 +412,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
       /**@TODO: Should use Annotation Resource object if possible **/
 
       // first save required annotations
-      if(butter.config.value('admin')) { // only admins can save required annotations
+      if(butter.config.value('canAddRequired')) {
           var reqUrl = baseUrl;
           if(butter.config.value('requiredAnnotationID')) {
               reqUrl +=  '/' + butter.config.value('requiredAnnotationID') + '?client=popcorn';

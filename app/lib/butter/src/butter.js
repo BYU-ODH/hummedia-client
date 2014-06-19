@@ -241,7 +241,8 @@ window.Butter = {
         trackEvent = track.addTrackEvent({
           popcornOptions: popcornOptions,
           type: type,
-          isAdmin: _this.config.value('admin')
+          isAdmin: _this.config.value('admin'),
+          canAddRequired: _this.config.value('canAddRequired'),
         });
 
         _this.deselectAllTrackEvents();
