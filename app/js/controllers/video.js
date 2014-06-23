@@ -74,24 +74,50 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         var vjs_opts = {
             height: '80%', // even though this is in the CSS, without it native videos are sized too small
             width: null,
-            children: {},
-            playbackRates: [0.5, 1, 1.5, 2] // if used on YT, shows 'undefined'
+            children: {}
         };
         var pop = null,
             pop_opts =  {frameAnimation: true}; // allows for more accurate timing
-       
-        pop = window.Popcorn.smart('hum-video', video.url, pop_opts);
-        pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
-        pop.media.classList.add('vjs-default-skin');
-        pop.media.classList.add('vjs-big-play-centered');
-    
-        if(video.type === 'humaudio') {
+        
+        if(video.type === 'yt') {
+            var el = $('#hum-video')[0];
+           
+            el.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
+            el.classList.add('vjs-default-skin');
+            el.classList.add('vjs-big-play-centered');
+            
+            vjs_opts['techOrder'] = ['youtube'];
+            vjs_opts['src'] = video.url[0];
+            vjs_opts['controls'] = true;
+
+            vjs_opts.children.loadingSpinner = false;
             vjs_opts.children.bigPlayButton = false;
+            vjs_opts.children.posterImage = false;
+
+            var vjs = videojs("hum-video", vjs_opts, function() {
+                var media_el = Popcorn.HTMLVideojsVideoElement( vjs );
+                pop = Popcorn(media_el, pop_opts);
+                placeCaptionButton.apply(this);
+                initializePopcornDependents( pop );
+            });
         }
-        if(video.type !== 'yt') {
+        else
+        {
+            // if used on YT, shows 'undefined'
+            vjs_opts['playbackRates'] = [0.5, 1, 1.5, 2];
+
+            if(video.type === 'humaudio') {
+                vjs_opts.children.bigPlayButton = false;
+            }
+
+            pop = window.Popcorn.smart('hum-video', video.url, pop_opts);
+            pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
+            pop.media.classList.add('vjs-default-skin');
+            pop.media.classList.add('vjs-big-play-centered');
+        
             videojs(pop.media, vjs_opts, placeCaptionButton);
+            initializePopcornDependents( pop );
         }
-        initializePopcornDependents( pop );
 
         function initializePopcornDependents( pop ) {
           //Adding Event Listeners to video element
