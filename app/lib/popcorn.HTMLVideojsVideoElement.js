@@ -18,7 +18,7 @@
         self.dispatchEvent( "canplaythrough" ); 
       });
       
-      var current_time = 0;
+      var current_time = null;
       vjs.on("timeupdate",function(){
           if(current_time!==vjs.currentTime()){
             current_time = vjs.currentTime();
@@ -30,7 +30,6 @@
     });
     
     self.parentNode = parent;
-    self.parentElement = parent;
     self._eventNamespace = Popcorn.guid( "HTMLVideojsVideoElement::" );
     self._util.type = "Videojs";
 
