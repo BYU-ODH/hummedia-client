@@ -17,6 +17,16 @@
         self.dispatchEvent( "canplay" );
         self.dispatchEvent( "canplaythrough" ); 
       });
+      
+      var current_time = 0;
+      vjs.on("timeupdate",function(){
+          if(current_time!==vjs.currentTime()){
+            current_time = vjs.currentTime();
+            self.dispatchEvent("timeupdate");
+          }
+          
+      });
+      
     });
     
     self.parentNode = parent;
