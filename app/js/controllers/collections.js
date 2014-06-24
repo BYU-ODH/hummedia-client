@@ -3,6 +3,20 @@ function CollectionsCtrl($scope, Collection, $routeParams, $location, user, $htt
     
     $scope.all = true;
 
+    // show courses as a list?
+    $scope.list = localStorage['hummedia.course.listView'];
+
+    $scope.setListView = function(enabled) {
+      $scope.list = enabled;
+      if(enabled) {
+        localStorage['hummedia.course.listView'] = true;
+      }
+      else
+      {
+        localStorage.removeItem('hummedia.course.listView');
+      }
+    };
+
     function setReady() {
         $scope.ready = true;
     };

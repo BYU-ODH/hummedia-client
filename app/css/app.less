@@ -517,6 +517,9 @@ a {
             width:27px;
         }
 }
+.collection_blocks ul {
+  list-style-type: none;
+}
 .video_blocks{
     width: 300px;
     vertical-align: top;
@@ -535,6 +538,52 @@ a {
         width: 300px;
         height: 200px;
     }
+}
+.collection_blocks {
+  .list-view {
+    display: table;
+    width: 100%;
+
+    .video_blocks {
+      width: auto;
+      display: table-row;
+      text-align: left;
+
+      &:not(:last-child) {
+        margin-bottom: 1em;
+      }
+
+      & > * {
+        display: table-cell;
+        vertical-align: middle;
+        font-style: normal;
+        color: black;
+        font-size: inherit;
+      }
+      img {
+        width: 3em;
+        height: 2em;
+      }
+    }
+  }
+}
+#collection-controls {
+  .flexbox;
+  padding: 0px 5px;
+}
+#list-view-buttons {
+  .order(1);
+  .flex(auto 1);
+  text-align: left;
+}
+#collection-info {
+  .order(2);
+  .flex(auto 2);
+}
+#collection-film-filter {
+  .order(3);
+  .flex(auto 1);
+  text-align: right;
 }
 .video_list{
     div{
