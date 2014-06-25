@@ -7,7 +7,8 @@
 
 var fs = require('fs');
     ncp = require('ncp').ncp,
-    htmlmin = require('html-minifier');
+    htmlmin = require('html-minifier'),
+    _path = require('path');
 
 var output_dir = __dirname + "/../production/"
     app_dir = __dirname + "/../app/",
@@ -78,14 +79,18 @@ function compressCSS(window, callback) {
             $(this).before("<link rel='stylesheet' href='/css/app.min." + versionstamp + ".css'></link>");
         }
         
-        total_css += fs.readFileSync(app_dir + href);
+        var css = fs.readFileSync(app_dir + href);
+
+        // fix any imports to absolute paths
+        var css = css.toString().replace(/@import ["'](.*)["'];/,"@import '" +  _path.dirname(app_dir + href) + "/$1';");
+        total_css += css;
 
         // remove old stylesheet from HTML and from production directory
         fs.unlink(output_dir + href);
         $(this).remove();
     });
     
-    less.render(total_css, {yuicompress: true}, function(e, css) {
+    less.render(total_css, {compress: true}, function(e, css) {
             fs.writeFile(minified_css, css);
             callback();
     });

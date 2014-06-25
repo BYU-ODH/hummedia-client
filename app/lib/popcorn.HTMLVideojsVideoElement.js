@@ -62,7 +62,7 @@
         set: function(val) { return vjs.width(val); }
       },
       offsetWidth: {
-        get: function() { return vjs.width() },
+        get: function() { return vjs.width() }
       },
       height: {
         get: function() { return vjs.height() },

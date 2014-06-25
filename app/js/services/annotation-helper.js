@@ -32,9 +32,9 @@ HUMMEDIA_SERVICES
                 throw "Annotation Helper must be called with the 'new' keyword.";
             }
             if(!popcornInstance instanceof window.Popcorn && !_isEditor) {
-                throw "One of two errors ocurred: \
-                       popcornInstance not a valid instance of Popcorn OR \
-                       not a valid instance of Butter";
+                throw "One of two errors ocurred: " +
+                      "popcornInstance not a valid instance of Popcorn OR " +
+                      "not a valid instance of Butter";
             }
             
             var _enabled     = [], // array of objects
