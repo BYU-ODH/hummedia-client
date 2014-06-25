@@ -93,10 +93,14 @@ function AdminCollectionCtrl($scope, Collection, Video, $routeParams, $location,
         
         $scope.course_string = Course.courseFieldsToString($scope.course_department, $scope.course_number, $scope.section_number, $scope.collection_data.semester);
 
-        
+       
+        // TODO: copying parameters makes it impossible to update the form
+        // without also updating this controller. What happens when the code
+        // is changed to just save $scope.collection_data rather than params?
         var params = new Object();
             params['dc:title'] = $scope.collection_data['dc:title'];
             params['dc:description'] = $scope.collection_data['dc:description'];
+            params['dc:creator'] = $scope.collection_data['dc:creator'];
             params['authorized'] = $scope.collection_data['authorized'];
             params['semester'] = $scope.collection_data['semester'];
         Collection.save(params, function(data){
