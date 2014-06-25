@@ -23,42 +23,62 @@
     </div>
 <div ng-show=collections.length class='collection_blocks'>
     <div class='collection_toggle'>
-        <div>
-            <h2>{{collection['dc:title']}}</h2>
-            <p data-ng-bind-html="collection['dc:description']"></p>
-                        
-            <div class="filter" data-ng-show="!collection.isLoading">
-                {{"Search:" | tr}} <input type="search" ng-model="video_filter">
+        <div id='collection-controls' ng-show=ready>
+            <div id='list-view-buttons'>
+              <button class='list-toggle' title='grid view' ng-click='setListView(false)' ng-disabled=!list>
+                <i class='icon-th'></i>
+              </button>
+              <button class='list-toggle' title='list view' ng-click='setListView(true)' ng-disabled=list>
+                <i class='icon-list'></i>
+              </button>
+            </div>
+
+            <div id='collection-info'>
+              <h2>{{collection['dc:title']}}</h2>
+              <p data-ng-bind-html="collection['dc:description']"></p>
+            </div>
+            
+            <div id='collection-film-filter' class="filter" data-ng-show="!collection.isLoading">
+               <input type="search" placeholder='Filter…' ng-model="video_filter">
             </div>         
             
             <i class='icon-cog icon-spin' data-ng-show="collection.isLoading" title="Loading videos"></i>
-            
-            <hr>
-        
         </div>
-        <a title="{{video['ma:description']}}" href="/video/{{video.pid}}?collection={{collection.pid}}" data-ng-repeat="video in collection['videos'] | filter: video_filter | orderColon:'ma:title'" class="video_blocks plain_link">
-            <!-- audio files -->
-            <svg viewBox="0 0 300 200" width=300 height=200 ng-if='video["type"]=="humaudio"' xmlns="http://www.w3.org/2000/svg" version="1.1">
-                <path
-                   style="fill:none;stroke:none"
-                   d="m 23.99,43.29 c 34.75,-5.93 69.94,-9.37 105.19,-10.28 47.89,-1.23 95.91,2.21 143.13,10.28"
-                   id="path3213"
-                   />
-                <text
-                   xml:space="preserve"
-                   transform="translate(1.47,18.87)"><textPath
-                     xlink:href="#path3213"
-                     class="cassette-text">{{video['ma:title']}}</textPath></text>
-            </svg>
-            <img ng-if='video["type"]=="humaudio"' class='cassette' src="/img/cassette.svg">
+        <hr>
+        <ul ng-class="{'list-view': list}">
+          <li data-ng-repeat="video in collection['videos'] | filter: video_filter | orderColon:'ma:title'" class=video_blocks>
+            <a title="{{video['ma:description']}}" href="/video/{{video.pid}}?collection={{collection.pid}}">
+                <!-- audio files -->
+                <svg viewBox="0 0 300 200" width=300 height=200 ng-if='!list && video["type"]=="humaudio"' xmlns="http://www.w3.org/2000/svg" version="1.1">
+                    <path
+                       style="fill:none;stroke:none"
+                       d="m 23.99,43.29 c 34.75,-5.93 69.94,-9.37 105.19,-10.28 47.89,-1.23 95.91,2.21 143.13,10.28"
+                       id="path3213"
+                       />
+                    <text
+                       xml:space="preserve"
+                       transform="translate(1.47,18.87)"><textPath
+                         xlink:href="#path3213"
+                         class="cassette-text">{{video['ma:title']}}</textPath></text>
+                </svg>
+                <img ng-if='video["type"]=="humaudio"' class='cassette' src="/img/cassette.svg">
 
-            <!-- video files -->
-            <img ng-if='video["type"]!="humaudio"' data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>
+                <!-- video files -->
+                <img ng-if='video["type"]!="humaudio" && !list' data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" scroll-load="{{video['ma:image'][0]['poster']}}" onerror="this.src='img/vhs.svg'"/>
 
-            <!-- both audio and video -->
-            <cite href="/video/{{video.pid}}?collection={{collection.pid}}">{{video['ma:title']}}</cite>
-            <small>{{video['ma:date']}} [{{video['ma:hasLanguage'][0] | language}}]</small>
-        </a>
+                <!-- no scroll-load for list videos -->
+                <img ng-if='video["type"]!="humaudio" && list' data-ng-src="{{video['ma:image'][0]['thumb'] || 'img/vhs.svg'}}" onerror="this.src='img/vhs.svg'"/>
+
+            </a>
+            <a href="/video/{{video.pid}}?collection={{collection.pid}}" class="plain_link">
+                <!-- both audio and video -->
+                <cite href="/video/{{video.pid}}?collection={{collection.pid}}">{{video['ma:title']}}</cite>
+            </a>
+            <a href="/video/{{video.pid}}?collection={{collection.pid}}" class="plain_link">
+                <small>{{video['ma:date']}} [{{video['ma:hasLanguage'][0] | language}}]</small>
+            </a>
+          </li>
+        </ul>
     </div>
 </div> 
 </div>
