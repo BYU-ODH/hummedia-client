@@ -194,6 +194,14 @@ define([ "util/lang", "util/keys", "util/time", "./base-editor", "ui/widget/tool
         }
       }
 
+      // if there is no target to select, don't show a select box
+      if(targets.length <= 1) {
+        propertyRootElement.style.display = 'none';
+      }
+      else {
+        propertyRootElement.style.display = 'inherit';
+      }
+
       return propertyRootElement;
     };
 
