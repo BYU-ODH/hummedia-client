@@ -11,8 +11,6 @@ function AdminIngestCtrl($scope, Video, $location) {
         var imdbID = $scope.imdb,
             filepath = $scope.video['ma:title'];
 
-        $scope.video.url = [imdbID + ".mp4", imdbID + ".webm"];
-
         $scope.creating = true;
         Video.save($scope.video,function(data){
             Video.ingest(filepath, data.pid, imdbID);
