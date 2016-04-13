@@ -12,6 +12,7 @@ define([ "editor/editor", "editor/base-editor",
     var _rootElement = rootElement,
         _projectTabs = _rootElement.querySelectorAll( ".project-tab" ),
         _saveButton  = _rootElement.querySelector("#butter-save-changes"),
+        _saveCoursesButton = _rootElement.querySelector("#butter-save-course-changes"),
         _this = this,
         _numProjectTabs = _projectTabs.length,
         _project,
@@ -85,6 +86,17 @@ define([ "editor/editor", "editor/base-editor",
         _saveButton.onclick = function() {
             _project.save();
         };
+
+        _saveCoursesButton.onclick = function() {
+            collections = _project.saveCourses();
+            var foo = collections.query({},function(){
+              for(var i=0; i<foo.length; i++){
+                $('#courses-select').append($("<option></option>").text(foo[i]['dc:title']));
+              }
+              $('select').chosen({"placeholder_text_multiple":"No Courses Selected"})
+
+            });
+        }
 
       },
       close: function() {

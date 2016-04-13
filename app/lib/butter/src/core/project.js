@@ -327,6 +327,10 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
       }
     };
 
+    _this.saveCourses = function() {
+      return butter.config.value('Collection');
+    }
+
     // Save and Publish a project.  Saving only happens if project data needs
     // to be saved (i.e., it has been changed since last save, or was never
     // saved before).
@@ -395,7 +399,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
       // clone data into a required object and an nonrequired object
       var required = JSON.parse(JSON.stringify(_this.data));
       var nonrequired = JSON.parse(JSON.stringify(_this.data));
-      
+
       var baseUrl = butter.config.value('annotationUrl');
           baseUrl = baseUrl.replace(/\\:/g, ':');
 
@@ -404,7 +408,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
 
       // strip required fields from the nonrequired object
       stripEventsByOption(nonrequired, '__humrequired', true);
-      
+
       function failure(xhr) {
           alert("There was an error saving your project. The web server returned: " + xhr['status']);
       }
@@ -425,15 +429,15 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
                   var updatedConfig = Config.parse(JSON.stringify({requiredAnnotationID: data.media[0].tracks[0].id}));
                   butter.config.override(updatedConfig);
                   projectSaved(data);
-              }, failure); 
+              }, failure);
           }
       }
-      
+
       // then save all other annotations
       var defUrl = baseUrl;
       if(butter.config.value('annotationID')) {
           defUrl +=  '/' + butter.config.value('annotationID') + '?client=popcorn';
-          xhr.patch( defUrl, nonrequired, projectSaved, failure); 
+          xhr.patch( defUrl, nonrequired, projectSaved, failure);
       }
       else
       {
@@ -442,7 +446,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
               var updatedConfig = Config.parse(JSON.stringify({annotationID: data.media[0].tracks[0].id}));
               butter.config.override(updatedConfig);
               projectSaved(data);
-          }, failure); 
+          }, failure);
       }
     };
   }
