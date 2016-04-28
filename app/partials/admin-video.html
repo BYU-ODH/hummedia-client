@@ -99,7 +99,7 @@
     </div>
     <hr>
     <ul>
-        <li data-ng-repeat="collection in collections | filter: {'dc:title': collection_filter}">
+        <li data-ng-repeat="collection in collections | filter: {'dc:title': collection_filter} | orderColon:'dc:title'">
             <label><input data-ng-model="selected_collections[collection.pid]" type='checkbox' value='{{collection.pid}}'/> {{collection["dc:title"]}}</label>
         </li>
     </ul>
