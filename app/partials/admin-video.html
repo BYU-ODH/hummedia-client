@@ -22,6 +22,11 @@
             <div class="form-table">
                 <div resource-form="video" resource-model="video"></div>
             </div>
+			<hr>
+			<div class="form-table">
+				<span>Last Viewed:</span>
+				<span>{{__rObj['dc:lastviewed'] ? __rObj['dc:lastviewed'] : 'Never'}}</span>
+			</div>
             <hr>
             <div data-rights data-ng-model="video['dc:rights']"></div>
             <div class="control-buttons">
