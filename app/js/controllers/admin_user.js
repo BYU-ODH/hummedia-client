@@ -62,9 +62,9 @@ function AdminUserCtrl($scope, account, $routeParams, $location) {
         }
         var query = $scope.nameQuery.toLowerCase();
 
-		var full = user.fullname || '';
-		var first = user.firstname || '';
-		var last = user.lastname || '';
+        var full = user.fullname || '';
+        var first = user.firstname || '';
+        var last = user.lastname || '';
 
         return full.toLowerCase().indexOf(query) !== -1
                || (last + ", " + first).toLowerCase().indexOf(query) !== -1
