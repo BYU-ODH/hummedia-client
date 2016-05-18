@@ -62,9 +62,12 @@ function AdminUserCtrl($scope, account, $routeParams, $location) {
         }
         var query = $scope.nameQuery.toLowerCase();
 
-        return user.fullname.toLowerCase().indexOf(query) !== -1
-               ||
-               (user.lastname + ", " + user.firstname).toLowerCase().indexOf(query) !== -1
+        var full = user.fullname || '';
+        var first = user.firstname || '';
+        var last = user.lastname || '';
+
+        return full.toLowerCase().indexOf(query) !== -1
+               || (last + ", " + first).toLowerCase().indexOf(query) !== -1
     };
 };
 AdminUserCtrl.$inject = ['$scope','Account', '$routeParams', '$location'];
