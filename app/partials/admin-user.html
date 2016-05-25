@@ -6,7 +6,7 @@
                 Filter: <input placeholder="John Doe" type="search" ng-model="nameQuery">
             </div>
             <ul>
-                <li class="selectable" data-ng-repeat="u in users | filter: nameFilter | orderBy:'lastname':false" data-ng-class="{selected: u._id == user._id}" data-ng-click="setUser(u)">{{u.lastname}}, {{u.firstname}}</li>
+              <li class="selectable" data-ng-repeat="u in users | filter: nameFilter | orderBy:'lastname':false" data-ng-class="{selected: u._id == user._id}" data-ng-click="setUser(u)"><i class="fa fa-search icon-search see-enrollments hover" title="See enrollments" ng-click=enrollments(u)></i>{{u.lastname}}, {{u.firstname}}</li>
             </ul>
         <div>
     </div>

@@ -239,11 +239,17 @@ strong {
         button{
             visibility: hidden;
         }
+        &>.hover {
+          visibility: hidden;
+        }
         &:hover{
             background-color: lightblue;
             border-color: lightblue;
             button{
                 visibility: visible;
+            }
+            &>.hover {
+              visibility: visible;
             }
         }
         .selected, &.selected{

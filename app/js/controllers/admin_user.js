@@ -17,6 +17,12 @@ function AdminUserCtrl($scope, account, $routeParams, $location) {
         copy.$get().success(function(){copy = null});
     }
 
+    $scope['enrollments'] = function(user) {
+      user.$enrollments({'_id': user._id}).then(function(data){
+        window.open().document.write(JSON.stringify(data));
+      });
+    };
+
     // remember, delete is a reserved word, so we need to do this for compilation
     $scope['delete'] = function(user) {
         if(!confirm("Are you sure you want to delete " + user.fullname + "(ID: " + user._id + ")?")) {
