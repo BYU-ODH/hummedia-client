@@ -272,7 +272,7 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
              * TODO: these can potentially be created AFTER leaving the page.
              * we need to destroy them then
              */
-            if(typeof annotation === 'undefined' || annotation) {
+            if (annotation) {
               annotation.destroy();
             }
             if(pop) {
