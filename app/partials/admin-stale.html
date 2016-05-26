@@ -1,0 +1,16 @@
+<section class="admin" id="admin-video-stale">
+	<div id="listwrapper">
+		<div id="list_scrolling_block">
+			<!-- <h2>{{Stale Media | tr}}</h2> -->
+			<h2>{{"Stale Media" | tr}}</h2>
+			<div class="filter">
+				{{"Filter:" | tr}} <input type="search" ng-model="title_filter">
+			</div>
+			<div data-ng-show="!videos.length && !no_videos" class="loading_message">{{"Loading Media..." | tr}}</div>
+			<div data-ng-show="no_videos" class="loading_message">{{"No Media" | tr}}</div>
+			<ul>
+				<li data-ng-repeat="v in videos | filter: {'ma:title': title_filter}" data-ng-clss="{selected: v.pid == video.pid}" data-ng-click="alert(v)">{{v["ma:title"]}}</li>
+			<ul>
+		</div>
+	</div>
+</section>
