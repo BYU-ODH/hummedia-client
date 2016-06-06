@@ -5,6 +5,27 @@
 <div class="field-row"><textarea id="input-vid-description" ng-model="__rObj['ma:description']"></textarea></div>
 <div class="field-row"><label for="input-vid-language">Languages:</label></div>
 <div class="field-row"><div select-language-multi ng-model="__rObj['ma:hasLanguage']"></div></div>
+
+<hr />
+<div class="field-row">
+	<label for="input-hlr">Owned by HLR?:</label>
+	<input type="checkbox" id="input-hlr" ng-model="__rObj['dc:hlr']"/>
+</div>
+<div ng-show="__rObj['dc:hlr']" class="field-row">
+	<label for="input-callnumber">Call Number:</label>
+	<input id="input-callnumber" />
+</div>
+<div ng-show="!__rObj['dc:hlr']" class="field-row">
+	<label for="input-expiration-date">Expiration Year:</label>
+	<input type="number" id="input-expiration-date" ng-model="__rObj['dc:expirationdate']" min="2000" placeholder="2015"/>
+	<label for="input-vid-physicallocation">Physical Location:</label>
+	<textarea id="input-vid-physicallocation" ng-model="__rObj['dc:physicallocation']" placeholder="Plase indicate who owns this video, its location, and any special instructions or circumstances regarding this video."></textarea>
+</div>
+<div class="form-table">
+	<span>Last Viewed:</span>
+	<span>{{__rObj['dc:lastviewed'] ? __rObj['dc:lastviewed'] : 'Never'}}</span>
+</div>
+<hr />
 <div class="field-row"><label for="input-vid-owner">Owner's NetID:</label><input name="input-vid-owner" ng-model="__rObj['dc:creator']" /></div>
 <div class="field-row">
     <label for="input-vid-rights">Availability:</label>
