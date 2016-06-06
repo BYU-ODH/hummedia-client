@@ -13,7 +13,7 @@
 </div>
 <div ng-show="__rObj['dc:hlr']" class="field-row">
 	<label for="input-callnumber">Call Number:</label>
-	<input id="input-callnumber" />
+    <input id="input-callnumber" ng-model="__rObj['dc:callnumber']"/>
 </div>
 <div ng-show="!__rObj['dc:hlr']" class="field-row">
 	<label for="input-expiration-date">Expiration Year:</label>
