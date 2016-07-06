@@ -1,7 +1,7 @@
 'use strict';
 function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     Video, AnnotationHelper, SubtitleHelper, Butter, $window, config,
-    $compile, analytics) {
+    $compile, analytics, $http) {
 
   //Code to style the page correctly
   //
@@ -109,6 +109,10 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             if(video.type === 'humaudio') {
                 vjs_opts.children.bigPlayButton = false;
             }
+
+			// Simple PUT request to update the lastviewed date of the video.
+			var req_conf = {method: 'PUT', url: config.apiBase + '/video/' + vid + '/view'};
+			$http(req_conf).then(function(response) {});
 
             pop = window.Popcorn.smart('hum-video', video.url, pop_opts);
             pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
@@ -272,7 +276,7 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
              * TODO: these can potentially be created AFTER leaving the page.
              * we need to destroy them then
              */
-            if (annotation) {
+            if (typeof annotation === 'undefined' || annotation) {
               annotation.destroy();
             }
             if(pop) {
@@ -283,4 +287,4 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     });
 }
 // always inject this in so we can later compress this JavaScript
-VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig','$compile', 'analytics'];
+VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig','$compile', 'analytics', '$http'];
