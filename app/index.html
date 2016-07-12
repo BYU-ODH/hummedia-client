@@ -94,7 +94,10 @@
   <!--[if gt IE 8]> -->
 
   <!-- LIBRARIES -->
+  <!--
   <script src="/lib/video-js/video.dev.js" data-exclude-compress></script> <!--must come before require.js-->
+  -->
+  <script src='https://vjs.zencdn.net/5.10.4/video.js'></script>
   <script src="/lib/require/require.js" data-cdn="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js"></script>
   <script>
       require.config({
@@ -200,6 +203,8 @@
   <script src="/js/controllers/video_search.js"></script>
   <script src="/js/controllers/video.js"></script>
   <script src="/js/controllers/developer.js" data-remove="true"></script>
+
+  <script src="/js/controllers/altvid.js"></script>
 <!--[endif]> -->
 </body>
 </html>

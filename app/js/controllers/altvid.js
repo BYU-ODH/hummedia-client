@@ -1,10 +1,11 @@
 'use strict';
-function AltVidCtrl($scope, $routeParams, ANNOTATION_MODE,
-    Video, AnnotationHelper, SubtitleHelper, Butter, $window, config,
-    $compile, analytics, $http) {
+function AltVidCtrl($scope, $routeParams, 
+        Video, AnnotationHelper, SubtitleHelper, Butter, $window, config,
+        Annotation,
+        $compile, analytics, $http) {
 
-  //Code to style the page correctly
-  //
+    //Code to style the page correctly
+    //
     function resizeView(){
         var new_height = $(window).height()-$('#nav-wrapper').height();
         $('#view').css("height", new_height);
@@ -30,13 +31,6 @@ function AltVidCtrl($scope, $routeParams, ANNOTATION_MODE,
 
     $scope.annotationsEnabled = true;
     $scope.subtitlesEnabled = true;
-    $scope.editorMode = ANNOTATION_MODE;
-    $scope.annotationsLayout = false;
-
-    if($scope.editorMode){
-        //In editor mode, use the annotation layout
-        $scope.annotationsLayout = true;
-    }
 
     $scope.toggleDescription = function() {
         $('#description').slideToggle();
@@ -45,38 +39,10 @@ function AltVidCtrl($scope, $routeParams, ANNOTATION_MODE,
     };
 
     $scope.video = Video.get({identifier: vid}, function initialize(video) {
-        /*
-        if(ANNOTATION_MODE) {
-            Butter(vid, coll, video['ma:hasPolicy']);
-            // this is a fix that destroys the Butter-specific DOM infestation
-            $scope.$on('$locationChangeStart', function(ev, newUrl) {
-                ev.preventDefault();
-                if(confirm("Are you sure you want to navigate away from this page? Your unsaved work will be lost.")) {
-                    $window.location = newUrl;
-                }
-            });
-            return;
-        }
-        */
-
-        /*
-        function placeCaptionButton() {
-            // I'm only doing it this way because it's the easiest way at the moment.
-            // feel free to change this to something less repulsive.
-            var div = document.createElement('div');
-            div.innerHTML = '<div ng-show="subtitles" class="vjs-captions-button vjs-menu-button vjs-control">' +
-                '<select ng-model="subtitle" ng-options="s.displayName for s in subtitles | orderBy:\'displayName\'">' +
-                  '<option value="">None</option>' +
-                '</select>' +
-              '</div>';
-            this.controlBar.el().appendChild(div.children[0]);
-            $compile(this.controlBar.el())($scope);
-        }
-        */
-
         function initPlayer() {
             // Set the video to play.
-            this.src('https://vjs.zencdn.net/v/oceans.mp4');
+            //this.src('https://vjs.zencdn.net/v/oceans.mp4');
+            this.src(video.url[0]);
 
             // Load the correct skin.
             this.addClass('video-js');
@@ -93,207 +59,151 @@ function AltVidCtrl($scope, $routeParams, ANNOTATION_MODE,
             this.skipPlugin({skips: defaultSkips()});
         };
 
-		// Send a simple PUT request to update the lastviewed date of the video.
-		var req_conf = {method: 'PUT', url: config.apiBase + '/video/' + vid + '/view'};
-		$http(req_conf).then(function(response) {});
+        // Send a simple PUT request to update the lastviewed date of the video.
+        var req_conf = {method: 'PUT', url: config.apiBase + '/video/' + vid + '/view'};
+        $http(req_conf).then(function(response) {});
 
         var player = videojs('newVid', {}, initPlayer);
 
+        // GOOGLE ANALYTICS
+        player.on('playButtonClicked', function() {
+            analytics.event('Video', 'Play', video['ma:title'], this.currentTime());
+        });
+        player.on('pauseButtonClicked', function() {
+            analytics.event('Video', 'Pause', video['ma:title'], this.currentTime());
+        });
+        player.on('scrubStart', function() {
+            analytics.event('Video', 'ScrubStart', video['ma:title'], this.currentTime());
+        });
+        player.on('scrubEnd', function() {
+            analytics.event('Video', 'ScrubEnd', video['ma:title'], this.currentTime());
+        });
+        player.on('muteClick', function() {
+            analytics.event('Video', 'Mute', video['ma:title'], this.currentTime());
+        });
+        player.on('unMuteClick', function() {
+            analytics.event('Video', 'UnMute', video['ma:title'], this.currentTime());
+        });
+        player.on('fullscreenClick', function() {
+            analytics.event('Video', 'Fullscreen', video['ma:title'], this.currentTime());
+        });
+        player.on('windowedClick', function() {
+            analytics.event('Video', 'Windowed', video['ma:title'], this.currentTime());
+        });
+        player.on('playbackRateClick', function() {
+            analytics.event('Video', 'Playback Rate', video['ma:title'], this.playbackRate());
+        });
+
         /*
-        if(video.type === 'yt') {
-            var el = $('#hum-video')[0];
+        console.log($scope.video);
+        var annos = Annotation.get({identifier: coll}, function(){console.log('request made!');});
+        console.log(annos);
+        */
 
-            el.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
-            el.classList.add('vjs-default-skin');
-            el.classList.add('vjs-big-play-centered');
+        var pop = window.Popcorn.smart('newVid', video.url, {});
+        var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']);
+        annotation.ready(function() {
+            var reqIds = annotation.reqIDs || [];
+            var nonReqIds = annotation.nonReqIDs || [];
+            console.log(reqIds);
+            console.log(nonReqIds);
 
-            vjs_opts['techOrder'] = ['youtube'];
-            vjs_opts['src'] = video.url[0];
-            vjs_opts['controls'] = true;
+            $scope.video.hasAnnotations = annotation.hasNonrequired;
+        });
 
-            vjs_opts.children.loadingSpinner = false;
-            vjs_opts.children.bigPlayButton = false;
-            vjs_opts.children.posterImage = false;
+        /*
+           var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']),
+           subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
+           */
 
-            vjs = videojs("hum-video", vjs_opts, function() {
-                var media_el = Popcorn.HTMLVideojsVideoElement( vjs );
-                pop = Popcorn(media_el, pop_opts);
-                //placeCaptionButton.apply(this);
-                //initializePopcornDependents( pop );
-            });
+        /*
+           annotation.ready(function handleSettings() {
+           if(annotation.length && navigator.userAgent.match(/(iPad|iPod|iPhone)/)) {
+           unsupportedDevice();
+           }
+           if(video['ma:hasRelatedResource'].length && annotation.transcriptEnabled) {
+           $scope.annotationsLayout = true;
+           };
+           });
+
+           var makeSpaceForAnnotations = function(events){
+           var whitelist = {"skip":true,"blank":true,"mutePlugin":true, "subtitle": true};
+           for(var i=0; i<events.length; i++){
+        //check if plugin is on whitelist
+        if(!whitelist[events[i]["_natives"]["plugin"]]){
+        //Switch to the annotations layout
+        $scope.annotationsLayout = true;
+        break;
         }
-        else
-        {
-            // if used on YT, shows 'undefined'
-            vjs_opts['playbackRates'] = [0.5, 1, 1.5, 2];
-
-            if(video.type === 'humaudio') {
-                vjs_opts.children.bigPlayButton = false;
-            }
-
-			// Simple PUT request to update the lastviewed date of the video.
-			var req_conf = {method: 'PUT', url: config.apiBase + '/video/' + vid + '/view'};
-			$http(req_conf).then(function(response) {});
-
-            pop = window.Popcorn.smart('hum-video', video.url, pop_opts);
-            pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement
-            pop.media.classList.add('vjs-default-skin');
-            pop.media.classList.add('vjs-big-play-centered');
-
-            //vjs = videojs(pop.media, vjs_opts, placeCaptionButton);
-            vjs = videojs(pop.media, vjs_opts, wireDummy);
-            //initializePopcornDependents( pop );
         }
+        }
+
+        annotation.ready(function(){
+        $scope.video.hasAnnotations = annotation.hasNonrequired;
+        makeSpaceForAnnotations(pop.getTrackEvents());
+        });
         */
 
         /*
-        function initializePopcornDependents( pop ) {
-          //Adding Event Listeners to video element
+        // @TODO: change to a promise...or something
+        $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
+        if(val) {
+        $scope.subtitles = subtitles.subtitles.map(function(sub) {
+        if(!sub.name) {
+        // gets the filename
+        sub.displayName = sub['@id'].split('/').pop();
+        }else{
+        sub.displayName = sub.name;
+        }
 
-          if(pop.media) {
-              //Hide the video before the data loads
-              pop.media.addEventListener("loadstart",function(){
-                  $('#video-loading').show();
-                  $('video').hide();
-              });
-              //Hide the loading message and show the video once it loads
-              pop.media.addEventListener("loadeddata",function(){
-                  $('#video-loading').fadeOut("slow");
-                  $('#video-error').fadeOut("slow");
-                  $('video').fadeIn("slow");
-              });
-              //Show an error message if the video is unable to load
-              pop.media.addEventListener("error",function(){
-                  $('#video-loading').fadeOut("slow");
-                  $('#video-error').fadeIn("slow");
-              });
-          };
-          */
-
-          // GOOGLE ANALYTICS
-          player.on('playButtonClicked', function() {
-            analytics.event('Video', 'Play', video['ma:title'], pop.currentTime());
-          });
-          player.on('pauseButtonClicked', function() {
-            analytics.event('Video', 'Pause', video['ma:title'], pop.currentTime());
-          });
-          player.on('scrubStart', function() {
-            analytics.event('Video', 'ScrubStart', video['ma:title'], pop.currentTime());
-          });
-          player.on('scrubEnd', function() {
-            analytics.event('Video', 'ScrubEnd', video['ma:title'], pop.currentTime());
-          });
-          player.on('muteClick', function() {
-            analytics.event('Video', 'Mute', video['ma:title'], pop.currentTime());
-          });
-          player.on('unMuteClick', function() {
-            analytics.event('Video', 'UnMute', video['ma:title'], pop.currentTime());
-          });
-          player.on('fullscreenClick', function() {
-            analytics.event('Video', 'Fullscreen', video['ma:title'], pop.currentTime());
-          });
-          player.on('windowedClick', function() {
-            analytics.event('Video', 'Windowed', video['ma:title'], pop.currentTime());
-          });
-          player.on('playbackRateClick', function() {
-            analytics.event('Video', 'Playback Rate', video['ma:title'], pop.playbackRate());
-          });
-
-          /*
-          var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']),
-              subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
-
-          function unsupportedDevice() {
-            pop.destroy();
-            pop.media.remove();
-            $("#newVid").html("<h1>We're sorry, but this film is currently unsupported on your device. " +
-            "If you are using a mobile device (iPad, iPhone, or iPod), please move to a desktop computer "+
-            "or a laptop. Thank you for your patience.</h2>");
-          }
-
-          annotation.ready(function handleSettings() {
-            if(annotation.length && navigator.userAgent.match(/(iPad|iPod|iPhone)/)) {
-              unsupportedDevice();
-            }
-            if(video['ma:hasRelatedResource'].length && annotation.transcriptEnabled) {
-                $scope.annotationsLayout = true;
-            };
-          });
-
-          var makeSpaceForAnnotations = function(events){
-              var whitelist = {"skip":true,"blank":true,"mutePlugin":true, "subtitle": true};
-              for(var i=0; i<events.length; i++){
-                  //check if plugin is on whitelist
-                  if(!whitelist[events[i]["_natives"]["plugin"]]){
-                      //Switch to the annotations layout
-                      $scope.annotationsLayout = true;
-                      break;
-                  }
-              }
-          }
-
-          annotation.ready(function(){
-              $scope.video.hasAnnotations = annotation.hasNonrequired;
-              makeSpaceForAnnotations(pop.getTrackEvents());
-          });
-          */
-
-    /*
-          // @TODO: change to a promise...or something
-          $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
-              if(val) {
-                  $scope.subtitles = subtitles.subtitles.map(function(sub) {
-                    if(!sub.name) {
-                      // gets the filename
-                      sub.displayName = sub['@id'].split('/').pop();
-                    }else{
-                      sub.displayName = sub.name;
-                    }
-
-                    if(sub.language) {
-                      sub.displayName += " [" + sub.language + "]";
-                    }
-                    return sub;
-                  });
-                  $scope.subtitle = subtitles.current;
-              }
-          });
-          */
-
-    /*
-          $scope.$watch('subtitle', function(subtitle) {
-              pop.removePlugin('transcript');
-              if(!subtitle) {
-                  subtitles.disable();
-                  return;
-              }
-              if(annotation.transcriptEnabled) {
-                  annotation.ready(function handleSettings() {
-                      $scope.annotationsLayout = true;
-                      subtitles.loadSubtitle(subtitle);
-                      pop.transcript({target: 'target-1', srcLang: subtitle.language, destLang: 'en', api: config.dictionary});
-                  });
-              }else{
-                  subtitles.loadSubtitle(subtitle);
-              }
-          });
-          */
-
-    /*
-          $scope.$watch(function(){return subtitles.current;},
-              function(current) {
-                  $scope.subtitle = current;
-              }
-          );
-          */
-
-    /*
-          $scope.$watch('annotationsEnabled', function(value){
-              value === false ? annotation.disable() : annotation.enable();
-          });
-
-        };
+        if(sub.language) {
+        sub.displayName += " [" + sub.language + "]";
+        }
+        return sub;
+        });
+        $scope.subtitle = subtitles.current;
+        }
+        });
         */
+
+        /*
+           $scope.$watch('subtitle', function(subtitle) {
+           pop.removePlugin('transcript');
+           if(!subtitle) {
+           subtitles.disable();
+           return;
+           }
+           if(annotation.transcriptEnabled) {
+           annotation.ready(function handleSettings() {
+           $scope.annotationsLayout = true;
+           subtitles.loadSubtitle(subtitle);
+           pop.transcript({target: 'target-1', srcLang: subtitle.language, destLang: 'en', api: config.dictionary});
+           });
+           }else{
+           subtitles.loadSubtitle(subtitle);
+           }
+           });
+           */
+
+        /*
+           $scope.$watch(function(){return subtitles.current;},
+           function(current) {
+           $scope.subtitle = current;
+           }
+           );
+           */
+
+        /*
+           $scope.$watch('annotationsEnabled', function(value){
+           value === false ? annotation.disable() : annotation.enable();
+           });
+
+           };
+           */
+
+        $scope.$watch('annotationsEnabled', function(value) {
+            console.log('annotations?: %s', value);
+        });
 
         // Unless we pause the movie when the page loses focus, annotations
         // will not continue to be used even though the movie will play in
@@ -305,7 +215,9 @@ function AltVidCtrl($scope, $routeParams, ANNOTATION_MODE,
         $scope.$on('$destroy', function cleanup() {
             $window.removeEventListener('blur', pauseVideo);
         });
-    });
+});
+
+document.vid = $scope.video;
 }
 // always inject this in so we can later compress this JavaScript
-AltVidCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig','$compile', 'analytics', '$http'];
+AltVidCtrl.$inject = ['$scope', '$routeParams', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig', 'Annotation', '$compile', 'analytics', '$http'];

@@ -11,7 +11,7 @@ angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.serv
         }
     });    
 
-    $routeProvider.when('/altvid/:id', {title: "Hummedia | Video", templateUrl: '/partials/altvid.html', controller: VideoCtrl,
+    $routeProvider.when('/altvid/:id', {title: "Hummedia | Video", templateUrl: '/partials/altvid.html', controller: AltVidCtrl,
         resolve: {
             ANNOTATION_MODE: function(){ return false; }
         }

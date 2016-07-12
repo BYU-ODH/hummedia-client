@@ -1,0 +1,15 @@
+.annotation {
+    position: absolute;
+    z-index: 7;
+    visibility: hidden;
+}
+
+.block {
+    position: absolute;
+    z-index: 5;
+    visibility: hidden;
+}
+
+.vjs-control {
+    z-index: 10;
+}
