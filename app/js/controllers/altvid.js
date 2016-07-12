@@ -5,7 +5,6 @@ function AltVidCtrl($scope, $routeParams,
         $compile, analytics, $http) {
 
     //Code to style the page correctly
-    //
     function resizeView(){
         var new_height = $(window).height()-$('#nav-wrapper').height();
         $('#view').css("height", new_height);
@@ -39,6 +38,24 @@ function AltVidCtrl($scope, $routeParams,
     };
 
     $scope.video = Video.get({identifier: vid}, function initialize(video) {
+        // We need this dummy Popcorn object because the AnnotationHelper depends on it.
+        var pop = window.Popcorn.smart('newVid', video.url, {});
+        var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']);
+
+        // TODO: Once the AnnotationHelper has loaded the annotation information, we
+        // should go fetch the annotations and apply them.
+        annotation.ready(function() {
+            // TODO: pass these into the plugins to initalize them.
+            // The plugins currently don't differentiate between required and
+            // optional annotations.
+            // TODO: convert the plugin information to the format needed by the new plugins.
+            var reqIds = annotation.reqIDs || [];
+            var nonReqIds = annotation.nonReqIDs || [];
+
+            // This ensures that the annotations checkbox will be displayed.
+            $scope.video.hasAnnotations = annotation.hasNonrequired;
+        });
+
         function initPlayer() {
             // Set the video to play.
             //this.src('https://vjs.zencdn.net/v/oceans.mp4');
@@ -94,22 +111,6 @@ function AltVidCtrl($scope, $routeParams,
             analytics.event('Video', 'Playback Rate', video['ma:title'], this.playbackRate());
         });
 
-        /*
-        console.log($scope.video);
-        var annos = Annotation.get({identifier: coll}, function(){console.log('request made!');});
-        console.log(annos);
-        */
-
-        var pop = window.Popcorn.smart('newVid', video.url, {});
-        var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']);
-        annotation.ready(function() {
-            var reqIds = annotation.reqIDs || [];
-            var nonReqIds = annotation.nonReqIDs || [];
-            console.log(reqIds);
-            console.log(nonReqIds);
-
-            $scope.video.hasAnnotations = annotation.hasNonrequired;
-        });
 
         /*
            var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']),
@@ -200,10 +201,6 @@ function AltVidCtrl($scope, $routeParams,
 
            };
            */
-
-        $scope.$watch('annotationsEnabled', function(value) {
-            console.log('annotations?: %s', value);
-        });
 
         // Unless we pause the movie when the page loses focus, annotations
         // will not continue to be used even though the movie will play in
