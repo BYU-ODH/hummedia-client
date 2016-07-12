@@ -10,6 +10,13 @@ angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.serv
             ANNOTATION_MODE: function(){ return false; }
         }
     });    
+
+    $routeProvider.when('/altvid/:id', {title: "Hummedia | Video", templateUrl: '/partials/altvid.html', controller: VideoCtrl,
+        resolve: {
+            ANNOTATION_MODE: function(){ return false; }
+        }
+    });    
+
     $routeProvider.when('/video/annotate/:id', {title: "Hummedia | Annotate", templateUrl: '/partials/video.html', controller: VideoCtrl,
         resolve: {
             ANNOTATION_MODE: function() { return true; }

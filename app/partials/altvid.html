@@ -1,0 +1,42 @@
+<link rel='stylesheet' href='/lib/videojs/video.css'>
+
+<script src='/lib/videojs/plugins/margin.js'></script>
+
+<script src='/lib/videojs/defaults.js'></script>
+
+<script src='/lib/videojs/plugins/annotate.js'></script>
+<script src='/lib/videojs/plugins/blank.js'></script>
+<script src='/lib/videojs/plugins/block.js'></script>
+<script src='/lib/videojs/plugins/mute.js'></script>
+<script src='/lib/videojs/plugins/pause.js'></script>
+<script src='/lib/videojs/plugins/skip.js'></script>
+
+<div id="video-content" ng-class="{'has-annotations': annotationsLayout}"  oncontextmenu="return false">
+    
+<div id="video-wrapper">
+    <div id="player-header">
+        <div>
+            <p>{{video['ma:title']}} <i analytics="{category: 'video', label: 'description toggle'}" ng-show="video['ma:description']" class="icon-info-circled" id="show-description" onclick="$('#description').fadeToggle(800);"></i></p>
+            <span style="font-size:80%;">{{video['ma:date']}}
+            <ul class="language-list">
+                <li data-ng-repeat="lg in video['ma:hasLanguage']">{{lg | language}}</li>
+            </ul>
+            </span>
+        </div>
+        <div id="description" data-ng-bind-html="video['ma:description']"></div>
+    </div>
+    <div id="video-loading">
+        <p>LOADING...</p>
+    </div>
+    <div id="video-error">
+        <p>Error!  Unable to load video!</p>
+    </div>
+
+    <video controls id='newVid' class='hum-video-container'/>
+
+    <label id="toggle-annotations" data-ng-show="video.hasAnnotations && !editorMode"><input type="checkbox" checked="checked" ng-model="annotationsEnabled"/>&nbsp;{{"Annotations" | tr}}&nbsp;</label>
+    <label id="toggle-subtitles" data-ng-show="video.hasSubtitles && !editorMode"><input type="checkbox" checked="checked" ng-model="subtitlesEnabled"/>&nbsp;{{"Subtitles" | tr}}&nbsp;</label>
+    
+</div>
+    
+</div>    
