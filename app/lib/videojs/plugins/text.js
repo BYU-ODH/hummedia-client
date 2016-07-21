@@ -1,12 +1,12 @@
-function annotationPlugin(options) {
-    if (options && options.annotations) {
-        var annotations = options.annotations;
+function textPlugin(options) {
+    if (options && options.messages) {
+        var messages = options.messages;
     } else {
-        var annotations = [];
+        var messages = [];
     }
 
     // Create the annotation layer.
-    var annoId = 'annotations';
+    var annoId = 'text';
     var annoDiv = document.createElement('div');
 
     annoDiv.id = annoId;
@@ -22,8 +22,8 @@ function annotationPlugin(options) {
     this.overlayDivs.push(annoDiv);
 
     // Create divs for each annotation.
-    for (var i in annotations) {
-        var anno = annotations[i];
+    for (var i in messages) {
+        var anno = messages[i];
 
         var x = anno.x + '%';
         var y = anno.y + '%';
@@ -46,8 +46,8 @@ function annotationPlugin(options) {
     // Show or hide annotations as needed.
     function redrawAnnotations(e) {
         var time =  this.currentTime();
-        for (var i in annotations) {
-            var anno = annotations[i];
+        for (var i in messages) {
+            var anno = messages[i];
             if (time > anno.start && time < anno.end) {
                 anno.div.style.visibility = 'visible';
             } else {
@@ -60,4 +60,4 @@ function annotationPlugin(options) {
     this.on('timeupdate', redrawAnnotations);
 };
 
-videojs.plugin('annotationPlugin', annotationPlugin);
+videojs.plugin('textPlugin', textPlugin);

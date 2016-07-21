@@ -1,12 +1,3 @@
-function defaultAnnotations() {
-    // Define the annotations we want to show.
-    var one = {'start': 0, 'end': 20, 'x': 10, 'y': 0, 'text': 'red', 'size': 24};
-    var two = {'start': 10, 'end': 30, 'x': 0, 'y': 50, 'text': 'blue', 'size': 48};
-    var three = {'start': 20, 'end': 40, 'x': 10, 'y': 30, 'text': 'yellow', 'size': 96};
-
-    return [one, two, three];
-}
-
 function defaultBlanks() {
     // Define the places we want to blank the screen.
     var one = {'start': 8, 'end': 12};
@@ -47,3 +38,13 @@ function defaultSkips() {
 
     return [one, two];
 }
+
+function defaultMessages() {
+    // Define the annotations we want to show.
+    var one = {'start': 0, 'end': 20, 'x': 10, 'y': 0, 'text': 'red', 'size': 24};
+    var two = {'start': 10, 'end': 30, 'x': 0, 'y': 50, 'text': 'blue', 'size': 48};
+    var three = {'start': 20, 'end': 40, 'x': 10, 'y': 30, 'text': 'yellow', 'size': 96};
+
+    return [one, two, three];
+}
+

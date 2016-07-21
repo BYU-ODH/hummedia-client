@@ -1,13 +1,11 @@
 'use strict';
-function AltVidCtrl($scope, $routeParams, 
-        Video, $window, config, Annotation,
-        $compile, $http) {
+function AltVidCtrl($scope, $routeParams, Video, $window, config,
+        Annotation, $compile, $http) {
 
     //Code to style the page correctly
     function resizeView(){
         var new_height = $(window).height()-$('#nav-wrapper').height();
         $('#view').css("height", new_height);
-        $('#annotations_wrapper').css('top', $('#nav-wrapper').height());
     }
 
     //Initialize resized view
@@ -78,12 +76,12 @@ function AltVidCtrl($scope, $routeParams,
             // annotations. the key is the name of the old-style plugin, the value is the
             // name of the new-style plugin.
             var typeConv = {
-                'annotation': 'annotation',
                 'blank': 'blank',
                 'block': 'block',
                 'mutePlugin': 'mute',
                 'pause': 'pause',
-                'skip': 'skip'
+                'skip': 'skip',
+                'text': 'text'
             }
 
             // This defines the mapping between the fields on the old- and new-style annotations.
@@ -93,12 +91,12 @@ function AltVidCtrl($scope, $routeParams,
             // 'num' is whether or not the field should be converted to a number
             //     Popcorn uses strings for numbers for some reason.
             var fieldConv = {
-                annotation: [],
                 blank: [{from: 'start', to: 'start', num: true}, {from: 'end', to: 'end', num: true}],
                 block: [],
                 mute: [{from: 'start', to: 'start', num: true}, {from: 'end', to: 'end', num: true}],
                 pause: [],
-                skip: [{from: 'start', to: 'start', num: true}, {from: 'end', to: 'end', num: true}]
+                skip: [{from: 'start', to: 'start', num: true}, {from: 'end', to: 'end', num: true}],
+                text: []
             }
 
             var results = {};
@@ -176,27 +174,21 @@ function AltVidCtrl($scope, $routeParams,
             // Enable a bunch of plugins.
             this.marginPlugin();
 
-            this.annotationPlugin({annotations: annotations.annotations});
             this.blankPlugin({blanks: annotations.blanks});
             this.blockPlugin({blocks: annotations.blocks});
             this.mutePlugin({mutes: annotations.mute});
             this.pausePlugin({pauses: annotations.pause});
             this.skipPlugin({skips: annotations.skip});
+            this.textPlugin({messages: annotations.text});
         };
 
         function initPlugins(data) {
-            console.log('initPlugins() called!');
-
             var oldAnnos = unWrap(data);
-            console.log(oldAnnos);
 
             // Enable the checkbox if we have any optional annotations.
             $scope.video.hasAnnotations = oldAnnos.optional.length > 0;
 
             annotations = convertAnnotations(oldAnnos.required, oldAnnos.optional);
-            console.log(annotations);
-
-            console.log(defaultSkips());
 
             player = videojs('newVid', {}, initPlayer);
         }
@@ -217,9 +209,7 @@ function AltVidCtrl($scope, $routeParams,
         $scope.$on('$destroy', function cleanup() {
             $window.removeEventListener('blur', pauseVideo);
         });
-});
-
-document.vid = $scope.video;
+    });
 }
 // always inject this in so we can later compress this JavaScript
 AltVidCtrl.$inject = ['$scope', '$routeParams', 'Video', '$window', 'appConfig', 'Annotation', '$compile', '$http'];
