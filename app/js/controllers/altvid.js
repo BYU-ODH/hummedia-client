@@ -1,8 +1,7 @@
 'use strict';
 function AltVidCtrl($scope, $routeParams, 
-        Video, AnnotationHelper, SubtitleHelper, Butter, $window, config,
-        Annotation,
-        $compile, analytics, $http) {
+        Video, $window, config, Annotation,
+        $compile, $http) {
 
     //Code to style the page correctly
     function resizeView(){
@@ -38,23 +37,132 @@ function AltVidCtrl($scope, $routeParams,
     };
 
     $scope.video = Video.get({identifier: vid}, function initialize(video) {
-        // We need this dummy Popcorn object because the AnnotationHelper depends on it.
-        var pop = window.Popcorn.smart('newVid', video.url, {});
-        var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']);
-
         // TODO: Once the AnnotationHelper has loaded the annotation information, we
         // should go fetch the annotations and apply them.
-        annotation.ready(function() {
-            // TODO: pass these into the plugins to initalize them.
-            // The plugins currently don't differentiate between required and
-            // optional annotations.
-            // TODO: convert the plugin information to the format needed by the new plugins.
-            var reqIds = annotation.reqIDs || [];
-            var nonReqIds = annotation.nonReqIDs || [];
+        // This ensures that the annotations checkbox will be displayed.
+        var params = {
+            'client': 'popcorn',
+            'collection': coll,
+            'dc:relation': vid};
 
-            // This ensures that the annotations checkbox will be displayed.
-            $scope.video.hasAnnotations = annotation.hasNonrequired;
-        });
+        // Cut out all of the annotation information from the old-style Popcorn plugins
+        // and put it into one of two lists depending on if the annotation is required.
+        function unWrap(data) {
+            var annotations = {required: [], optional: []}
+
+            for (var i = 0; i < data.length; i++) {
+                var resource = data[i];
+                for (var j = 0; j < resource.media.length; j++) {
+                    var media = resource.media[j];
+                    for (var k = 0; k < media.tracks.length; k++) {
+                        var track = media.tracks[k];
+                        for (var m = 0; m < track.trackEvents.length; m++) {
+                            var ev = track.trackEvents[m];
+                            if (track.required) {
+                                annotations.required.push(ev);
+                            } else {
+                                annotations.optional.push(ev);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return annotations;
+        }
+
+        // T his converts the annotation data from old-style (Popcorn) plugins to new-style
+        // (VideoJS) ones. It takes two separate lists of required and optional annotations.
+        function convertAnnotations(required, optional) {
+            // This defines the mapping between the plugin names on the old- and new-style
+            // annotations. the key is the name of the old-style plugin, the value is the
+            // name of the new-style plugin.
+            var typeConv = {
+                'annotation': 'annotation',
+                'blank': 'blank',
+                'block': 'block',
+                'mutePlugin': 'mute',
+                'pause': 'pause',
+                'skip': 'skip'
+            }
+
+            // This defines the mapping between the fields on the old- and new-style annotations.
+            // The root-level object key is the name of the plugin.
+            // 'from' is the field from the old-style annotation.
+            // 'to' is the field for the new-style annotation.
+            // 'num' is whether or not the field should be converted to a number
+            //     Popcorn uses strings for numbers for some reason.
+            var fieldConv = {
+                annotation: [],
+                blank: [{from: 'start', to: 'start', num: true}, {from: 'end', to: 'end', num: true}],
+                block: [],
+                mute: [{from: 'start', to: 'start', num: true}, {from: 'end', to: 'end', num: true}],
+                pause: [],
+                skip: [{from: 'start', to: 'start', num: true}, {from: 'end', to: 'end', num: true}]
+            }
+
+            var results = {};
+
+            // Convert the given list of plugins and optionally mark them as required.
+            function convertList(list, required) {
+                // Convert a single plugin.
+                function convertSingle(type, data) {
+                    var fields = fieldConv[type];
+                    if (!fields) {
+                        return null;
+                    }
+
+                    var result = {}
+                    for (var i = 0; i < fields.length; i++) {
+                        var field = fields[i];
+
+                        // Check that needed field exists.
+                        if (!data.hasOwnProperty(field.from)) {
+                            return null;
+                        }
+
+                        if (field.num) {
+                            parseFloat(result[field.to] = data[field.from]);
+                        } else {
+                            result[field.to] = data[field.from];
+                        }
+                    }
+
+                    return result;
+                }
+
+                for (var i = 0; i <list.length; i++) {
+                    var oldStyle = list[i];
+
+                    var type = typeConv[oldStyle.type];
+                    var data = oldStyle.popcornOptions;
+
+                    var newStyle = convertSingle(type, data);
+
+                    // Add successfully-converted annotations.
+                    if (newStyle) {
+                        newStyle.required = required;
+
+                        if (results[type]) {
+                            results[type].push(newStyle);
+                        } else {
+                            results[type] = [newStyle];
+                        }
+                    }
+                }
+            }
+
+            convertList(required, true);
+            convertList(optional, false);
+
+            return results;
+        }
+
+        // The flow on this next bit is kind of tricky in an asynchronous
+        // JavaScript-y way. We depend on the plugin data being fetched and plugins
+        // initialized before we initialize the player.
+        var annotations = [];
+        var player = undefined;
 
         function initPlayer() {
             // Set the video to play.
@@ -68,139 +176,36 @@ function AltVidCtrl($scope, $routeParams,
             // Enable a bunch of plugins.
             this.marginPlugin();
 
-            this.annotationPlugin({annotations: defaultAnnotations()});
-            this.blankPlugin({blanks: defaultBlanks()});
-            this.blockPlugin({blocks: defaultBlocks()});
-            this.mutePlugin({mutes: defaultMutes()});
-            this.pausePlugin({pauses: defaultPauses()});
-            this.skipPlugin({skips: defaultSkips()});
+            this.annotationPlugin({annotations: annotations.annotations});
+            this.blankPlugin({blanks: annotations.blanks});
+            this.blockPlugin({blocks: annotations.blocks});
+            this.mutePlugin({mutes: annotations.mute});
+            this.pausePlugin({pauses: annotations.pause});
+            this.skipPlugin({skips: annotations.skip});
         };
+
+        function initPlugins(data) {
+            console.log('initPlugins() called!');
+
+            var oldAnnos = unWrap(data);
+            console.log(oldAnnos);
+
+            // Enable the checkbox if we have any optional annotations.
+            $scope.video.hasAnnotations = oldAnnos.optional.length > 0;
+
+            annotations = convertAnnotations(oldAnnos.required, oldAnnos.optional);
+            console.log(annotations);
+
+            console.log(defaultSkips());
+
+            player = videojs('newVid', {}, initPlayer);
+        }
+
+        Annotation.query(params, initPlugins);
 
         // Send a simple PUT request to update the lastviewed date of the video.
         var req_conf = {method: 'PUT', url: config.apiBase + '/video/' + vid + '/view'};
         $http(req_conf).then(function(response) {});
-
-        var player = videojs('newVid', {}, initPlayer);
-
-        // GOOGLE ANALYTICS
-        player.on('playButtonClicked', function() {
-            analytics.event('Video', 'Play', video['ma:title'], this.currentTime());
-        });
-        player.on('pauseButtonClicked', function() {
-            analytics.event('Video', 'Pause', video['ma:title'], this.currentTime());
-        });
-        player.on('scrubStart', function() {
-            analytics.event('Video', 'ScrubStart', video['ma:title'], this.currentTime());
-        });
-        player.on('scrubEnd', function() {
-            analytics.event('Video', 'ScrubEnd', video['ma:title'], this.currentTime());
-        });
-        player.on('muteClick', function() {
-            analytics.event('Video', 'Mute', video['ma:title'], this.currentTime());
-        });
-        player.on('unMuteClick', function() {
-            analytics.event('Video', 'UnMute', video['ma:title'], this.currentTime());
-        });
-        player.on('fullscreenClick', function() {
-            analytics.event('Video', 'Fullscreen', video['ma:title'], this.currentTime());
-        });
-        player.on('windowedClick', function() {
-            analytics.event('Video', 'Windowed', video['ma:title'], this.currentTime());
-        });
-        player.on('playbackRateClick', function() {
-            analytics.event('Video', 'Playback Rate', video['ma:title'], this.playbackRate());
-        });
-
-
-        /*
-           var annotation = new AnnotationHelper(pop, vid, coll, video['ma:hasPolicy']),
-           subtitles  = new SubtitleHelper(pop, video['ma:hasRelatedResource']);
-           */
-
-        /*
-           annotation.ready(function handleSettings() {
-           if(annotation.length && navigator.userAgent.match(/(iPad|iPod|iPhone)/)) {
-           unsupportedDevice();
-           }
-           if(video['ma:hasRelatedResource'].length && annotation.transcriptEnabled) {
-           $scope.annotationsLayout = true;
-           };
-           });
-
-           var makeSpaceForAnnotations = function(events){
-           var whitelist = {"skip":true,"blank":true,"mutePlugin":true, "subtitle": true};
-           for(var i=0; i<events.length; i++){
-        //check if plugin is on whitelist
-        if(!whitelist[events[i]["_natives"]["plugin"]]){
-        //Switch to the annotations layout
-        $scope.annotationsLayout = true;
-        break;
-        }
-        }
-        }
-
-        annotation.ready(function(){
-        $scope.video.hasAnnotations = annotation.hasNonrequired;
-        makeSpaceForAnnotations(pop.getTrackEvents());
-        });
-        */
-
-        /*
-        // @TODO: change to a promise...or something
-        $scope.$watch(function(){return subtitles.subtitles.length;}, function(val){
-        if(val) {
-        $scope.subtitles = subtitles.subtitles.map(function(sub) {
-        if(!sub.name) {
-        // gets the filename
-        sub.displayName = sub['@id'].split('/').pop();
-        }else{
-        sub.displayName = sub.name;
-        }
-
-        if(sub.language) {
-        sub.displayName += " [" + sub.language + "]";
-        }
-        return sub;
-        });
-        $scope.subtitle = subtitles.current;
-        }
-        });
-        */
-
-        /*
-           $scope.$watch('subtitle', function(subtitle) {
-           pop.removePlugin('transcript');
-           if(!subtitle) {
-           subtitles.disable();
-           return;
-           }
-           if(annotation.transcriptEnabled) {
-           annotation.ready(function handleSettings() {
-           $scope.annotationsLayout = true;
-           subtitles.loadSubtitle(subtitle);
-           pop.transcript({target: 'target-1', srcLang: subtitle.language, destLang: 'en', api: config.dictionary});
-           });
-           }else{
-           subtitles.loadSubtitle(subtitle);
-           }
-           });
-           */
-
-        /*
-           $scope.$watch(function(){return subtitles.current;},
-           function(current) {
-           $scope.subtitle = current;
-           }
-           );
-           */
-
-        /*
-           $scope.$watch('annotationsEnabled', function(value){
-           value === false ? annotation.disable() : annotation.enable();
-           });
-
-           };
-           */
 
         // Unless we pause the movie when the page loses focus, annotations
         // will not continue to be used even though the movie will play in
@@ -217,4 +222,4 @@ function AltVidCtrl($scope, $routeParams,
 document.vid = $scope.video;
 }
 // always inject this in so we can later compress this JavaScript
-AltVidCtrl.$inject = ['$scope', '$routeParams', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig', 'Annotation', '$compile', 'analytics', '$http'];
+AltVidCtrl.$inject = ['$scope', '$routeParams', 'Video', '$window', 'appConfig', 'Annotation', '$compile', '$http'];
