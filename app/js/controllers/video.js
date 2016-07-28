@@ -121,6 +121,51 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
 
             vjs = videojs(pop.media, vjs_opts, placeCaptionButton);
             initializePopcornDependents( pop );
+
+            // Read and parse any paramaters from the URL and return them as a dictionary object.
+            function getUrlParams() {
+                var paramString = window.location.search.substr(1);
+                if (paramString.length <= 0) {
+                    return {}
+                }
+
+                var results = {};
+                var params = paramString.split('&');
+                for (var i in params) {
+                    var parts = params[i].split('=');
+                    results[parts[0]] = parts[1];
+                }
+
+                return results;
+            }
+
+            window.pop = pop;
+
+            // If a 'start' param exists, fast-forward to that segment of the video.
+            // This is used for the ClipList system.
+            var params = getUrlParams();
+            if (params.start) {
+                var start = parseFloat(params.start);
+                pop.currentTime(start);
+            }
+
+            // If an 'end' param exists, pause playback when it is reached.
+            if (params.end) {
+                var end = parseFloat(params.end);
+
+                // We form a closure around 'pausedOnce' to make sure that the video
+                // is only paused the first time the end of the clip is reached.
+                var pausedOnce = false;
+                function pauseOnEnd(ev, a) {
+                    if (!pausedOnce) {
+                        if (pop.currentTime() >= end) {
+                            pausedOnce = true;
+                            pop.pause();
+                        }
+                    }
+                }
+                pop.on('timeupdate', pauseOnEnd);
+            }
         }
 
         function initializePopcornDependents( pop ) {
