@@ -1,3 +1,46 @@
+<!--
+    <div id='cliplist' style='background:white; float:right'>
+-->
+<div id='cliplist' class='admin admin-editor' style='float:right'>
+    <h2>Bookmarked Clips</h2>
+    <hr />
+    <div id='clips'>
+        <ul>
+            <li>
+                <a href='https://milo.byu.edu/video/521fa58604743b6f1ba4bb33?start=8&end=15'>One</a>
+                <button>Delete</button>
+            </li>
+            <li>
+                <a href='https://milo.byu.edu/video/521fa58604743b6f1ba4bb33?start=23&end=42'>Two</a>
+                <button>Delete</button>
+            </li>
+        </ul>
+    </div>
+    <hr />
+    <div id='clip-editor' class='form-table'>
+        <h2>Save New Clip</h2>
+        <div class='field-row'>
+            <label for='clip-name'>Name:</label>
+            <input id='clip-name' type='text' value='New Clip' />
+        </div>
+        <br />
+        <div class='field-row'>
+            <label for='clip-start'>Start Time:</label>
+            <input id='clip-start' type='number' min=0 value=0 />
+        </div>
+        <br />
+        <div class='field-row'>
+            <label for='clip-end'>End Time:</label>
+            <input id='clip-end' type='number' min=0 value=10 />
+        </div>
+        <br />
+        <div class='field-row'>
+            <button id='clip-save'>Save</button>
+            <button id='clip-embed-code'>Get Embed Code</button>
+        </div>
+    </div>
+</div>
+
 <div id="video-content" ng-class="{'has-annotations': annotationsLayout}"  oncontextmenu="return false">
     
 <div id="video-wrapper">
@@ -41,11 +84,4 @@
     </div>
 </div> 
 
-<div id='cliplist' style='background:white; float:right'>
-    <div>ClipList</div>
-    <div><a href='https://milo.byu.edu/video/521fa58604743b6f1ba4bb33?start=8&end=15'>One</a></div>
-    <div><a href='https://milo.byu.edu/video/521fa58604743b6f1ba4bb33?start=23&end=42'>Two</a></div>
-</div>
-
 </div>    
-
