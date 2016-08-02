@@ -1,7 +1,7 @@
 'use strict';
 function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     Video, AnnotationHelper, SubtitleHelper, Butter, $window, config,
-    $compile, analytics, $http) {
+    $compile, analytics, $http, Clip) {
 
   //Code to style the page correctly
   //
@@ -43,6 +43,9 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         $('#description-toggle-icon').toggleClass('icon-minus');
         $('#description-toggle-icon').toggleClass('icon-plus');
     };
+
+    // Get the clips associated with this user.
+    $scope.clips = Clip.get_list();
 
     $scope.video = Video.get({identifier: vid}, function initialize(video) {
         if(ANNOTATION_MODE) {
@@ -332,4 +335,4 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     });
 }
 // always inject this in so we can later compress this JavaScript
-VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig','$compile', 'analytics', '$http'];
+VideoCtrl.$inject = ['$scope', '$routeParams', 'ANNOTATION_MODE', 'Video', 'AnnotationHelper', 'SubtitleHelper', 'Butter', '$window', 'appConfig','$compile', 'analytics', '$http', 'Clip'];
