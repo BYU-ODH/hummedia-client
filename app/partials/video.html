@@ -3,13 +3,10 @@
     <hr />
     <div id='clips'>
         <ul>
-            <li>
-                <a href='https://milo.byu.edu/video/521fa58604743b6f1ba4bb33?start=8&end=15'>One</a>
+            <li ng-repeat='clip in clips'>
+                <a href='https://milo.byu.edu/video/{{clip.mediaid}}?start={{clip.start}}&end={{clip.end}}'>{{clip.name}}</a>
                 <button>Delete</button>
-            </li>
-            <li>
-                <a href='https://milo.byu.edu/video/521fa58604743b6f1ba4bb33?start=23&end=42'>Two</a>
-                <button>Delete</button>
+                <button>Get Embed Code</button>
             </li>
         </ul>
     </div>
@@ -33,7 +30,6 @@
         <br />
         <div class='field-row'>
             <button id='clip-save'>Save</button>
-            <button id='clip-embed-code'>Get Embed Code</button>
         </div>
     </div>
 </div>
