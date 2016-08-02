@@ -2,7 +2,7 @@
 
 angular.module('hummedia.services').
     factory('Clip', ['$resource', 'appConfig', function($resource, config){
-        var resource = $resource(config.apiBase + '/clips/:identifier', {identifier: '@identifier'},
+        var resource = $resource(config.apiBase + '/clips/:id', {id: '@_id'},
         {
             'get': {method: 'GET'},
             'get_list': {method: 'GET', isArray: true},

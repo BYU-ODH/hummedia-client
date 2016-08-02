@@ -5,8 +5,9 @@
         <ul>
             <li ng-repeat='clip in clips'>
                 <a href='https://milo.byu.edu/video/{{clip.mediaid}}?start={{clip.start}}&end={{clip.end}}'>{{clip.name}}</a>
-                <button>Delete</button>
+                <button ng-click='clip.$delete()'>Delete</button>
                 <button>Get Embed Code</button>
+                <span>{{clip.thing}}</span>
             </li>
         </ul>
     </div>
