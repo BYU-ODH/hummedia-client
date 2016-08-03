@@ -3,7 +3,7 @@
         <h2>Bookmarked Clips</h2>
         <div id='clips'>
             <ul>
-                <li ng-repeat='clip in clips'>
+                <li ng-repeat='clip in clips' style='clear: both'>
                     <a href={{getClipLink(clip)}}'>{{clip.name}}</a>
                     <span style='float:right'>
                         <button ng-click='deleteClip(clip)'>Delete</button>
@@ -35,7 +35,7 @@
             <input id='clip-end' ng-model='newClip.end' type='number' min=0 style='float:right' />
         </div>
         <br />
-        <div class='field-row'>
+        <div class='field-row' style='clear: both'>
             <button ng-click='saveNewClip()' id='clip-save'>Save</button>
         </div>
     </div>
