@@ -44,8 +44,22 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         $('#description-toggle-icon').toggleClass('icon-plus');
     };
 
+    // Set the default values of the new clip.
+    function resetNewClip() {
+        $scope.newClip = {start: 0, end: 10, name: 'New Clip', mediaid: vid}
+    }
+    resetNewClip();
+
+    // Save the new clip to the server.
+    $scope.saveNewClip = function() {
+        Clip.post($scope.newClip);
+        $scope.clips.push($scope.newClip);
+        resetNewClip();
+    }
+
     // Get the clips associated with this user.
     $scope.clips = Clip.get_list();
+    document.clip = Clip;
 
     $scope.video = Video.get({identifier: vid}, function initialize(video) {
         if(ANNOTATION_MODE) {
@@ -115,7 +129,7 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
 
 			// Simple PUT request to update the lastviewed date of the video.
 			var req_conf = {method: 'PUT', url: config.apiBase + '/video/' + vid + '/view'};
-			$http(req_conf).then(function(response) {});
+			$http(req_conf).then(function() {});
 
             pop = window.Popcorn.smart('hum-video', video.url, pop_opts);
             pop.media.classList.add('video-js'); // IE <=11 won't let us combine all these into one statement

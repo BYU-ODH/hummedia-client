@@ -13,24 +13,24 @@
     </div>
     <hr />
     <div id='clip-editor' class='form-table'>
-        <h2>Save New Clip</h2>
+        <h2>Create New Clip</h2>
         <div class='field-row'>
             <label for='clip-name'>Name:</label>
-            <input id='clip-name' type='text' value='New Clip' />
+            <input id='clip-name' ng-model='newClip.name' type='text' value='New Clip' />
         </div>
         <br />
         <div class='field-row'>
             <label for='clip-start'>Start Time:</label>
-            <input id='clip-start' type='number' min=0 value=0 />
+            <input id='clip-start' ng-model='newClip.start' type='number' min=0 value=0 />
         </div>
         <br />
         <div class='field-row'>
             <label for='clip-end'>End Time:</label>
-            <input id='clip-end' type='number' min=0 value=10 />
+            <input id='clip-end' ng-model='newClip.end' type='number' min=0 value=10 />
         </div>
         <br />
         <div class='field-row'>
-            <button id='clip-save'>Save</button>
+            <button ng-click='saveNewClip()' id='clip-save'>Save</button>
         </div>
     </div>
 </div>
