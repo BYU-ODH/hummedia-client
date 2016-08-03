@@ -1,20 +1,21 @@
-<div id='cliplist' class='admin admin-editor' style='float:right'>
-    <h2>Bookmarked Clips</h2>
-    <hr />
-    <div id='clips'>
-        <ul>
-            <li ng-repeat='clip in clips'>
-                <a href={{getClipLink(clip)}}'>{{clip.name}}</a>
-                <button ng-click='deleteClip(clip)'>Delete</button>
-                <button ng-click='showClipLink(clip)' ng-show='!clip.showLink'>Show Link</button>
-                <button ng-click='hideClipLink(clip)' ng-show='clip.showLink'>Hide Link</button>
-                <div ng-show='clip.showLink'>
-                    {{getClipLink(clip)}}
-                </div>
-            </li>
-        </ul>
+<div id='cliplist-container' class='admin admin-editor' style='float:right'>
+    <div ng-show='clips.length > 0' id='clip-bookmarks'>
+        <h2>Bookmarked Clips</h2>
+        <div id='clips'>
+            <ul>
+                <li ng-repeat='clip in clips'>
+                    <a href={{getClipLink(clip)}}'>{{clip.name}}</a>
+                    <button ng-click='deleteClip(clip)'>Delete</button>
+                    <button ng-click='showClipLink(clip)' ng-show='!clip.showLink'>Show Link</button>
+                    <button ng-click='hideClipLink(clip)' ng-show='clip.showLink'>Hide Link</button>
+                    <div ng-show='clip.showLink'>
+                        {{getClipLink(clip)}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <hr />
     </div>
-    <hr />
     <div id='clip-editor' class='form-table'>
         <h2>Create New Clip</h2>
         <div class='field-row'>

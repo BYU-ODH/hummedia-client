@@ -52,9 +52,9 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
 
     // Save the new clip to the server.
     $scope.saveNewClip = function() {
-        Clip.post($scope.newClip);
-        $scope.clips.push($scope.newClip);
+        var result = Clip.post($scope.newClip);
         resetNewClip();
+        $scope.clips.push(result);
     }
 
     // Get the clips associated with this user.
@@ -74,7 +74,6 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
         }
 
         // Delete from the currently-visible ClipList.
-        console.log('index: %d', index);
         $scope.clips.splice(index, 1);
 
         // Delete from the backend.
