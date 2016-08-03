@@ -4,10 +4,13 @@
     <div id='clips'>
         <ul>
             <li ng-repeat='clip in clips'>
-                <a href='https://milo.byu.edu/video/{{clip.mediaid}}?start={{clip.start}}&end={{clip.end}}'>{{clip.name}}</a>
-                <button ng-click='clip.$delete()'>Delete</button>
-                <button>Get Embed Code</button>
-                <span>{{clip.thing}}</span>
+                <a href={{getClipLink(clip)}}'>{{clip.name}}</a>
+                <button ng-click='deleteClip(clip)'>Delete</button>
+                <button ng-click='showClipLink(clip)' ng-show='!clip.showLink'>Show Link</button>
+                <button ng-click='hideClipLink(clip)' ng-show='clip.showLink'>Hide Link</button>
+                <div ng-show='clip.showLink'>
+                    {{getClipLink(clip)}}
+                </div>
             </li>
         </ul>
     </div>

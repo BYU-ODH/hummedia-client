@@ -61,6 +61,28 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     $scope.clips = Clip.get_list();
     document.clip = Clip;
 
+    // Delete the clip.
+    $scope.deleteClip = function(clip) {
+        var params = {'id': clip['_id']}
+        Clip.delete(params);
+    }
+
+    // Build a link for the clip.
+    $scope.getClipLink = function(clip){
+        var urlBase = window.location.origin;
+        return urlBase + '/video/' + clip.mediaid + '?start=' + clip.start + '&end=' + clip.end;
+    }
+
+    // Set the clip's link to be either visible.
+    $scope.showClipLink = function(clip) {
+        clip.showLink = true;
+    }
+
+    // Set the clip's link to be either hidden.
+    $scope.hideClipLink = function(clip) {
+        clip.showLink = false;
+    }
+
     $scope.video = Video.get({identifier: vid}, function initialize(video) {
         if(ANNOTATION_MODE) {
             Butter(vid, coll, video['ma:hasPolicy']);
