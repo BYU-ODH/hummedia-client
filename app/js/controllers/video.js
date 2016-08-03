@@ -63,8 +63,22 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
 
     // Delete the clip.
     $scope.deleteClip = function(clip) {
-        var params = {'id': clip['_id']}
-        Clip.delete(params);
+        var id = clip['_id'];
+
+        // Find the index in the currently-visible ClipList.
+        var index = -1;
+        for (var i = 0; i < $scope.clips.length; i++) {
+            if ($scope.clips[i]['_id'] === id) {
+                index = i;
+            }
+        }
+
+        // Delete from the currently-visible ClipList.
+        console.log('index: %d', index);
+        $scope.clips.splice(index, 1);
+
+        // Delete from the backend.
+        Clip.delete({'id': id});
     }
 
     // Build a link for the clip.
