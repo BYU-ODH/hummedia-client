@@ -5,9 +5,11 @@
             <ul>
                 <li ng-repeat='clip in clips'>
                     <a href={{getClipLink(clip)}}'>{{clip.name}}</a>
-                    <button ng-click='deleteClip(clip)'>Delete</button>
-                    <button ng-click='showClipLink(clip)' ng-show='!clip.showLink'>Show Link</button>
-                    <button ng-click='hideClipLink(clip)' ng-show='clip.showLink'>Hide Link</button>
+                    <span style='float:right'>
+                        <button ng-click='deleteClip(clip)'>Delete</button>
+                        <button ng-click='showClipLink(clip)' ng-show='!clip.showLink'>Show Link</button>
+                        <button ng-click='hideClipLink(clip)' ng-show='clip.showLink'>Hide Link</button>
+                    </span>
                     <div ng-show='clip.showLink'>
                         {{getClipLink(clip)}}
                     </div>
@@ -20,17 +22,17 @@
         <h2>Create New Clip</h2>
         <div class='field-row'>
             <label for='clip-name'>Name:</label>
-            <input id='clip-name' ng-model='newClip.name' type='text' value='New Clip' />
+            <input id='clip-name' ng-model='newClip.name' type='text' style='float:right' />
         </div>
         <br />
         <div class='field-row'>
             <label for='clip-start'>Start Time:</label>
-            <input id='clip-start' ng-model='newClip.start' type='number' min=0 value=0 />
+            <input id='clip-start' ng-model='newClip.start' type='number' min=0 style='float:right' />
         </div>
         <br />
         <div class='field-row'>
             <label for='clip-end'>End Time:</label>
-            <input id='clip-end' ng-model='newClip.end' type='number' min=0 value=10 />
+            <input id='clip-end' ng-model='newClip.end' type='number' min=0 style='float:right' />
         </div>
         <br />
         <div class='field-row'>
