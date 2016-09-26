@@ -21,17 +21,17 @@ ln -fs /vagrant /var/www
 if ! apache2ctl -M | grep auth_token_module; then
   cd /tmp
   rm -rf mod_auth_token*
-  wget --no-verbose https://mod-auth-token.googlecode.com/files/mod_auth_token-1.0.6-beta.tar.gz
+  wget --no-verbose https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/mod-auth-token/mod_auth_token-1.0.6-beta.tar.gz
   tar -xvzf mod_auth_token-1.0.6-beta.tar.gz
   chmod +x mod_auth_token
   cd mod_auth_token
   chmod +x configure
   # symlinks are incorrect; need to patch them
-  ln -fs /usr/share/automake-1.11/config.guess config.guess
-  ln -fs /usr/share/automake-1.11/config.sub config.sub
-  ln -fs /usr/share/automake-1.11/COPYING COPYING
-  ln -fs /usr/share/automake-1.11/install-sh install-sh
-  ln -fs /usr/share/automake-1.11/missing missing
+  ln -fs /usr/share/automake-1.11/config.guess config.guess;
+  ln -fs /usr/share/automake-1.11/config.sub config.sub;
+  ln -fs /usr/share/automake-1.11/COPYING COPYING;
+  ln -fs /usr/share/automake-1.11/install-sh install-sh;
+  ln -fs /usr/share/automake-1.11/missing missing;
   # configure auth module's Makefile and build
   ./configure
   make install # will automatically enable it
