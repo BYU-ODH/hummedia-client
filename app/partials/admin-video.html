@@ -26,7 +26,7 @@
             <div data-rights data-ng-model="video['dc:rights']"></div>
             <div class="control-buttons">
                 <button id="admin-video-cancel" data-ng-readonly="video.isSaving" data-ng-click="cancel()"> {{"Cancel" | tr}}</button>
-                <button id="admin-video-delete" data-ng-readonly="video.isSaving" data-ng-click="delete(video)" class="icon-trash"> {{"Delete" | tr}}</button>
+                <button id="admin-video-delete" data-ng-show="user.isSuperuser" data-ng-readonly="video.isSaving" data-ng-click="delete(video)" class="icon-trash"> {{"Delete" | tr}}</button>
                 <button id="admin-video-save" data-ng-readonly="video.isSaving" data-ng-click="update()"class="icon-floppy"> <span data-ng-switch="video.isSaving"><span data-ng-switch-default>{{"Save Changes" | tr}}</span><span data-ng-switch-when="true">{{"Saving…" | tr}}</span></span></button>
             </div>
         </div>
