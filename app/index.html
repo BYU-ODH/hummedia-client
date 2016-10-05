@@ -79,7 +79,7 @@
         </nav>
         <nav data-ng-show="showAdminMenu && (user.canCreate || user.isTA)" id="nav-admin" data-ng-cloak>
            <a href="/admin/collection" analytics="{category: 'admin-nav', label: 'collections'}">{{"Collections" | tr}}</a>
-           <a href="/admin/video" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'videos'}">{{"Media" | tr}}</a>
+           <a href="/admin/video" analytics="{category: 'admin-nav', label: 'videos'}">{{"Media" | tr}}</a>
            <a href="/admin/user" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Users" | tr}}</a>
            <a href="/admin/video/ingest" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Ingest Videos" | tr}}</a>
            <a href="/admin/audio/create" data-ng-show="user.isSuperuser" analytics="{category: 'admin-nav', label: 'users'}">{{"Ingest Audio" | tr}}</a>
