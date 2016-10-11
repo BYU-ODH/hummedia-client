@@ -73,6 +73,7 @@
             <a data-ng-show="user.canCreate || user.isTA" ng-click="toggleAdmin()" analytics="{category: 'nav', label: 'admin'}">{{"Admin" | tr}}</a>
             <a href="/collection" analytics="{category: 'nav', label: 'courses'}">{{"Courses" | tr}}</a>
             <a href="/search" id="nav-search" analytics="{category: 'nav', label: 'search'}">{{"Search" | tr}}</a>
+            <a href="" data-ng-show="user.exists" data-ng-click="toggleCliplist()">{{"Cliplist" | tr}}</a>
             <a href="/about" analytics="{category: 'nav', label: 'about'}">{{"About" | tr}}</a>
             <a id="logout-link" data-ng-click="user.logout()" data-ng-show="user.exists || user.netIDRequired" analytics="{category: 'nav', label: 'logout'}">{{"Logout" | tr}}</a>
             <a href="/developer" data-ng-show="debug">Developer</a>
@@ -200,6 +201,7 @@
   <script src="/js/controllers/subtitle.js"></script>
   <script src="/js/controllers/video_search.js"></script>
   <script src="/js/controllers/video.js"></script>
+  <script src="/js/controllers/cliplist.js"></script>
   <script src="/js/controllers/developer.js" data-remove="true"></script>
 <!--[endif]> -->
 </body>

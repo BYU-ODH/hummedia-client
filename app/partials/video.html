@@ -1,6 +1,6 @@
-<div id='cliplist-container' class='admin admin-editor' style='float:right'>
+<div id='cliplist-container' class='admin admin-editor' style='position: absolute; left: 75%' data-ng-show='showCliplist'>
     <div ng-show='clips.length > 0' id='clip-bookmarks'>
-        <h2>Bookmarked Clips</h2>
+        <h2 style='cursor: move;' class='no-select'>Bookmarked Clips</h2>
         <div id='clips'>
             <ul>
                 <li ng-repeat='clip in clips' style='clear: both'>

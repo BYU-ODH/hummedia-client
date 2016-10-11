@@ -381,6 +381,25 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             }
             $window.removeEventListener('blur', pauseVideo);
         });
+
+        $('#cliplist-container h2').mousedown(function(e){
+          window.dragging = {};
+          dragging.pageX0 = e.pageX;
+          dragging.pageY0 = e.pageY;
+          dragging.element = $(this).parent().parent();
+          dragging.offset0 = $(this).parent().parent().offset();
+          function drag(e){
+              var left = dragging.offset0.left + (e.pageX - dragging.pageX0);
+              var top = dragging.offset0.top + (e.pageY - dragging.pageY0);
+              dragging.element.offset({top: top, left: left});
+          }
+          function release(e){
+              $('body').off('mousemove', drag)
+              $('body').off('mouseup', release);
+          }
+          $('body').on('mouseup', release);
+          $('body').on('mousemove', drag);
+        });
     });
 }
 // always inject this in so we can later compress this JavaScript
