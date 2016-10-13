@@ -1,5 +1,5 @@
 'use strict';
-function NavCtrl($scope, user, config, $rootScope, $location) {
+function NavCtrl($scope, user, config, $rootScope, $location, Clip) {
     $scope.user = user;
     $scope.showAdminMenu = false;
     $scope.showLogin = true;
@@ -14,8 +14,14 @@ function NavCtrl($scope, user, config, $rootScope, $location) {
     };
     $scope.toggleCliplist = function() {
         if ($location.$$path.substring(1,6) != 'video') {
-            $rootScope.showCliplist = true;
-            $location.path('/cliplist');
+            Clip.get_list().$promise.then(function(resp) {
+              if (resp.length > 0) {
+                $rootScope.showCliplist = true;
+                $location.path('video/' + resp[0]['mediaid']).search({'start': resp[0]['start'], 'end': resp[0]['end']});
+              } else {
+                $location.path('/cliplist'); 
+              }
+            });
         } else {
             $rootScope.showCliplist = !$rootScope.showCliplist;
         }
@@ -40,4 +46,4 @@ function NavCtrl($scope, user, config, $rootScope, $location) {
           "interruptions of service. We apologize for the inconvenience.";
     }
 };
-NavCtrl.$inject = ['$scope','user','appConfig', '$rootScope', '$location'];
+NavCtrl.$inject = ['$scope','user','appConfig', '$rootScope', '$location', 'Clip'];
