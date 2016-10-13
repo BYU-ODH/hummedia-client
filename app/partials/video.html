@@ -1,6 +1,6 @@
-<div id='cliplist-container' class='admin admin-editor' style='float:right'>
+<div id='cliplist-container' class='admin admin-editor' data-ng-show='showCliplist'>
     <div ng-show='clips.length > 0' id='clip-bookmarks'>
-        <h2>Bookmarked Clips</h2>
+        <h2 style='cursor: move;'>Bookmarked Clips</h2>
         <div id='clips'>
             <ul>
                 <li ng-repeat='clip in clips' style='clear: both'>
@@ -20,23 +20,25 @@
     </div>
     <div id='clip-editor' class='form-table'>
         <h2>Create New Clip</h2>
-        <div class='field-row'>
-            <label for='clip-name'>Name:</label>
-            <input id='clip-name' ng-model='newClip.name' type='text' style='float:right' />
-        </div>
-        <br />
-        <div class='field-row'>
-            <label for='clip-start'>Start Time:</label>
-            <input id='clip-start' ng-model='newClip.start' type='number' min=0 style='float:right' />
-        </div>
-        <br />
-        <div class='field-row'>
-            <label for='clip-end'>End Time:</label>
-            <input id='clip-end' ng-model='newClip.end' type='number' min=0 style='float:right' />
-        </div>
+        <form name=newClipForm>
+            <div class='field-row'>
+                <label for='clip-name'>Name:</label>
+                <input name='clipName' id='clip-name' ng-model='newClip.name' type='text' placeholder='New Clip' style='float:right' required/>
+            </div>
+            <br />
+            <div class='field-row'>
+                <label for='clip-start'>Start Time:</label>
+                <input name='clipStart' id='clip-start' ng-model='newClip.start' pattern="[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}$" placeholder="00:00:00" style='float:right' required/>
+            </div>
+            <br />
+            <div class='field-row'>
+                <label for='clip-end'>End Time:</label>
+                <input name='clipEnd' id='clip-end' ng-model='newClip.end' pattern="[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}$" placeholder="00:00:00" style='float:right' required/>
+            </div>
+        </form>
         <br />
         <div class='field-row' style='clear: both'>
-            <button ng-click='saveNewClip()' id='clip-save'>Save</button>
+            <button ng-click='saveNewClip()' id='clip-save' ng-disabled='newClipForm.$invalid'>Save</button>
         </div>
     </div>
 </div>

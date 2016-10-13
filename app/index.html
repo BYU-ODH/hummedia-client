@@ -73,6 +73,7 @@
             <a data-ng-show="user.canCreate || user.isTA" ng-click="toggleAdmin()" analytics="{category: 'nav', label: 'admin'}">{{"Admin" | tr}}</a>
             <a href="/collection" analytics="{category: 'nav', label: 'courses'}">{{"Courses" | tr}}</a>
             <a href="/search" id="nav-search" analytics="{category: 'nav', label: 'search'}">{{"Search" | tr}}</a>
+            <a href="" data-ng-show="user.exists" data-ng-click="toggleCliplist()">{{"Cliplist" | tr}}</a>
             <a href="/about" analytics="{category: 'nav', label: 'about'}">{{"About" | tr}}</a>
             <a id="logout-link" data-ng-click="user.logout()" data-ng-show="user.exists || user.netIDRequired" analytics="{category: 'nav', label: 'logout'}">{{"Logout" | tr}}</a>
             <a href="/developer" data-ng-show="debug">Developer</a>
@@ -95,6 +96,8 @@
 
   <!-- LIBRARIES -->
   <script src="/lib/video-js/video.dev.js" data-exclude-compress></script> <!--must come before require.js-->
+  <script src="/lib/jquery-2.0.0.js" data-cdn="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="/lib/jquery.mask.min.js"></script>
   <script src="/lib/require/require.js" data-cdn="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js"></script>
   <script>
       require.config({
@@ -108,7 +111,6 @@
           }
       });
   </script>
-  <script src="/lib/jquery-2.0.0.js" data-cdn="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script data-remove>less = {async: "true"};</script><!--prevents synchronous XMLHTTPRequest warnings-->
   <script src="/lib/less/less-1.3.3.min.js" data-remove></script>
   <script src="/lib/angular/angular.js" data-cdn="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>

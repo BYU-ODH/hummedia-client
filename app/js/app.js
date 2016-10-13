@@ -10,6 +10,7 @@ angular.module('hummedia', ['hummedia.config','hummedia.filters', 'hummedia.serv
             ANNOTATION_MODE: function(){ return false; }
         }
     });    
+    $routeProvider.when('/cliplist', {title: "Hummedia | Cliplist", templateUrl: '/partials/cliplist.html'});
     $routeProvider.when('/video/annotate/:id', {title: "Hummedia | Annotate", templateUrl: '/partials/video.html', controller: VideoCtrl,
         resolve: {
             ANNOTATION_MODE: function() { return true; }

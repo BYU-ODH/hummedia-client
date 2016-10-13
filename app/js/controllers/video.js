@@ -33,6 +33,9 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     $scope.editorMode = ANNOTATION_MODE;
     $scope.annotationsLayout = false;
 
+    $('#clip-start').mask('00:00:00');
+    $('#clip-end').mask('00:00:00')
+
     if($scope.editorMode){
         //In editor mode, use the annotation layout
         $scope.annotationsLayout = true;
@@ -46,15 +49,27 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
 
     // Set the default values of the new clip.
     function resetNewClip() {
-        $scope.newClip = {start: 0, end: 10, name: 'New Clip', mediaid: vid}
+        $scope.newClip = {start: '', end: '', name: '', mediaid: vid}
     }
     resetNewClip();
 
     // Save the new clip to the server.
     $scope.saveNewClip = function() {
-        var result = Clip.post($scope.newClip);
-        resetNewClip();
-        $scope.clips.push(result);
+        if ($scope.newClip.start.match(/[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}$/) 
+            && $scope.newClip.end.match(/[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}$/)) {
+
+          var startVals = $scope.newClip.start.split(':').map(Number);
+          $scope.newClip.start = startVals[0] * 3600 + startVals[1] * 60 + startVals[2];
+
+          var endVals = $scope.newClip.end.split(':').map(Number);
+          $scope.newClip.end = endVals[0] * 3600 + endVals[1] * 60 + endVals[2];
+
+          var result = Clip.post($scope.newClip);
+          resetNewClip();
+          $scope.clips.push(result);
+        } else {
+          alert('Invalid time. Please enter it in the format "HH:mm:ss".');
+        }
     }
 
     // Get the clips associated with this user.
@@ -380,6 +395,26 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
               pop.destroy();
             }
             $window.removeEventListener('blur', pauseVideo);
+        });
+
+        $('#cliplist-container h2').mousedown(function(e){
+          e.preventDefault();
+          window.dragging = {};
+          dragging.pageX0 = e.pageX;
+          dragging.pageY0 = e.pageY;
+          dragging.element = $(this).parent().parent();
+          dragging.offset0 = $(this).parent().parent().offset();
+          function drag(e){
+              var left = dragging.offset0.left + (e.pageX - dragging.pageX0);
+              var top = dragging.offset0.top + (e.pageY - dragging.pageY0);
+              dragging.element.offset({top: top, left: left});
+          }
+          function release(e){
+              $('body').off('mousemove', drag)
+              $('body').off('mouseup', release);
+          }
+          $('body').on('mouseup', release);
+          $('body').on('mousemove', drag);
         });
     });
 }
