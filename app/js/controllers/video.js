@@ -34,7 +34,22 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
     $scope.annotationsLayout = false;
 
     $('#clip-start').mask('00:00:00');
-    $('#clip-end').mask('00:00:00')
+    $('#clip-end').mask('00:00:00');
+
+    $('#clip-name').on('click', function() {
+      if ($(this).val() == "" && $('#clip-start').val() == "" && $('#clip-end').val() == "") {
+        var toHMMSS = secs => {
+            var hours   = Math.floor(secs / 3600) % 24;
+            var minutes = Math.floor(secs / 60) % 60;
+            var seconds = Math.floor(secs % 60);
+            return [hours,minutes,seconds].map(v => v < 10 ? "0" + v : v).join(":")
+        }
+        $('#clip-start').val(toHMMSS(window.pop.video.currentTime));
+        $('#clip-end').val(toHMMSS(window.pop.video.currentTime));
+        $scope.newClip.start = $('#clip-start').val();
+        $scope.newClip.end = $('#clip-end').val();
+      }
+    })
 
     if($scope.editorMode){
         //In editor mode, use the annotation layout
@@ -59,14 +74,20 @@ function VideoCtrl($scope, $routeParams, ANNOTATION_MODE,
             && $scope.newClip.end.match(/[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}:[0-9]{1}[0-9]{1}$/)) {
 
           var startVals = $scope.newClip.start.split(':').map(Number);
-          $scope.newClip.start = startVals[0] * 3600 + startVals[1] * 60 + startVals[2];
+          var startSeconds = startVals[0] * 3600 + startVals[1] * 60 + startVals[2];
 
           var endVals = $scope.newClip.end.split(':').map(Number);
-          $scope.newClip.end = endVals[0] * 3600 + endVals[1] * 60 + endVals[2];
+          var endSeconds = endVals[0] * 3600 + endVals[1] * 60 + endVals[2];
 
-          var result = Clip.post($scope.newClip);
-          resetNewClip();
-          $scope.clips.push(result);
+          if (startSeconds < endSeconds) {
+            $scope.newClip.start = startSeconds;
+            $scope.newClip.end = endSeconds;
+            var result = Clip.post($scope.newClip);
+            resetNewClip();
+            $scope.clips.push(result);
+          } else {
+            alert('Please enter an end time that is after the start time.');
+          }
         } else {
           alert('Invalid time. Please enter it in the format "HH:mm:ss".');
         }

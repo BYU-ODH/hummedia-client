@@ -1,4 +1,5 @@
 <div id='cliplist-container' class='admin admin-editor' data-ng-show='showCliplist'>
+    <i data-ng-click="toggleCliplist()" class="icon-cancel-circled close-icon"></i>
     <div ng-show='clips.length > 0' id='clip-bookmarks'>
         <h2 style='cursor: move;'>Bookmarked Clips</h2>
         <div id='clips'>
@@ -23,7 +24,7 @@
         <form name=newClipForm>
             <div class='field-row'>
                 <label for='clip-name'>Name:</label>
-                <input name='clipName' id='clip-name' ng-model='newClip.name' type='text' placeholder='New Clip' style='float:right' required/>
+                <input name='clipName' id='clip-name' ng-model='newClip.name' type='text' placeholder='Clip Name' style='float:right' required/>
             </div>
             <br />
             <div class='field-row'>
@@ -38,7 +39,7 @@
         </form>
         <br />
         <div class='field-row' style='clear: both'>
-            <button ng-click='saveNewClip()' id='clip-save' ng-disabled='newClipForm.$invalid'>Save</button>
+            <button ng-click='saveNewClip()' id='clip-save' ng-disabled='newClipForm.clipName.$invalid'>Save</button>
         </div>
     </div>
 </div>

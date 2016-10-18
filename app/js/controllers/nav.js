@@ -12,7 +12,7 @@ function NavCtrl($scope, user, config, $rootScope, $location, Clip) {
     $scope.toggleAdmin = function() {
         $scope.showAdminMenu = !$scope.showAdminMenu;
     };
-    $scope.toggleCliplist = function() {
+    $rootScope.toggleCliplist = function() {
         if ($location.$$path.substring(1,6) != 'video') {
             Clip.get_list().$promise.then(function(resp) {
               if (resp.length > 0) {
