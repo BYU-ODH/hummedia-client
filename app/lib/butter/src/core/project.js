@@ -296,6 +296,9 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
       return JSON.stringify( _this.data );
     };
 
+
+    //_this.import(_this.export());
+
     // Expose backupData() to make testing possible
     var backupData = _this.backupData = function() {
       // If the project isn't different from last time, or if it's known
@@ -443,6 +446,25 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
               butter.config.override(updatedConfig);
               projectSaved(data);
           }, failure); 
+      }
+    };
+
+    _this.download = function() {
+        return(_this.data);
+    };
+
+    _this.upload = function(json) {
+      var newObj = json;
+      var oldObj = _this.data;
+      if (JSON.stringify(Object.keys(newObj).sort()) === JSON.stringify(Object.keys(oldObj).sort()) &&
+        JSON.stringify(Object.keys(newObj.media[0]).sort()) === JSON.stringify(Object.keys(oldObj.media[0]).sort())) {
+          if (newObj.media[0].id === oldObj.media[0].id) {
+            _this.import(json);
+          } else {
+            alert("The selected annotation file is not for this video.");
+          }
+      } else {
+          alert("The selected annotation file is invalid.");
       }
     };
   }

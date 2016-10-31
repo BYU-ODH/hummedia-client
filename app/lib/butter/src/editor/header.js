@@ -5,6 +5,8 @@
 define([ "ui/widget/tooltip" ], function( Tooltip ) {
 
   return function( editorAreaDOMRoot, editorModule ) {
+    var _this = this;
+
     var _popcornButton = editorAreaDOMRoot.querySelector( ".butter-editor-header-popcorn" );
     var _projectButton = editorAreaDOMRoot.querySelector( ".butter-editor-header-share" );
 
@@ -21,6 +23,13 @@ define([ "ui/widget/tooltip" ], function( Tooltip ) {
     
     function openProjectEditor() {
       editorModule.openEditor( "project-editor" );
+      if (!_this.isSaved) {
+        editorAreaDOMRoot.querySelector( "#butter-save-changes" ).classList.remove( "butter-disabled" );
+        editorAreaDOMRoot.querySelector( "#butter-download-annotations" ).classList.add( "butter-disabled" );
+      } else {
+        editorAreaDOMRoot.querySelector( "#butter-save-changes" ).classList.add( "butter-disabled" );
+        editorAreaDOMRoot.querySelector( "#butter-download-annotations" ).classList.remove( "butter-disabled" );
+      }
     }  
 
     this.setFocus = function( editorName ) {
@@ -45,15 +54,25 @@ define([ "ui/widget/tooltip" ], function( Tooltip ) {
 
     this.views = {
       saved: function() {
-        _projectButton.classList.add( "butter-editor-btn-disabled" );
-        _projectButton.removeEventListener( "click", openProjectEditor, false );
-        // If the project editor is open, open the media editor instead.
-        if ( _currentFocus === _projectButton ) {
-            editorModule.openEditor( "plugin-list" );
+        _this.isSaved = true;;
+        // _projectButton.classList.add( "butter-editor-btn-disabled" );
+        // _projectButton.removeEventListener( "click", openProjectEditor, false );
+        // // If the project editor is open, open the media editor instead.
+        // if ( _currentFocus === _projectButton ) {
+        //     editorModule.openEditor( "plugin-list" );
+        // }
+        if (_currentFocus === _projectButton) { //TODO: Toggle these without switching
+          document.getElementById("butter-save-changes").classList.add( "butter-disabled" );
+          document.getElementById("butter-download-annotations").classList.remove( "butter-disabled" );
         }
       },
       unSaved: function() {
-        _projectButton.classList.remove( "butter-editor-btn-disabled" );
+        _this.isSaved = false;
+        if (_currentFocus === _projectButton) {
+          document.getElementById("butter-save-changes").classList.remove( "butter-disabled");
+          document.getElementById("butter-download-annotations").classList.add( "butter-disabled" );
+        }
+        //_projectButton.classList.remove( "butter-editor-btn-disabled" );
         _projectButton.addEventListener( "click", openProjectEditor, false );
       },
       enablePlugins: function() {

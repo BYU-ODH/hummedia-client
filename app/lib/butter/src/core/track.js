@@ -235,7 +235,7 @@ define( [ "./eventmanager", "./trackevent", "./views/track-view", "util/sanitize
           option = manifestOptions[propertyName];
           if ( option.elem === "textarea" || option.elem === "input" ) {
             // sanitize the input for this element
-            sanitizationList.push(propertyName);
+            sanitizationList.push(propertyName); //TODO: WHat the theck os going on here?
           }
         }
       }
