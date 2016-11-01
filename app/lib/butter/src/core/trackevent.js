@@ -72,12 +72,8 @@ define( [ "./logger", "./eventmanager", "./observer",
     if ( !_type ){
       _logger.log( "Warning: " + _id + " has no type." );
     }
-    else if (_type == 'sequencer') {
-      this.manifest = {'options': {}};
-      console.log(options)
-    } else {
+    else {
       this.manifest = Popcorn.manifest[ _type ];
-      console.log(this.manifest)
     }
 
     _popcornOptions.start = _popcornOptions.start || 0;

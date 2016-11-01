@@ -296,9 +296,6 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
       return JSON.stringify( _this.data );
     };
 
-
-    //_this.import(_this.export());
-
     // Expose backupData() to make testing possible
     var backupData = _this.backupData = function() {
       // If the project isn't different from last time, or if it's known

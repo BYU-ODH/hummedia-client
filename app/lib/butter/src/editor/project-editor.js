@@ -116,7 +116,7 @@ define([ "editor/editor", "editor/base-editor",
                 //   return;
                 // }
                   var annotations_file = JSON.parse(f.target.result);
-                  _project.upload(annotations_file);
+                  _project.import(annotations_file);
               }
 
               reader.readAsText(e.target.files[0])
