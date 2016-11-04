@@ -79,6 +79,10 @@ define([ "editor/editor", "editor/base-editor",
     butter.listen( "projectsaved", function onProjectSaved() {
         alert("Project saved.");
     });
+    butter.listen( "projectsavedrefresh", function onProjectSavedAndRefresh() {
+        alert("Annotations successfully imported. This page will now refresh.");
+        window.location.reload(true);
+    });
 
     Editor.BaseEditor.extend( this, butter, rootElement, {
       open: function() {
@@ -107,16 +111,14 @@ define([ "editor/editor", "editor/base-editor",
             document.getElementById("file-upload").addEventListener("change", function(e) {
               var reader = new FileReader();
               reader.onload = function(f) {
-                // try {
-                //   var annotations_file = JSON.parse(f.target.result);
-                //   _project.upload(annotations_file);
-                // } catch(e) {
-                //   //alert(e);//"Invalid File!");
-                //   console.log(e);
-                //   return;
-                // }
+                try {
                   var annotations_file = JSON.parse(f.target.result);
-                  _project.import(annotations_file);
+                  _project.upload(annotations_file);
+                } catch(e) {
+                  alert("Invalid File!");
+                  console.log(e);
+                  return;
+                }
               }
 
               reader.readAsText(e.target.files[0])

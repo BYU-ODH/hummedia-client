@@ -619,7 +619,8 @@
                       }
 
                       firstSource = sources[ 0 ];
-                      newTrack = new Track();
+                      //Commented out to prevent a weird bug where the added sequencer causes an error
+                      /*newTrack = new Track();
                       _this.addTrack( newTrack );
                       newTrack.addTrackEvent({
                         type: "sequencer",
@@ -632,7 +633,7 @@
                           duration: _duration,
                           target: "video-container"
                         }
-                      });
+                      });*/
                       _clipData[ firstSource ] = firstSource;
                     }
                   }

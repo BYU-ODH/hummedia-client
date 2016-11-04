@@ -61,7 +61,7 @@ define([ "ui/widget/tooltip" ], function( Tooltip ) {
         // if ( _currentFocus === _projectButton ) {
         //     editorModule.openEditor( "plugin-list" );
         // }
-        if (_currentFocus === _projectButton) { //TODO: Toggle these without switching
+        if (_currentFocus === _projectButton) { 
           document.getElementById("butter-save-changes").classList.add( "butter-disabled" );
           document.getElementById("butter-download-annotations").classList.remove( "butter-disabled" );
         }
