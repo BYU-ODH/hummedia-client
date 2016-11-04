@@ -22,6 +22,11 @@ define([], function() {
       _projectWasSavedOnce = true;
       window.onbeforeunload = null;
     });
+
+    butter.listen( "projectsavedrefresh", function() {
+      _projectWasSavedOnce = true;
+      window.onbeforeunload = null;
+    });
   };
 
 });

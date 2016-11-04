@@ -12,6 +12,8 @@ define([ "editor/editor", "editor/base-editor",
     var _rootElement = rootElement,
         _projectTabs = _rootElement.querySelectorAll( ".project-tab" ),
         _saveButton  = _rootElement.querySelector("#butter-save-changes"),
+        _downloadButton = _rootElement.querySelector("#butter-download-annotations"),
+        _uploadButton = _rootElement.querySelector("#butter-upload-annotations"),
         _this = this,
         _numProjectTabs = _projectTabs.length,
         _project,
@@ -77,15 +79,52 @@ define([ "editor/editor", "editor/base-editor",
     butter.listen( "projectsaved", function onProjectSaved() {
         alert("Project saved.");
     });
+    butter.listen( "projectsavedrefresh", function onProjectSavedAndRefresh() {
+        alert("Annotations successfully imported. This page will now refresh.");
+        window.location.reload(true);
+    });
 
     Editor.BaseEditor.extend( this, butter, rootElement, {
       open: function() {
         _project = butter.project;
 
         _saveButton.onclick = function() {
+          if (!this.classList.contains('butter-disabled')) {
             _project.save();
+          }
         };
 
+        _downloadButton.onclick = function() {
+          if (!this.classList.contains('butter-disabled')) {
+            var obj = JSON.parse(_project.export());
+            var data = "tetx/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
+
+            var button = document.getElementById('butter-download-annotations');
+            button.href = 'data:' + data;
+            button.download = document.getElementById("video-title").textContent.trim()+'.json';
+          }
+        }
+
+        _uploadButton.onclick = function() {
+          if (confirm("Discard current annotations and replace them with new ones?")) {
+            document.getElementById("file-upload").click();
+            document.getElementById("file-upload").addEventListener("change", function(e) {
+              var reader = new FileReader();
+              reader.onload = function(f) {
+                try {
+                  var annotations_file = JSON.parse(f.target.result);
+                  _project.upload(annotations_file);
+                } catch(e) {
+                  alert("Invalid File!");
+                  console.log(e);
+                  return;
+                }
+              }
+
+              reader.readAsText(e.target.files[0])
+            });
+          }
+        }
       },
       close: function() {
       }

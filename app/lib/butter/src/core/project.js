@@ -270,6 +270,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
         for ( i = 0, l = media.length; i < l; ++i ) {
           mediaData = media[ i ];
           m = butter.getMediaByType( "target", mediaData.target );
+          m.clear();
 
           if ( !m ) {
             m = new Media();
@@ -288,7 +289,6 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
       if( json.backupDate ) {
         startBackups();
       }
-
     };
 
     // Export project data as JSON string (e.g., for use with project.import())
@@ -330,7 +330,7 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
     // Save and Publish a project.  Saving only happens if project data needs
     // to be saved (i.e., it has been changed since last save, or was never
     // saved before).
-    _this.save = function( callback ) {
+    _this.save = function( callback, refresh ) {
       if ( !callback ) {
         callback = function() {};
       }
@@ -360,7 +360,11 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
           }
 
           // Let consumers know that the project is now saved;
-          _this.dispatch( "projectsaved" );
+          if (!refresh) {
+            _this.dispatch( "projectsaved" );
+          } else {
+            _this.dispatch( "projectsavedrefresh" );
+          }
       }
 
 
@@ -443,6 +447,27 @@ define( [ "core/eventmanager", "core/media", "util/sanitizer", "util/xhr", "core
               butter.config.override(updatedConfig);
               projectSaved(data);
           }, failure); 
+      }
+    };
+
+    _this.download = function() {
+        return(_this.data);
+    };
+
+    _this.upload = function(json) {
+      var newObj = json;
+      var oldObj = _this.data;
+
+      if (JSON.stringify(Object.keys(newObj).sort()) === JSON.stringify(Object.keys(oldObj).sort()) &&
+        JSON.stringify(Object.keys(newObj.media[0]).sort()) === JSON.stringify(Object.keys(oldObj.media[0]).sort())) {
+          if (newObj.media[0].id === oldObj.media[0].id) {
+            _this.import(json);
+            _this.save(undefined, true);
+          } else {
+            alert("The selected annotation file is not for this video.");
+          }
+      } else {
+        alert("The selected annotation file is invalid.");
       }
     };
   }
