@@ -80,8 +80,10 @@ define([ "editor/editor", "editor/base-editor",
         alert("Project saved.");
     });
     butter.listen( "projectsavedrefresh", function onProjectSavedAndRefresh() {
-        alert("Annotations successfully imported. This page will now refresh.");
-        window.location.reload(true);
+        alert("Annotations successfully imported. You will now be redirected to your collection.");
+        //navigates back to the collection page
+        var collectionId = window.location.search.substring(window.location.search.indexOf("=")+1, window.location.search.length);
+        window.location.href = window.location.origin+"/admin/collection?id="+collectionId;
     });
 
     Editor.BaseEditor.extend( this, butter, rootElement, {
