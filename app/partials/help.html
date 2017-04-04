@@ -1,0 +1,11 @@
+<div id="help_content">
+  <div id="tabs-holder">
+      <ul id="tabs">
+          <li><u>Help Sections</u></li>
+          <li data-ng-repeat="section in sections" data-ng-click="changeView(section)" data-ng-class="{highlighted: section==selectedSection}">{{titles[$index]}}</li>
+      </ul>
+  </div>
+  <div id="help-wrapper">
+    <div data-ng-include="helpSection">
+  </div>
+</div>

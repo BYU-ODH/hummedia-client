@@ -1,0 +1,14 @@
+Once you have a collection up and connected to your course, you are ready to add some content. To get started, click on "Add Media" on the top right.
+<br><br>
+<img src="../img/help/adding-content/1.png" width="50%">
+<br>
+Here, you will see a list of all of the media currently uploaded to Hummedia. Scroll down to find your media, or narrow down the results by typing into the search bar at the top. Check the box next to the content that you want to add, and click "Add Selected to Collection" at the bottom. Exit this menu by clicking the red X in the top left corner.
+<br><br>
+<img src="../img/help/adding-content/2.png" width="90%">
+<br><br>
+If you don't see the video you are looking for, contact the HLR lab attendants in JFSB 1141or call 2-5424. If you have a physical copy of the video/audio, make sure to bring it so that they can convert and upload it for you. Please remember that&nbsp;<b>the content that you upload to Hummedia is often copyrighted, so only upload material that is required for class.</b> There is also an option to "add a new video" from an external source like YouTube. Refer to the "Adding Video Via YouTube" help file for more information.
+<br><br>
+To remove media from your collection,&nbsp;hover the mouse pointer&nbsp;over the title&nbsp;and select "Remove". You can also add annotations by clicking on "Annotate." (See the help file "Adding Annotations.") Selecting the checkbox next to the name shows the transcript for the content if it is enabled and available.
+<br><br>
+<img src="../img/help/adding-content/3.png" width="35%">
+<br><br><br>

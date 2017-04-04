@@ -1,0 +1,3 @@
+Some of&nbsp;the videos on Hummedia have optional subtitles. In order to toggle these subtitles on/off, please use the CC button on the bottom right corner of the video player.&nbsp;<b>Note: Currently subtitles do not work on Apple iOS video players used with iPads and iPhones.</b>
+<br><br><br><br>
+<img src="../img/help/viewing-subtitles/1.png" width="90%8">

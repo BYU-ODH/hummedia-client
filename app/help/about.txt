@@ -1,0 +1,16 @@
+<p>Hummedia is a project of the BYU Office of Digital Humanities. <a href="http://odh.byu.edu/contact/">Contact us.</a></p>
+  <p>
+      <small>
+          Hummedia is not supported on Internet Explorer, or browsers prior to Chrome 45, Safari 10, and Firefox 22.<br>
+          <br>
+          Font Awesome by Dave Gandy - <a href="http://fontawesome.io">http://fontawesome.io</a><br>
+          <br>
+          Additional Icons:<br>
+          Turtle by Nick Abrams from The Noun Project<br>
+          Rabbit by Rémy Médard from The Noun Project<br>
+          <br>
+          Background Image: <a target="blank" ng-href="{{img_profile}}"><cite>{{image_title}}</cite> by {{img_username}}</a>
+          <br>
+          <a target="blank" id="footer-license" ng-href="{{copyright}}"><img class='cc-logo' src="img/cc.png" /> {{license}}</a>
+       </small>
+  </p>

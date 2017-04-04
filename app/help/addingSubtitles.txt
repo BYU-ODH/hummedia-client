@@ -1,0 +1,11 @@
+Hummedia allows you to upload multiple subtitles to your videos. There are many different tools online for finding or&nbsp;creating your own subtitles. If you have a .vtt or .srt format subtitle file, you can upload it to your video to give viewers the ability to turn on subtitles by clicking the CC icon in the player. This feature is not only useful for foreign language videos, but should be used to provide access for those with hearing impairment. &nbsp;<b>Note: Currently subtitles do not work with Apple iOS video players used on iPads or iPhones.</b>
+<br><br>
+To get started, click on the "Admin" tab on the top right and then "Media" on the top left. From there, search through the media until you find the desired video. You should see a window where you can view and edit the metadata for the video.
+<br><br>
+<img src="../img/help/adding-subtitles/1.png" width="85%">
+<br><br>
+Click on "Add Subtitle" to open the dialog box shown below. Select the language of the subtitles, give them a name, and then select the subtitle file you would like to upload by clicking the "Choose File" button. Once it is selected, click "Upload" and the subtitles will be added. &nbsp;Note: Currently there is no error message if the upload fails; the dialog box will remain as is.
+<br><br>
+<img src="../img/help/adding-subtitles/2.png" width="40%">
+<br><br>
+Once the subtitles are uploaded, the subtitle track should be visible above the "Add Subtitle" button. If you want to delete them or download them, hover over the name of the track and click either button that appears.

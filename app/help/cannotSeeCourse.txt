@@ -1,0 +1,11 @@
+Are students having trouble seeing your course when they log in? Make sure that you update or add your course to your collection.
+<br><br>
+To do so, first navigate to your collection, check the courses that are linked to the collection but no longer valid,&nbsp;and click "Delete Selected Courses".
+<br><br>
+After that, re-sync your courses by clicking "Add New Course" and inputting the EXACT name of the course. This includes letters following the numbers i.e. JAPAN 491R. Make sure to include the section number as well. Hummedia uses the AIM system to determine what courses and which students may view a video.
+<br><br>
+After this, your students should be able to see your course. <b><u>Please remember that you need to do this at the beginning of every semester to allow your students to see your media.
+<br>
+</u></b>
+<br>
+<img src="../img/help/cannot-see-course/1.png" width="33%">

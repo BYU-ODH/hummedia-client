@@ -1267,29 +1267,58 @@ a {
 /***************************
  * About Page
 ****************************/
-
-#content-about{
-    background-color: white;
-    width: 50%;
-    border-radius: 5px;
-    margin: auto;
-    margin-top: 10%;
-    padding: 10px;
-    a {
-        color: rgb(71, 71, 213);
-        text-decoration: none;
-    }
-    p:not(:last-child) {
-        margin-bottom: 10px;
-    }
-    small {
-        opacity: 0.9;
-        a{
-            color: black;
-            text-decoration: none;
+#about_content{
+        padding: 10px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        text-align: center;
+        width: 100%;
+        h2{
+            font-size: 150%;
         }
-    }
+        .help_header{
+            cursor: pointer;
+            background-color: lightgray;
+            margin: 5px;
+            border-radius: 5px;
+        }
 }
+#help_content{
+    #about_content;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+#help-wrapper{
+  #wrapper;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  width: 80%;
+  display: inline-block;
+  vertical-align: top;
+}
+// #content-about{
+//     background-color: white;
+//     width: 50%;
+//     border-radius: 5px;
+//     margin: auto;
+//     margin-top: 10%;
+//     padding: 10px;
+//     a {
+//         color: rgb(71, 71, 213);
+//         text-decoration: none;
+//     }
+//     p:not(:last-child) {
+//         margin-bottom: 10px;
+//     }
+//     small {
+//         opacity: 0.9;
+//         a{
+//             color: black;
+//             text-decoration: none;
+//         }
+//     }
+// }
 
 #footer-license {
     .cc-logo {

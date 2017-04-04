@@ -74,7 +74,7 @@
             <a href="/collection" analytics="{category: 'nav', label: 'courses'}">{{"Courses" | tr}}</a>
             <a href="/search" id="nav-search" analytics="{category: 'nav', label: 'search'}">{{"Search" | tr}}</a>
             <a href="" data-ng-show="user.exists" data-ng-click="toggleCliplist()">{{"Cliplist" | tr}}</a>
-            <a href="/about" analytics="{category: 'nav', label: 'about'}">{{"About" | tr}}</a>
+            <a href="/help" analytics="{category: 'nav', label: 'help'}">{{"Help" | tr}}</a>
             <a id="logout-link" data-ng-click="user.logout()" data-ng-show="user.exists || user.netIDRequired" analytics="{category: 'nav', label: 'logout'}">{{"Logout" | tr}}</a>
             <a href="/developer" data-ng-show="debug">Developer</a>
         </nav>
@@ -187,6 +187,7 @@
   <!-- CONTROLLERS -->
   <script src="/js/controllers/nav.js"></script>
   <script src="/js/controllers/home.js"></script>
+  <script src="/js/controllers/help.js"></script>
   <script src="/js/controllers/search.js"></script>
   <script src="/js/controllers/select-course.js"></script>
   <script src="/js/controllers/login.js"></script>

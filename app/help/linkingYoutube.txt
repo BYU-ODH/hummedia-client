@@ -1,0 +1,29 @@
+Can't find the video or audio content that you want to add to your course? If you need to add something to your course from a DVD, VHS, or the like, make sure that you take it to the HLR help desk in the computer lab on the first floor of the JFSB. However, if you just want to link content from a YouTube video or upload content that you created yourself, you can link it to Hummedia yourself.
+<br><br>
+First, open up your collection and click on "Add Media".&nbsp;
+<br><br>
+<img src="../img/help/linking-youtube/1.png" width="35%">
+<br><br>
+Then, click on the word "Create" in the sentence at the bottom. (Note that this doesn't give you the ability to 'create' a video, just 'link' to it)
+<br><br>
+<img src="../img/help/linking-youtube/2.png" width="85%">
+<br><br>
+And then finally, click on "Add Video" at the bottom of the next menu. (Note that you can skip directly to this menu by clicking on "Media" in the top left corner of your page.
+<br><br>
+<img src="../img/help/linking-youtube/3.png" width="85%">
+<br><br>
+This will take you to a built in YouTube search menu. From here you can search for the video you would like to link.&nbsp;
+<br><br>
+<img src="../img/help/linking-youtube/4.png" width="90%">
+<br><br>
+If you already know the exact location of your video, you can copy the end of the URL of the YouTube video and type it in the search bar. For example, for this URL you would copy "X6Mtpk4jeVA". This should bring the exact video to the top of the search results.
+<br>
+<img src="../img/help/linking-youtube/5.png" width="33%">
+<br><br>
+If content is uploaded to YouTube, it should be okay to use since we are just linking to it, but if you have questions about video that can be used, feel free to come to the HLR help desk and we will be happy to help you out. If the content isn't already up on YouTube and it isn't copyrighted, you can upload the video yourself through your own YouTube account.&nbsp;
+<br><br>
+<a href="https://www.lifewire.com/create-a-youtube-channel-tutorial-2655497" title="Link: https://www.lifewire.com/create-a-youtube-channel-tutorial-2655497">Here</a> is a link to a tutorial online for creating a YouTube account and uploading your own content.<br><br>Once you've decided on the content that you want to use, hover over the video you want and click on the "Use This Video" button that appears. You can also click on the "Watch On YouTube" button to view the video on YouTube. That will take you to a page where you can edit the metadata (details about the video).
+<br><br>
+<img src="../img/help/linking-youtube/6.png" width="80%">
+<br><br>
+From here, you can edit the title, date, director, and description by typing them into the fields. Some of these fields may be auto-populated from the original video, but feel free to change them if you so desire. You can also choose the language(s) for the video. If there is more than one language used in the video, hold down the Ctrl key and click on the languages used.<br><br>The rest of the fields are not necessary when linking to YouTube or Vimeo, but you can put your BYU NetID and indicate where the video is from in the appropriate fields. &nbsp;Change the "Availability" to Public only if the linked video is truly open for everyone to view.

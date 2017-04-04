@@ -1,0 +1,34 @@
+<img src="../img/help/annotation-types/1.png" width="33%">
+<br><br>
+<b><u>Skip<br></u></b><b><u></u></b><u></u>This annotation allows you to skip parts of the content. It can be useful for cutting out unnecessary portions.<br><br><b><u>Mute</u></b><u></u>
+<br>
+As the name suggests, this annotations cuts the volume for the space that it covers. It can be useful for cutting out inappropriate words or sounds.
+<br><br>
+<b><u>YouTube-Search</u></b><u></u>
+<br>
+This annotation brings up a YouTube search below the video based on the parameters you choose. When adding this annotation, make sure to add a search query, the amount of results you would like to show up, and a description. This can be useful in helping students find extra resources on a certain subject.
+<br><br>
+<b><u>Freebase Search</u></b><u></u><br>This annotation is in beta and may not work. It should search a database based on the search query you provide.
+<br><br>
+<b><u>Pause<br></u></b><b><u></u></b><u></u>
+This annotation pauses the video. It can be useful if there is a frame in the video that you want viewers to get a good look at. You can adjust the duration of the pause in seconds. Leaving the pause duration at '0' will cause the video to stay paused until a viewer resumes play.
+<br><br>
+<u><b>Comment</b></u><br>
+<u></u>Use this annotation to cause a comment to pop up. Make sure to add the text of the comment in the annotation module.
+<br>
+<b><br><u>Reference<br></u></b><u></u>
+This annotation causes a term/definition type reference to pop up. Type the name of the term you would like to explain in the "Item" field and the definition in the "Text" field. By checking the "Show Only on Click" button, the definition only shows when the viewer clicks on the name of the term.
+<br><br>
+<b><u>Interaction</u></b><u></u>
+<br>
+This annotation is still in beta and does not yet have full functionality. It causes a field to pop up where a user can provide input (i.e. an answer to a question). Type the text for what you want to ask in the "Prompt" field.&nbsp;
+<br><br><b><u>Image<br></u></b>
+This annotation causes an image to pop up on the screen. This can be used to provide a picture of something referenced in the video etc. Make sure the image that you want to use is hosted online somewhere and paste the URL for the image in the "Image URL" field. Leave the "Target" drop down on "Target 1". Setting it to "Target 2" may cause the image to not appear.
+<br><br>
+<b><u>Modal</u></b><u></u>
+<br>
+This causes a modal to pop up with a message of your choice. Input the text you want to show up in the "text" field. Note that a modal popping up also pauses the video. Select "Show Only Once" to prevent the modal from showing up every time the annotation is passed through.
+<br><br>
+<b><u>Blank</u></b><u></u>
+<br>
+As the name suggests, this causes the video to go blank. This can be useful when objectionable imagery is shown in a video, but the words that are spoken are still important.

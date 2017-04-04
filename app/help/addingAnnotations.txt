@@ -1,0 +1,63 @@
+One of the useful features of the Hummedia video service is the ability to customize the playback&nbsp;of a video used in class or as an assignment for your students. These customized events are called "annotations." Since annotations are specific to each collection,&nbsp;any video&nbsp;you wish to customize needs to be added to a collection first.&nbsp;To create annotations, navigate to the collection that the video is linked to. Hover the mouse pointer&nbsp;over the title of the video and buttons giving you&nbsp;the option to annotate or remove the content from a collection should appear.
+<br><br>
+<img src="../img/help/adding-annotations/1.png" width="40%">
+<br><br>
+Click on "Annotate" to open the Annotation Editor.&nbsp;
+<br>
+The screen shot of the annotation editor, given below, shows the three main parts of the display:
+<br>
+1. The black area is the video viewer and shows the title, release date, and language of the video in the upper left corner.
+<br>
+2. The bottom area shows the playhead and&nbsp;annotations timeline.
+<br>
+3. The right side lists the possible annotations available. &nbsp;(Not all are active at this time.)
+<br><br>
+<img src="../img/help/adding-annotations/2.png" width="90%">
+<br><br>
+&nbsp;Let's start with a closeup of the left side of the annotations timeline:
+<br><br>
+<img src="../img/help/adding-annotations/3.png" width="30%">
+<br><br>
+The green play button can be used to play or pause&nbsp;the video. Pressing the space bar on your keyboard will do the same. You can also use your left and right arrow keys to go advance or reverse each frame one by one. The location of the playhead is indicated by the time (hours:minutes:seconds) shown to the right of the play button.
+<br><br>
+The button with the eye on it can be used to toggle annotations on and off so you can do before/after previews of the video.
+<br><br>
+To the right of that is a speaker button where you can toggle&nbsp;the sound on and off.
+<br><br>
+The red line with the green dot is the playhead&nbsp;and can be dragged along the timeline to any part of the video. You can also click anywhere on the timeline to skip to that location.
+<br><br>
+The default view is the timeline of the entire video. &nbsp;The bar on the bottom left allows you to zoom in or out on the timeline to be able to make finer adjustments to the annotations. To the right of the zoom tool is a&nbsp;bar with green lines on each end which can also be used in a similar way by clicking and dragging the arrows that appear. You can then grab this piece and use it as a horizontal scroll bar to select the&nbsp;section of the video that&nbsp;you want to zoom into.
+<br><br>
+The most important piece of this section is the section for Layers. Layers are added to your to your video track and give you a
+<br>
+place to set your annotations. Press the key with the plus sign on it to add a new layer. You can have as many layers as you'd
+<br>
+like, but note that a lot of annotations don't work on top of each other and that your annotation tracks might be consolidated into one layer after saving.
+<br><br>
+To delete a layer, hover your mouse over it and click on the trash can icon.
+<br><br>
+If you want to see the code for your layer, click on the three lines to the right of the layer name. (Layer data is stored in JSON format)<br><br>Next we have our annotations menu on the right.
+<br><br>
+<img src="../img/help/adding-annotations/4.png" width="35%">
+<br><br>
+Clicking on any of the annotation types here will automatically generate an annotation of that type at the location of the cursor on the progress bar. Alternatively, you can click and drag any of the annotation buttons&nbsp;to the desired location. The default length for an annotation is 5 seconds.
+<br><br>
+Once the annotation is placed, you can change the duration of the annotation by clicking on the left or right side and dragging it to the desired length. (Note that if you try to place an annotation on top of another that it will automatically generate another layer to accommodate)
+<br><br>
+To delete an annotation, click on the annotation and press the "delete" key on your keyboard.
+<br>
+<img src="../img/help/adding-annotations/5.png" width="25%">
+<br><br>
+If you have already determined the start and end times for an annotation, you may&nbsp;manually enter the starting and ending point for the annotation in the Start and End boxes that appear on the right side once an annotation is chosen.&nbsp;
+<br>
+<img src="../img/help/adding-annotations/6.png" width="35%">
+<br>
+Each annotation has fields like this where you can enter the specific times either in the hr:min:sec format or&nbsp;in seconds. (For example, an annotation starting at 1 minute and 30 seconds into a video and ending at the 3 minute mark would have either 0:01:30 or&nbsp;90.0 in the start field and either 0:03:00 or 180.0 in the end field.)
+<br><br>
+Below the Start and End boxes is a check box to make an annotation&nbsp;"Required." &nbsp;Checking this button will make the annotation required every time the video is play, and place the annotation in every collection. (i.e. If it is also used in another course.) &nbsp;This is usually only used when customizing a video to meet BYU standards and the content is inappropriate for use by anyone at BYU.
+<br><br>
+To close the detail window&nbsp;for the annotation you are currently editing, click on the X in the top right corner or click on the word "Events".
+<br><br>
+Once you are done, click on the floppy disk on the top to save your annotation track. From there, there will be two buttons for exporting or importing your annotations in JSON format.&nbsp;
+<br><br>
+Check out the "Annotation Types" help file for an explanation of all the different annotation types one by one.
