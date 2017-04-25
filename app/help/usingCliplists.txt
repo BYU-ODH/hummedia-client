@@ -1,9 +1,17 @@
-Have you noticed the 'Cliplist' tab in the top right part of the screen? This is a useful feature in Hummedia that allows you to store clips from videos that you view on Hummedia. Faculty can use this feature to create playlists for class lecture. Students can use this feature&nbsp;to study specific parts of videos that they have trouble with, or save small clips so that they can have them ready to use in presentations, and more.<br><br>To use the Cliplist tool, first open the video that you want to obtain a clip from.<br>Next, click on the Cliplist tab in the top right corner of the screen. It should bring up this window.
+<h2><u>Using Cliplists</u></h2>
+Have you noticed the 'Cliplist' tab in the top right part of the screen? This is a useful feature in Hummedia that allows you to store clips from videos that you view on Hummedia. Faculty can use this feature to create playlists for class lecture. Students can use this feature to study specific parts of videos that they have trouble with, or save small clips so that they can have them ready to use in presentations, and more.
 <br><br>
+<p>
+To use the Cliplist tool, first open the video that you want to obtain a clip from.
+<br>
+Next, click on the Cliplist tab in the top right corner of the screen. It should bring up this window.
+</p><br>
 <img src="../img/help/using-cliplists/1.png" width="40%">
 <br>
-When you want to&nbsp;exit the cliplist module, close it by clicking on the red X.<br>With this module open, figure out what part of the video you want to make a clip of. Then, type in the time code for the start of the clip in the middle box. This is formatted in hours:minutes:seconds. So for example, if you want your clip to start at 10 minutes and 30 seconds, your code will look like this.<br>00:10:30<br>After that, find out the time you want your clip to end, and add the time code to the last box.<br>Once you've figured out your start and end times, give your clip a name and click Save.<br>Once you've saved, the clip should appear at the top.
+<p>When you want to exit the cliplist module, close it by clicking on the red X.</p>
 <br>
+With this module open, figure out what part of the video you want to make a clip of. Then, type in the time code for the start of the clip in the middle box. This is formatted in hours:minutes:seconds. So for example, if you want your clip to start at 10 minutes and 30 seconds, your code will look like this: <i>00:10:30</i><br>After that, find out the time you want your clip to end, and add the time code to the last box. Once you've figured out your start and end times, give your clip a name and click Save. Once you've saved, the clip should appear at the top.
+<br><br>
 <img src="../img/help/using-cliplists/2.png" width="40%">
 <br>
 From here, you can click on your clip to edit or view it again. You can also make new clips in the same way as above. Make sure to double check your clips to ensure that you didn't make a mistake on your time codes.<br><br>To delete the clip, click on the delete button that appears to the side of the clip name. The "Show Link" button is currently not useful as the link that appears will not play outside of Hummedia. &nbsp;We hope to eventually make it useful if we can satisfy Copyright restrictions and control it's use according to the law.

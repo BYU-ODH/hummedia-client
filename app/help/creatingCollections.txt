@@ -1,37 +1,38 @@
+<h2><u>Creating a Collection</u></h2>
 In Hummedia, media files are organized into collections and then linked to courses. Therefore, if you want to start adding media to your courses, the best place to start is to make a collection to link to your course. To get started, click on the "admin" tab on the upper left of the screen, as shown below.
 <br><br>
 <img src="../img/help/creating-collections/1.png" width="50%">
-<br><br>
-From there, click on the "Collections" tab that appears on the upper left side.
-<br><br>
+<br>
+<p>From there, click on the "Collections" tab that appears on the upper left side.</p>
+<br>
 <img src="../img/help/creating-collections/2.png" width="40%">
 <br>
-(Don't worry if your menu looks a little bit different.)
-<br><br>
+<p>(Don't worry if your menu looks a little bit different.)</P>
+<br>
 A menu showing&nbsp;a list of all the collections should appear in the center of the screen. Click the "Create New Collection" button at the bottom to start creating your new collection.
 <br>
 <img src="../img/help/creating-collections/3.png" width="40%">
 <br>
-(You might have a tab on the top here that takes you to just your own collections.)<br><br>When you click on "Create New Collection", another module should pop up to the right of it. Input a name for your collection, your NetID, and a description of the collection if you like.
-<br><br>
+<p>(You might have a tab on the top here that takes you to just your own collections.)<br><br>When you click on "Create New Collection", another module should pop up to the right of it. Input a name for your collection, your NetID, and a description of the collection if you like.</p>
+<br>
 <img src="../img/help/creating-collections/4.png" width="33%">
 <br><br>
-After clicking "Save Changes", the module will expand and give you some more options.
-<br><br>
+<p>After clicking "Save Changes", the module will expand and give you some more options.</p>
+<br>
 <img src="../img/help/creating-collections/5.png" width="50%">
 <br><br>
-Let's start by adding a course. Click on the "Add New Course" button.
-<br><br>
+<p>Let's start by adding a course. Click on the "Add New Course" button.</p>
+<br>
 <img src="../img/help/creating-collections/6.png" width="30%">
 <br><br>
 This is where we will select our course. Click on the top left drop down box here to select your department. (Note that only departments in the College of Humanities are available at this time.) Then type in the course number and the section number. Make sure that the course name and section number are exactly as they are in the official class catalog. Lastly, select the term you during which the class will be taught. Remember that you can add as many courses as is necessary.&nbsp;Here is an example for Japanese 491R Section 001 taught in Spring Term 2017.&nbsp;
 <br><br>
 <img src="../img/help/creating-collections/7.png" width="30%">
 <br><br>
-Once your course is added, you should see it in the middle of the page like this.
+<p>Once your course is added, you should see it in the middle of the page like this.
 <br>
-If you want to delete it, check the box to the left and click the "Delete Selected Courses" button.
-<br><br>
+If you want to delete it, check the box to the left and click the "Delete Selected Courses" button.</p>
+<br>
 <img src="../img/help/creating-collections/8.png" width="35%">
 <br><br>
 Because Hummedia uses the AIM system to check class enrollments, students that are enrolled in these courses have the ability to view the content connected to this collection. (<b>So please remember that you have to re-add the course each term/semester</b>) However, the section below allows you to add other students for special reasons as well as to give TA's special privileges.

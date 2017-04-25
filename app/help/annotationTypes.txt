@@ -1,3 +1,4 @@
+<h2><u>Annotation Types</u></h2>
 <img src="../img/help/annotation-types/1.png" width="33%">
 <br><br>
 <b><u>Skip<br></u></b><b><u></u></b><u></u>This annotation allows you to skip parts of the content. It can be useful for cutting out unnecessary portions.<br><br><b><u>Mute</u></b><u></u>

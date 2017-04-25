@@ -1,3 +1,4 @@
+<h2><u>Adding Content to Your Collection</u></h2>
 Once you have a collection up and connected to your course, you are ready to add some content. To get started, click on "Add Media" on the top right.
 <br><br>
 <img src="../img/help/adding-content/1.png" width="50%">

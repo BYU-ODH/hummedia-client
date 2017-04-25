@@ -1,3 +1,4 @@
+<h2><u>Students can't see my course!</u></h2>
 Are students having trouble seeing your course when they log in? Make sure that you update or add your course to your collection.
 <br><br>
 To do so, first navigate to your collection, check the courses that are linked to the collection but no longer valid,&nbsp;and click "Delete Selected Courses".

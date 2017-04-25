@@ -1,3 +1,4 @@
+<h2><u>Adding Annotations</u></h2>
 One of the useful features of the Hummedia video service is the ability to customize the playback&nbsp;of a video used in class or as an assignment for your students. These customized events are called "annotations." Since annotations are specific to each collection,&nbsp;any video&nbsp;you wish to customize needs to be added to a collection first.&nbsp;To create annotations, navigate to the collection that the video is linked to. Hover the mouse pointer&nbsp;over the title of the video and buttons giving you&nbsp;the option to annotate or remove the content from a collection should appear.
 <br><br>
 <img src="../img/help/adding-annotations/1.png" width="40%">
@@ -14,8 +15,8 @@ The screen shot of the annotation editor, given below, shows the three main part
 <br><br>
 <img src="../img/help/adding-annotations/2.png" width="90%">
 <br><br>
-&nbsp;Let's start with a closeup of the left side of the annotations timeline:
-<br><br>
+<p>Let's start with a closeup of the left side of the annotations timeline:</p>
+<br>
 <img src="../img/help/adding-annotations/3.png" width="30%">
 <br><br>
 The green play button can be used to play or pause&nbsp;the video. Pressing the space bar on your keyboard will do the same. You can also use your left and right arrow keys to go advance or reverse each frame one by one. The location of the playhead is indicated by the time (hours:minutes:seconds) shown to the right of the play button.
@@ -36,8 +37,10 @@ like, but note that a lot of annotations don't work on top of each other and tha
 <br><br>
 To delete a layer, hover your mouse over it and click on the trash can icon.
 <br><br>
-If you want to see the code for your layer, click on the three lines to the right of the layer name. (Layer data is stored in JSON format)<br><br>Next we have our annotations menu on the right.
+If you want to see the code for your layer, click on the three lines to the right of the layer name. (Layer data is stored in JSON format)
 <br><br>
+<p>Next we have our annotations menu on the right.</p>
+<br>
 <img src="../img/help/adding-annotations/4.png" width="35%">
 <br><br>
 Clicking on any of the annotation types here will automatically generate an annotation of that type at the location of the cursor on the progress bar. Alternatively, you can click and drag any of the annotation buttons&nbsp;to the desired location. The default length for an annotation is 5 seconds.
@@ -48,8 +51,9 @@ To delete an annotation, click on the annotation and press the "delete" key on y
 <br>
 <img src="../img/help/adding-annotations/5.png" width="25%">
 <br><br>
-If you have already determined the start and end times for an annotation, you may&nbsp;manually enter the starting and ending point for the annotation in the Start and End boxes that appear on the right side once an annotation is chosen.&nbsp;
-<br>
+If you have already determined the start and end times for an annotation, you may&nbsp;manually enter the starting and ending point for the annotation in the Start and End boxes that appear on the right side once an annotation is chosen.
+&nbsp;
+<br><br>
 <img src="../img/help/adding-annotations/6.png" width="35%">
 <br>
 Each annotation has fields like this where you can enter the specific times either in the hr:min:sec format or&nbsp;in seconds. (For example, an annotation starting at 1 minute and 30 seconds into a video and ending at the 3 minute mark would have either 0:01:30 or&nbsp;90.0 in the start field and either 0:03:00 or 180.0 in the end field.)

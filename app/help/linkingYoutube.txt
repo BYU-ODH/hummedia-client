@@ -1,19 +1,20 @@
+<h2><u>Linking Content Via YouTube</u></h2>
 Can't find the video or audio content that you want to add to your course? If you need to add something to your course from a DVD, VHS, or the like, make sure that you take it to the HLR help desk in the computer lab on the first floor of the JFSB. However, if you just want to link content from a YouTube video or upload content that you created yourself, you can link it to Hummedia yourself.
 <br><br>
-First, open up your collection and click on "Add Media".&nbsp;
-<br><br>
+<p>First, open up your collection and click on "Add Media".</p>
+<br>
 <img src="../img/help/linking-youtube/1.png" width="35%">
 <br><br>
-Then, click on the word "Create" in the sentence at the bottom. (Note that this doesn't give you the ability to 'create' a video, just 'link' to it)
-<br><br>
+<p>Then, click on the word "Create" in the sentence at the bottom. (Note that this doesn't give you the ability to 'create' a video, just 'link' to it)</p>
+<br>
 <img src="../img/help/linking-youtube/2.png" width="85%">
 <br><br>
 And then finally, click on "Add Video" at the bottom of the next menu. (Note that you can skip directly to this menu by clicking on "Media" in the top left corner of your page.
 <br><br>
 <img src="../img/help/linking-youtube/3.png" width="85%">
 <br><br>
-This will take you to a built in YouTube search menu. From here you can search for the video you would like to link.&nbsp;
-<br><br>
+<p>This will take you to a built in YouTube search menu. From here you can search for the video you would like to link.</p>
+<br>
 <img src="../img/help/linking-youtube/4.png" width="90%">
 <br><br>
 If you already know the exact location of your video, you can copy the end of the URL of the YouTube video and type it in the search bar. For example, for this URL you would copy "X6Mtpk4jeVA". This should bring the exact video to the top of the search results.
