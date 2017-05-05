@@ -10,12 +10,12 @@ HUMMEDIA_SERVICES
 
             var TRACK_ELEMENT_SUPPORTED =
                     typeof popcornInstance.media.addTextTrack === 'function';
-            
+
             var _media        = popcornInstance.media,
                 _currentIndex = null, // which subtitle is currently selected
                 _enabled      = true,
                 _that         = this;
-            
+
             this.enable = function() {
                 if(_enabled) {
                     return;
@@ -32,7 +32,7 @@ HUMMEDIA_SERVICES
                     popcornInstance.enable('subtitle');
                 }
             };
-            
+
             this.disable = function() {
                 if(!_enabled) {
                     return;
@@ -52,7 +52,7 @@ HUMMEDIA_SERVICES
 
             this.loadSubtitle = function(subtitle) {
                 var index = subtitles.indexOf(subtitle);
-                
+
                 // make sure we're passing in only what we have
                 if(index === -1) {
                     throw new Error("Subtitle not available. " +
@@ -76,7 +76,7 @@ HUMMEDIA_SERVICES
             Object.defineProperty(this, 'subtitles', {
                 get: function() { return subtitles; }
             });
-            
+
             Object.defineProperty(this, 'current', {
                 get: function() {
                     return _enabled ? subtitles[_currentIndex] : null;
@@ -92,11 +92,17 @@ HUMMEDIA_SERVICES
                     track.srclang = subtitle['language'];
                     track.label   = subtitle['name'];
 
-                    _media.appendChild(track);
+                    // For an unknown reason, this returns false on iOS devices
+                    if (_media == document.getElementsByTagName('video')[0]) {
+                      _media.appendChild(track);
+                    } else {
+                      // Hacky way to get subtitles working on iOS
+                      document.getElementsByTagName('video')[0].appendChild(track);
+                    }
                 });
 
                 // if we don't call disable, all subtitles will be present at once
-                this.disable(); 
+                this.disable();
 
                 // text tracks might become disabled by a user's click on
                 // the closed captioning button; this listens for those kinds
@@ -111,7 +117,7 @@ HUMMEDIA_SERVICES
                             if(i === _currentIndex && _enabled) {
                                 return;
                             }
-                            
+
                             /**
                              * There's a weird issue (at least in Chrome 34)
                              * where selecting a subtitle and clicking the
