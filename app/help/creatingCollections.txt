@@ -1,5 +1,5 @@
-<h2><u>Creating a Collection</u></h2>
-In Hummedia, media files are organized into collections and then linked to courses. Therefore, if you want to start adding media to your courses, the best place to start is to make a collection to link to your course. To get started, click on the "admin" tab on the upper left of the screen, as shown below.
+"co"<h2><u>Creating a Collection</u></h2>
+In Hummedia, media files are organized into collections and then linked to courses. Therefore, if you want to start adding media to your courses, the best place to start is to make a collection to link to your course. To get started, login and click on the "admin" tab on the upper right of the screen, as shown below.
 <br><br>
 <img src="../img/help/creating-collections/1.png" width="50%">
 <br>
@@ -17,7 +17,7 @@ A menu showing&nbsp;a list of all the collections should appear in the center of
 <br>
 <img src="../img/help/creating-collections/4.png" width="33%">
 <br><br>
-<p>After clicking "Save Changes", the module will expand and give you some more options.</p>
+<p>After you click "Save Changes", the module will expand and give you some more options.</p>
 <br>
 <img src="../img/help/creating-collections/5.png" width="50%">
 <br><br>
@@ -25,7 +25,7 @@ A menu showing&nbsp;a list of all the collections should appear in the center of
 <br>
 <img src="../img/help/creating-collections/6.png" width="30%">
 <br><br>
-This is where we will select our course. Click on the top left drop down box here to select your department. (Note that only departments in the College of Humanities are available at this time.) Then type in the course number and the section number. Make sure that the course name and section number are exactly as they are in the official class catalog. Lastly, select the term you during which the class will be taught. Remember that you can add as many courses as is necessary.&nbsp;Here is an example for Japanese 491R Section 001 taught in Spring Term 2017.&nbsp;
+This is where we will select our course. Click on the top left drop down box here to select your academic area. (Note that only academic areas in the College of Humanities are available at this time.) Then type in the course number and the section number. Make sure that the course name and section number are exactly as they are in the official class catalog. Lastly, select the term during which the class will be taught. Remember that you can add as many courses as is necessary.&nbsp;Here is an example for Japanese 491R Section 001 taught in Spring Term 2017.&nbsp;
 <br><br>
 <img src="../img/help/creating-collections/7.png" width="30%">
 <br><br>
@@ -35,14 +35,14 @@ If you want to delete it, check the box to the left and click the "Delete Select
 <br>
 <img src="../img/help/creating-collections/8.png" width="35%">
 <br><br>
-Because Hummedia uses the AIM system to check class enrollments, students that are enrolled in these courses have the ability to view the content connected to this collection. (<b>So please remember that you have to re-add the course each term/semester</b>) However, the section below allows you to add other students for special reasons as well as to give TA's special privileges.
+Because Hummedia uses the AIM system to check class enrollments, students that are enrolled in these courses have the ability to view the content connected to this collection. (<b>So please remember that you have to re-add the course each term/semester</b>) However, the "Read Access" section below the "Courses Using the Collection" section allows you to add other students for special reasons as well as to give TAs special privileges.
 <br><br>
 <img src="../img/help/creating-collections/1.png" width="50%">
 <br>
 The "Read Access" section allows you to add viewing privileges for students that are not enrolled in your course. However,&nbsp;<b>remember that the content uploaded to your course may be copyrighted and should only be shown to students in your course for educational purposes, so only add other students if you feel that it is justified.</b> Use this feature sparingly. To add a student, type their Net ID into the field and press "Grant".
 <br><br>
-The "Write Access" section is where you can add a TA to your course. Using this feature will give your TA the ability to edit files that are uploaded to this course. Like above, type their Net ID into the field and press "Grant". Note that you can revoke privileges for students with read or write access by clicking on the "revoke" button to the right of their Net ID after it shows up.
+Below the "Read Access" section is the "Write Access" section where you can add a TA or other person to your course. Using this feature will give the person that you add the ability to edit files that are uploaded to this course. As above, type this person's Net ID into the field and press "Grant." Note that you can revoke privileges for students with read or write access by clicking on the "revoke" button to the right of their Net ID after it shows up.
 <br><br>
-At the bottom, make sure to check the "Authorize Collection" button when you are done verifying that the media that you are using for this collection will be used as required material for this class (or classes if you decide to link this course to more than one.) As stated above, unless the content has been uploaded by you, only give access to people that need to see it for class assignments.
+At the bottom, make sure to check the "Authorize Collection" button when you are done verifying that the media you are using for this collection will be used as required material for this class (or classes if you decide to link this course to more than one.) As stated above, unless the content has been uploaded by you, only give access to people that need to see it for class assignments.
 <br><br>
-To finish, make sure to click "Save Changes". You can also delete your collection at any time by clicking the "Delete" button.
+To finish, make sure to click "Save Changes." You can also delete your collection at any time by clicking the "Delete" button. Once you are have saved everything, your students should be able to see all of the content in this section. From here, you can click the "Logout" button in the top right corner of the page to logout, or you can stay logged in and make other changes to your content. View the other help pages for instructions on how to do so.
