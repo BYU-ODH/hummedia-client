@@ -21,7 +21,7 @@ ln -fs /vagrant /var/www
 if ! apache2ctl -M | grep auth_token_module; then
   cd /tmp
   rm -rf mod_auth_token*
-  wget --no-verbose https://mod-auth-token.googlecode.com/files/mod_auth_token-1.0.6-beta.tar.gz
+  wget --no-verbose https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/mod-auth-token/mod_auth_token-1.0.6-beta.tar.gz
   tar -xvzf mod_auth_token-1.0.6-beta.tar.gz
   chmod +x mod_auth_token
   cd mod_auth_token
