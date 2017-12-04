@@ -3350,6 +3350,8 @@ vjs.Player.prototype.createEl = function(){
   // doesn't flash 100% width/height, but class only applies with .video-js parent
   tag.id += '_html5_api';
   tag.className = 'vjs-tech';
+  
+  tag.setAttribute("controlsList", "nodownload"); //Added by Alex 12/17. Prevents download button in Chrome
 
   // Make player findable on elements
   tag['player'] = el['player'] = this;
